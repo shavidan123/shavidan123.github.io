@@ -61,18 +61,19 @@ $darker-gray                : mix(#000, $gray, 60%);
 $light-gray                 : mix(#fff, $gray, 50%);
 $lighter-gray               : mix(#fff, $gray, 90%);
 
-$body-color                 : #fff; // White remains for body for clarity
-$background-color           : #F0F5F0; // Light greenish background, very soft
-$code-background-color      : #E0EFE0; // Slightly darker green for code blocks
-$code-background-color-dark : $light-gray; // Assuming light-gray is defined, keep or adjust to a slightly green-tinged gray if needed
-$text-color                 : #305030; // Dark green for text, ensuring readability
-$border-color               : #CCE0CC; // Soft green for borders
+$body-color                 : #202124; // Dark grey, almost black, for the main body color
+$background-color           : #2A2B2E; // Slightly lighter dark grey for background, adds subtle depth
+$code-background-color      : #343537; // Even lighter grey for code blocks, ensures contrast
+$code-background-color-dark : #2A2B2E; // Can use the same as background-color for consistency in dark mode
 
-$primary-color              : #8AAE8A; // Muted green, primary action color
-$success-color              : #62c462; // Bright green for success, this can stay as it fits the theme
-$warning-color              : #E9B44C; // Mustard yellow for warnings, to complement the greens
-$danger-color               : #D66A6A; // Soft red for danger, ensuring visibility without clashing
-$info-color                 : #7EBDC2;
+$text-color                 : #E8EAED; // Light grey for text, ensuring readability against the dark background
+$border-color               : #5F6368; // Medium dark grey for borders, subtle against the backgrounds
+
+$primary-color              : #8AB4F8; // Bright blue, good for dark themes and provides accessibility
+$success-color              : #34A853; // Bright green for success, vibrant against dark backgrounds
+$warning-color              : #FBBC05; // Bright yellow for warnings, ensures good visibility
+$danger-color               : #EA4335; // Bright red for danger, stands out well in dark mode
+$info-color                 : #F28B82;
 
 /* brands */
 $behance-color              : #1769FF;
