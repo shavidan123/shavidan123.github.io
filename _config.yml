@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "Avi's Website"
+title                    : "Avidan Shah"
 title_separator          : "-"
 name                     : &name "Avidan Shah"
 description              : &description "personal description"
@@ -21,7 +21,7 @@ repository               : "shavidan123/shavidan123.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "1f705ea2-afa1-4ecf-9f6b-a91dcdd0d346(1).JPG"
+  avatar           : "profilepic.JPG"
   name             : "Avidan Shah"
   pronouns         : # example: "she/her"  
   bio              : "CS + Applied Mathematics @ Berkeley"
