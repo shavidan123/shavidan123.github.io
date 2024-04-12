@@ -61,18 +61,18 @@ $darker-gray                : mix(#000, $gray, 60%);
 $light-gray                 : mix(#fff, $gray, 50%);
 $lighter-gray               : mix(#fff, $gray, 90%);
 
-$body-color                 : #fff;
-$background-color           : #fff;
-$code-background-color      : #fafafa;
-$code-background-color-dark : $light-gray;
-$text-color                 : $dark-gray;
-$border-color               : $lighter-gray;
+$body-color                 : #fff; // White remains for body for clarity
+$background-color           : #F0F5F0; // Light greenish background, very soft
+$code-background-color      : #E0EFE0; // Slightly darker green for code blocks
+$code-background-color-dark : $light-gray; // Assuming light-gray is defined, keep or adjust to a slightly green-tinged gray if needed
+$text-color                 : #305030; // Dark green for text, ensuring readability
+$border-color               : #CCE0CC; // Soft green for borders
 
-$primary-color              : #7a8288;
-$success-color              : #62c462;
-$warning-color              : #f89406;
-$danger-color               : #ee5f5b;
-$info-color                 : #52adc8;
+$primary-color              : #8AAE8A; // Muted green, primary action color
+$success-color              : #62c462; // Bright green for success, this can stay as it fits the theme
+$warning-color              : #E9B44C; // Mustard yellow for warnings, to complement the greens
+$danger-color               : #D66A6A; // Soft red for danger, ensuring visibility without clashing
+$info-color                 : #7EBDC2;
 
 /* brands */
 $behance-color              : #1769FF;
