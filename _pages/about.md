@@ -11,11 +11,13 @@ Hey, I'm Avi! I'm currently a 3rd year undergraduate student at the University o
 
 # Research
 
-My recent research projects include SSH anomaly detection using keystroke inter-arrival times, creating universal transfer attacks on black-box language models, and adversarial curriculum learning for bus-bunching mitigation. I'm extremely fortunate for the opportunity to conduct research with amazing mentors Julien Piet and Chawin Sitawarin at Berkeley as a part of David Wagner's group. See my research page for more information.
+My recent projects include SSH anomaly detection using keystroke inter-arrival times, creating universal transfer attacks on black-box language models, and adversarial curriculum learning for bus-bunching mitigation. 
+
+I'm extremely fortunate for the opportunity to conduct research with amazing mentors [Julien Piet](https://people.eecs.berkeley.edu/~julien.piet/) and [Chawin Sitawarin](https://chawins.github.io/) at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/). See my research page for more information.
 
 # Other
 
-Previously, I've worked at Millennium Management as a quantitative research intern, where I developed a ML-based anomaly detection tool for market data and analyzed trading signals. I will be returning there for Summer 2024. I have also worked under Dr. Kalyan Veeramachaneni as a member of MIT CSAIL's Data to AI Lab, where I built an open source tool to fit ML pipelines for daily anomaly detection on time-series datasets.
+Previously, I've worked at Millennium Management as a quantitative research intern, where I developed a ML-based anomaly detection tool for market data and analyzed trading signals. I will be returning there for Summer 2024. I have also worked under Kalyan Veeramachaneni as a member of MIT CSAIL's Data to AI Lab, where I built an open source tool to fit ML pipelines for daily anomaly detection on time-series datasets.
 
 In my free time, I enjoy reading (sociology and fantasy!), weightlifting, and playing the piano.
 
