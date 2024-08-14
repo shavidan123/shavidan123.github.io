@@ -16,7 +16,7 @@ Education
 
 Experience
 ======
-* Summer 2024: Incoming Quantitative Research Intern at Millennium Management, New York, NY
+* Summer 2024: Quantitative Research Intern at Millennium Management, New York, NY
 
 * Summer 2023: Quantitative Research Intern at Millennium Management, New York, NY
 
