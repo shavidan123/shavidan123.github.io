@@ -11,7 +11,7 @@ Hey, I'm Avi! I'm currently a 4th year undergraduate student at the University o
 
 # Research
 
-My recent projects include SSH anomaly detection using keystroke inter-arrival times, creating universal transfer attacks on black-box language models, and adversarial curriculum learning for bus-bunching mitigation. 
+My recent projects include SSH anomaly detection using keystroke inter-arrival times, creating universal transfer attacks on black-box language models, and adversarial curriculum learning for bus-bunching mitigation. My latest paper, Stronger Universal and Transfer Attacks by Suppressing Refusals, has been accepted to the NeurIPS 2024 SafeGenAI Workshop.
 
 I'm extremely fortunate for the opportunity to conduct research with amazing mentors [Julien Piet](https://people.eecs.berkeley.edu/~julien.piet/) and [Chawin Sitawarin](https://chawins.github.io/) at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/). See my research page for more information.
 
