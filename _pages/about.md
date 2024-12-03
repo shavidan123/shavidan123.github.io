@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hey, I'm Avi! I'm currently a 3rd year undergraduate student at the University of California, Berkeley, where I am a double major in Computer Science and Applied Mathematics. I plan to apply for Ph.D programs for the Fall 2025 class. I'm broadly interested in both machine learning applications for computer security, and security/robustness of machine learning models themselves. Right now, I'm particularly focused on adversarial attacks on language models and the effects of data poisoning on model robustness.
+Hey, I'm Avi! I'm currently a 4th year undergraduate student at the University of California, Berkeley, where I am a double major in Computer Science and Applied Mathematics. I plan to apply for Ph.D programs for the Fall 2025 class. I'm broadly interested in both machine learning applications for computer security, and security/robustness of machine learning models themselves. Right now, I'm particularly focused on adversarial attacks on language models and the effects of training data poisoning on model robustness.
 
 # Research
 
