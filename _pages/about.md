@@ -17,7 +17,7 @@ I'm extremely fortunate for the opportunity to conduct research with amazing men
 
 # Other
 
-Previously, I've worked at [Millennium Management](https://www.mlp.com/) as a quantitative research intern, where I developed a ML-based anomaly detection tool for market data and analyzed trading signals. I will be returning there for Summer 2024. I have also worked under Kalyan Veeramachaneni as a member of MIT's [Data to AI Lab](https://dai.lids.mit.edu/), where I built an open source tool to fit ML pipelines for daily anomaly detection on time-series datasets.
+Previously, I've worked at [Millennium Management](https://www.mlp.com/) as a quantitative research intern for two summers, where I assisted with data pipeline development, created a ML-based anomaly detection tool for market data, and analyzed trading signals. I have also worked under Kalyan Veeramachaneni as a member of MIT's [Data to AI Lab](https://dai.lids.mit.edu/), where I built an open source tool to fit ML pipelines for daily anomaly detection on time-series datasets.
 
 In my free time, I enjoy reading (sociology and fantasy!), weightlifting, and playing the piano.
 
