@@ -33,4 +33,4 @@ Teaching
 * CS61A - Academic Intern
 * ENG125 - Course Reader
 
-[View Full Resume](http://shavidan123.github.io/files/Avi_Shah_Resume_112124.pdf)
+[View Full Resume](http://shavidan123.github.io/files/Avi_Shah_Resume_12142024.pdf)
