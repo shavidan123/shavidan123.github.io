@@ -11,7 +11,9 @@ Hey, I'm Avi! I'm currently a 4th year undergraduate student at the University o
 
 # Research
 
-My recent projects include SSH anomaly detection using keystroke inter-arrival times, creating universal transfer attacks on black-box language models, and adversarial curriculum learning for bus-bunching mitigation. My latest paper, Stronger Universal and Transfer Attacks by Suppressing Refusals, has been accepted to the NeurIPS 2024 SafeGenAI Workshop.
+My latest paper, Stronger Universal and Transfer Attacks by Suppressing Refusals, has been accepted to the NeurIPS 2024 SafeGenAI Workshop, as well as the NAACL 2025 main conference!
+
+Recent projects include SSH anomaly detection using keystroke inter-arrival times, creating universal transfer attacks on black-box language models, and adversarial curriculum learning for bus-bunching mitigation. 
 
 I'm extremely fortunate for the opportunity to conduct research with amazing mentors [Julien Piet](https://people.eecs.berkeley.edu/~julien.piet/) and [Chawin Sitawarin](https://chawins.github.io/) at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/). See my research page for more information.
 
@@ -19,5 +21,5 @@ I'm extremely fortunate for the opportunity to conduct research with amazing men
 
 Previously, I've worked at [Millennium Management](https://www.mlp.com/) as a quantitative research intern for two summers, where I assisted with data pipeline development, created a ML-based anomaly detection tool for market data, and analyzed trading signals. I have also worked under Kalyan Veeramachaneni as a member of MIT's [Data to AI Lab](https://dai.lids.mit.edu/), where I built an open source tool to fit ML pipelines for daily anomaly detection on publicly available time-series datasets.
 
-In my free time, I enjoy reading (sociology and fantasy!), weightlifting, and playing the piano.
+In my free time, I enjoy reading (sociology and fantasy!), weightlifting, photography, and playing the piano.
 
