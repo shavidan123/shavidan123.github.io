@@ -24,9 +24,9 @@ author:
   avatar           : "profilepic.JPG"
   name             : "Avidan Shah"
   pronouns         : # example: "she/her"  
-  bio              : "CS + Applied Mathematics @ Berkeley"
-  location         : "Berkeley, CA"
-  employer         : "University of California, Berkeley"
+  bio              : "MSCS @ NYU, Prev CS + Applied Mathematics @ Berkeley"
+  location         : "New York, NY"
+  employer         : "New York University"
   uri              : # URL
   email            : "amcshah@berkeley.edu" 
 
