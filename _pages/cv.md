@@ -11,11 +11,14 @@ redirect_from:
 
 Education
 ======
-* B.A. in Computer Science, University of California, Berkeley, 2025 (expected)
-* B.A in Applied Mathematics, Unviersity of California, Berkeley, 2025 (expected)
+* M.S in Computer Science, New York University, (expected December 2026)
+* B.A. in Computer Science, University of California, Berkeley, May 2025
+* B.A in Applied Mathematics, Unviersity of California, Berkeley, May 2025
 
 Experience
 ======
+* Summer 2025: Machine Learning Engineer Intern at Adobe, San Jose, CA
+
 * Summer 2024: Quantitative Research Intern at Millennium Management, New York, NY
 
 * Summer 2023: Quantitative Research Intern at Millennium Management, New York, NY
