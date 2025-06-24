@@ -11,7 +11,7 @@ Hey, I'm Avi! I'm currently a masters student at New York University, after rece
 
 # Research
 
-My latest paper, Stronger Universal and Transfer Attacks by Suppressing Refusals, has been accepted to the NeurIPS 2024 SafeGenAI Workshop, as well as the NAACL 2025 main conference!
+My latest paper, Stronger Universal and Transfer Attacks by Suppressing Refusals, has been accepted to the NeurIPS 2024 SafeGenAI Workshop, as well as the NAACL 2025 main conference, where I delivered a [poster presentation](https://aclanthology.org/2025.naacl-long.302/)!
 
 Recent projects include SSH anomaly detection using keystroke inter-arrival times, creating universal transfer attacks on black-box language models, and adversarial curriculum learning for bus-bunching mitigation. 
 
