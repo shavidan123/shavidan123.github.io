@@ -12,5 +12,5 @@ Here's my collection of notes on research papers, random thoughts, and things I 
 {% include base_path %}
 
 {% for post in site.posts reversed %}
-  {% include archive-single.html %}
+  {% include archive-single-no-header.html %}
 {% endfor %}
