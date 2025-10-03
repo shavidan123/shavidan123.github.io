@@ -8,10 +8,29 @@ author_profile: true
 {% include base_path %}
 {% include group-by-array collection=site.posts field="tags" %}
 
-{% for tag in group_names %}
-  {% assign posts = group_items[forloop.index0] %}
+{%- comment -%}
+Index of tags with counts and anchor links
+{%- endcomment -%}
+<ul class="taxonomy__index">
+  {%- assign zipped = group_names | zip: group_items -%}
+  {%- assign zipped_sorted = zipped | sort_natural: 0 -%}
+  {%- for pair in zipped_sorted -%}
+    {%- assign tag = pair[0] -%}
+    {%- assign posts = pair[1] -%}
+    <li>
+      <a href="#{{ tag | slugify }}">{{ tag }} ({{ posts | size }})</a>
+    </li>
+  {%- endfor -%}
+</ul>
+
+{%- comment -%}
+Sections per tag, with posts sorted newest first
+{%- endcomment -%}
+{%- for pair in zipped_sorted -%}
+  {%- assign tag = pair[0] -%}
+  {%- assign posts = pair[1] | sort: 'date' | reverse -%}
   <h2 id="{{ tag | slugify }}" class="archive__subtitle">{{ tag }}</h2>
-  {% for post in posts %}
+  {%- for post in posts -%}
     {% include archive-single.html %}
-  {% endfor %}
-{% endfor %}
+  {%- endfor -%}
+{%- endfor -%}
