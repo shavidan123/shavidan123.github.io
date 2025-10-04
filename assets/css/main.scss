@@ -40,28 +40,3 @@
 @import "vendor/magnific-popup/magnific-popup";
 @import "print";
 
-.page__taxonomy {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-.taxonomy__label {
-  font-weight: 600;
-  margin-right: 0.5em;
-}
-
-.taxonomy__item {
-  display: inline-block;
-  background: #f2f2f2;
-  border-radius: 4px;
-  padding: 2px 6px;
-  margin: 0 4px 4px 0;
-  font-size: 0.85em;
-  text-decoration: none;
-  color: #333;
-  transition: background 0.2s ease;
-}
-
-.taxonomy__item:hover {
-  background: #e0e0e0;
-}

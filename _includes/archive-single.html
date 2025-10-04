@@ -53,16 +53,9 @@
     {% endif %}
 
     {% if post.tags and post.tags.size > 0 %}
-      <p class="page__taxonomy">
-        <span class="taxonomy__label">Tags:</span>
-        {% for tag in post.tags %}
-          <a class="taxonomy__item"
-            href="{{ base_path }}{{ site.tag_archive.path }}#{{ tag | slugify }}">
-            {{ tag }}
-          </a>
-        {% endfor %}
-      </p>
+      {% include tag_list.html tags=post.tags %}
     {% endif %}
+
     
     {% if post.citation and post.paperurl %}
       <p>Recommended citation: {{ post.citation }} <a href="{{ post.paperurl }}">{{ post.paperurl }}</a></p>
