@@ -53,16 +53,7 @@
     {% endif %}
 
     {% if post.tags and post.tags.size > 0 %}
-      <p class="page__taxonomy">
-        <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
-        <span itemprop="keywords">
-        {% assign sorted_tags = post.tags | sort_natural %}
-        {% for tag in sorted_tags %}
-          <a href="{{ base_path }}{{ site.tag_archive.path }}#{{ tag | slugify }}" 
-            class="page__taxonomy-item" rel="tag">{{ tag }}</a>
-        {% endfor %}
-        </span>
-      </p>
+      {% include tag_list.html tags=post.tags %}
     {% endif %}
 
     
