@@ -6,31 +6,46 @@ author_profile: true
 ---
 
 {% include base_path %}
-{% include group-by-array collection=site.posts field="tags" %}
 
 {%- comment -%}
-Index of tags with counts and anchor links
+Collect and sort all unique tag names (case-insensitive sort, but we keep original casing)
+{%- endcomment -%}
+{%- assign all_tags = "" -%}
+{%- for post in site.posts -%}
+  {%- if post.tags -%}
+    {%- for t in post.tags -%}
+      {%- unless all_tags contains t | append: "||" -%}
+        {%- assign all_tags = all_tags | append: t | append: "||" -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign tag_array = all_tags | split: "||" | sort -%}
+
+{%- comment -%}
+Top index: tag list with counts
 {%- endcomment -%}
 <ul class="taxonomy__index">
-  {%- assign zipped = group_names | zip: group_items -%}
-  {%- assign zipped_sorted = zipped | sort_natural: 0 -%}
-  {%- for pair in zipped_sorted -%}
-    {%- assign tag = pair[0] -%}
-    {%- assign posts = pair[1] -%}
-    <li>
-      <a href="#{{ tag | slugify }}">{{ tag }} ({{ posts | size }})</a>
-    </li>
+  {%- for tag in tag_array -%}
+    {%- assign count = 0 -%}
+    {%- for post in site.posts -%}
+      {%- if post.tags contains tag -%}
+        {%- assign count = count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+    <li><a href="#{{ tag | slugify }}">{{ tag }} ({{ count }})</a></li>
   {%- endfor -%}
 </ul>
 
 {%- comment -%}
-Sections per tag, with posts sorted newest first
+Sections per tag (posts newest first)
 {%- endcomment -%}
-{%- for pair in zipped_sorted -%}
-  {%- assign tag = pair[0] -%}
-  {%- assign posts = pair[1] | sort: 'date' | reverse -%}
+{%- for tag in tag_array -%}
   <h2 id="{{ tag | slugify }}" class="archive__subtitle">{{ tag }}</h2>
-  {%- for post in posts -%}
-    {% include archive-single.html %}
+  {%- assign tagged = site.posts | sort: 'date' | reverse -%}
+  {%- for post in tagged -%}
+    {%- if post.tags contains tag -%}
+      {% include archive-single.html %}
+    {%- endif -%}
   {%- endfor -%}
 {%- endfor -%}
