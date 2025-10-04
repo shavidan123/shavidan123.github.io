@@ -1,0 +1,9 @@
+/* Make tag pills look identical everywhere */
+.page__taxonomy-item {
+  color: inherit;           /* no green link color */
+  text-decoration: none;    /* remove underline */
+}
+.page__taxonomy-item:hover,
+.page__taxonomy-item:focus {
+  text-decoration: none;    /* keep no underline on hover */
+}
