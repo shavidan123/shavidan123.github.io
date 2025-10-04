@@ -7,3 +7,15 @@
 .page__taxonomy-item:focus {
   text-decoration: none;    /* keep no underline on hover */
 }
+
+.tag-index {
+  list-style: none;       /* remove bullets */
+  margin: .5rem 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;        /* wrap to next line instead of overflowing */
+  gap: .5rem;             /* spacing between pills */
+}
+.tag-index li { margin: 0; }
+.tag-index .page__taxonomy-item { white-space: nowrap; } /* keeps each pill on one line */
+.tag-index .tag-count { opacity: .85; font-size: .85em; margin-left: .25em; }

@@ -23,9 +23,9 @@ Collect and sort all unique tag names (case-insensitive sort, but we keep origin
 {%- assign tag_array = all_tags | split: "||" | sort -%}
 
 {%- comment -%}
-Top index: tag list with counts
+Top index: tag list with counts (pill style, wraps)
 {%- endcomment -%}
-<ul class="taxonomy__index">
+<ul class="taxonomy__index tag-index">
   {%- for tag in tag_array -%}
     {%- assign count = 0 -%}
     {%- for post in site.posts -%}
@@ -33,7 +33,11 @@ Top index: tag list with counts
         {%- assign count = count | plus: 1 -%}
       {%- endif -%}
     {%- endfor -%}
-    <li><a href="#{{ tag | slugify }}">{{ tag }} ({{ count }})</a></li>
+    <li>
+      <a class="page__taxonomy-item" href="#{{ tag | slugify }}">
+        {{ tag }} <span class="tag-count">({{ count }})</span>
+      </a>
+    </li>
   {%- endfor -%}
 </ul>
 
