@@ -11,12 +11,14 @@ redirect_from:
 
 Education
 ======
-* M.S in Computer Science, New York University, (expected December 2026)
+* M.S in Computer Science, New York University, GPA: 4.0/4.0
 * B.A. in Computer Science, University of California, Berkeley, May 2025
 * B.A in Applied Mathematics, Unviersity of California, Berkeley, May 2025
 
 Experience
 ======
+* Winter 2026: MATS 9.0 Research Fellow, Berkeley, CA
+
 * Summer 2025: Machine Learning Engineer Intern at Adobe, San Jose, CA
 
 * Summer 2024: Quantitative Research Intern at Millennium Management, New York, NY
