@@ -1,4 +1,33 @@
 <script src="{{ base_path }}/assets/js/main.min.js"></script>
 
+<script>
+(function() {
+  var toggle = document.getElementById('theme-toggle');
+  var iconLight = document.getElementById('theme-icon-light');
+  var iconDark = document.getElementById('theme-icon-dark');
+
+  function updateIcons(theme) {
+    if (theme === 'dark') {
+      iconLight.style.display = 'inline';
+      iconDark.style.display = 'none';
+    } else {
+      iconLight.style.display = 'none';
+      iconDark.style.display = 'inline';
+    }
+  }
+
+  var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  updateIcons(currentTheme);
+
+  toggle.addEventListener('click', function() {
+    var theme = document.documentElement.getAttribute('data-theme');
+    var newTheme = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateIcons(newTheme);
+  });
+})();
+</script>
+
 {% include analytics.html %}
 {% include /comments-providers/scripts.html %}

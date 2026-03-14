@@ -19,3 +19,120 @@
 .tag-index li { margin: 0; }
 .tag-index .page__taxonomy-item { white-space: nowrap; } /* keeps each pill on one line */
 .tag-index .tag-count { opacity: .85; font-size: .85em; margin-left: .25em; }
+
+/* =============================================
+   Light / Dark theme toggle
+   ============================================= */
+
+/* Light theme overrides */
+html[data-theme="light"] body {
+  background-color: #FAF9F6;
+  color: #2C2520;
+}
+
+html[data-theme="light"] .masthead {
+  background: #FAF9F6;
+  border-bottom-color: #E8E3DD;
+}
+
+html[data-theme="light"] .greedy-nav {
+  background: #FAF9F6;
+}
+
+html[data-theme="light"] .greedy-nav a {
+  color: #B8860B;
+}
+
+html[data-theme="light"] .greedy-nav a:hover {
+  color: #996600;
+}
+
+html[data-theme="light"] .page__content a {
+  color: #B8860B;
+}
+
+html[data-theme="light"] .page__content a:hover {
+  color: #996600;
+}
+
+html[data-theme="light"] .page__content h2 {
+  border-bottom-color: #E8E3DD;
+}
+
+html[data-theme="light"] .author__urls a {
+  color: #2C2520;
+}
+
+html[data-theme="light"] .author__urls a:hover {
+  color: #B8860B;
+}
+
+html[data-theme="light"] .sidebar .author__name {
+  color: #2C2520;
+}
+
+html[data-theme="light"] .author__bio {
+  color: #5A5047;
+}
+
+html[data-theme="light"] .author__avatar img {
+  border-color: #E8E3DD;
+}
+
+html[data-theme="light"] .page__footer {
+  background-color: #F0ECE6;
+  color: #5A5047;
+}
+
+html[data-theme="light"] hr {
+  border-top-color: #E8E3DD;
+}
+
+html[data-theme="light"] blockquote {
+  border-left-color: #E2A84B;
+}
+
+html[data-theme="light"] .pub-entry span {
+  color: #7A7067 !important;
+}
+
+html[data-theme="light"] p > code,
+html[data-theme="light"] a > code,
+html[data-theme="light"] li > code,
+html[data-theme="light"] td > code {
+  background: #F0ECE6;
+  border-color: #E8E3DD;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #E2A84B;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(226, 168, 75, 0.15);
+}
+
+html[data-theme="light"] .theme-toggle {
+  color: #B8860B;
+}
+
+html[data-theme="light"] .theme-toggle:hover {
+  background: rgba(184, 134, 11, 0.1);
+}

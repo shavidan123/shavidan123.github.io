@@ -6,7 +6,7 @@
    Typography
    ========================================================================== */
 
-$doc-font-size              : 16;
+$doc-font-size              : 17;
 
 /* paragraph indention */
 $paragraph-indent           : false; // true, false (default)
@@ -14,7 +14,7 @@ $indent-var                 : 1.3em;
 
 /* system typefaces */
 $serif                      : Georgia, Times, serif;
-$sans-serif                 : -apple-system, ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+$sans-serif                 : "Inter", -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
 $monospace                  : Monaco, Consolas, "Lucida Console", monospace;
 
 /* sans serif typefaces */
@@ -61,19 +61,20 @@ $darker-gray                : mix(#000, $gray, 60%);
 $light-gray                 : mix(#fff, $gray, 50%);
 $lighter-gray               : mix(#fff, $gray, 90%);
 
-$body-color                 : #202124; // Dark grey, almost black, for the main body color
-$background-color           : #2A2B2E; // Slightly lighter dark grey for background, adds subtle depth
-$code-background-color      : #343537; // Even lighter grey for code blocks, ensures contrast
-$code-background-color-dark : #2A2B2E; // Can use the same as background-color for consistency in dark mode
+/* Dark theme (default) */
+$body-color                 : #1C1917;
+$background-color           : #231F1C;
+$code-background-color      : #2C2724;
+$code-background-color-dark : #231F1C;
 
-$text-color                 : #E8EAED; // Light grey for text, ensuring readability against the dark background
-$border-color               : #5F6368; // Medium dark grey for borders, subtle against the backgrounds
+$text-color                 : #D4CFC9;
+$border-color               : #3D3733;
 
-$primary-color              : #91EBB8; // Bright blue, good for dark themes and provides accessibility 8AB4F8
-$success-color              : #34A853; // Bright green for success, vibrant against dark backgrounds
-$warning-color              : #FBBC05; // Bright yellow for warnings, ensures good visibility
-$danger-color               : #EA4335; // Bright red for danger, stands out well in dark mode
-$info-color                 : #91EBB8;
+$primary-color              : #E2A84B;
+$success-color              : #5B9A3C;
+$warning-color              : #E2A84B;
+$danger-color               : #C9553D;
+$info-color                 : #E2A84B;
 
 /* brands */
 $behance-color              : #1769FF;
@@ -103,11 +104,11 @@ $xing-color                 : #006567;
 
 
 /* links */
-$link-color                 : $info-color;
-$link-color-hover           : mix(#000, $link-color, 25%);
-$link-color-visited         : mix(#fff, $link-color, 25%);
+$link-color                 : $primary-color;
+$link-color-hover           : mix(#fff, $link-color, 20%);
+$link-color-visited         : mix(#fff, $link-color, 10%);
 $masthead-link-color        : $primary-color;
-$masthead-link-color-hover  : mix(#000, $primary-color, 25%);
+$masthead-link-color-hover  : mix(#fff, $primary-color, 20%);
 
 
 /*
