@@ -36,7 +36,7 @@ html[data-theme="light"] .masthead {
 }
 
 html[data-theme="light"] .greedy-nav {
-  background: #FAF9F6;
+  background: transparent;
 }
 
 html[data-theme="light"] .greedy-nav a {
@@ -81,6 +81,11 @@ html[data-theme="light"] .author__avatar img {
 
 html[data-theme="light"] .page__footer {
   background-color: #F0ECE6;
+  color: #5A5047;
+  border-top-color: #E8E3DD;
+}
+
+html[data-theme="light"] .page__footer-follow {
   color: #5A5047;
 }
 
