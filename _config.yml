@@ -25,8 +25,8 @@ author:
   name             : "Avidan Shah"
   pronouns         : # example: "she/her"  
   bio              : "MSCS @ NYU, Prev CS + Applied Mathematics @ Berkeley"
-  location         : "New York, NY"
-  employer         : "New York University"
+  location         : #
+  employer         : #
   uri              : # URL
   email            : "ams9714@nyu.edu"
 
