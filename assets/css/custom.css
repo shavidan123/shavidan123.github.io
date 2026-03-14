@@ -112,9 +112,15 @@ html[data-theme="light"] .pub-excerpt {
    Publication entries with thumbnails
    ============================================= */
 
+.publications-list {
+  /* Override .page__content a styling for pub links */
+}
+
 .pub-entry {
-  display: flex;
-  gap: 1.2em;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  gap: 1em;
   margin-bottom: 1.5em;
   padding-bottom: 1.5em;
   border-bottom: 1px solid #3D3733;
@@ -125,13 +131,23 @@ html[data-theme="light"] .pub-excerpt {
 }
 
 .pub-thumbnail {
-  flex-shrink: 0;
+  flex: 0 0 85px !important;
+  width: 85px !important;
+  max-width: 85px !important;
+  min-width: 85px !important;
+}
+
+.pub-thumbnail a {
+  display: block;
   width: 85px;
 }
 
-.pub-thumbnail img {
-  width: 85px;
-  height: auto;
+.pub-thumbnail img,
+.page__content .pub-thumbnail img {
+  display: block !important;
+  width: 85px !important;
+  max-width: 85px !important;
+  height: auto !important;
   border-radius: 3px;
   border: 1px solid #3D3733;
   transition: opacity 0.2s ease;
