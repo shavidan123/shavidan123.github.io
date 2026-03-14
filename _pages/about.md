@@ -7,9 +7,15 @@ redirect_from:
   - /about.html
 ---
 
-Hey, I'm Avi! I'm currently taking a gap semester from my MSCS in Computer Science at New York University to participate in the MATS 9.0 Research Fellowship, where I'm advised by Shi Feng and Jacob Pfau. I recently graduated from UC Berkeley where I double majored in Computer Science and Applied Mathematics. I'm broadly interested in security/robustness for deep learning models as well as improving OOD generalization. Right now, I'm particularly focused on red teaming, building defenses for deployed AI systems, and AI oversight/control.
+I do research in AI safety and security.
 
-At NYU, I'm advised by Rico Angell and He He, working on jailbreak defenses and model interpretability. I'm also extremely fortunate for the opportunity during my undergraduate studies to be mentored by [Chawin Sitawarin](https://chawins.github.io/) and [Julien Piet](https://people.eecs.berkeley.edu/~julien.piet/) at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
+I'm currently taking a gap semester from my MS in Computer Science at New York University to participate in the MATS 9.0 Research Fellowship, where I'm advised by [Shi Feng](https://shi-feng.super.site/) and [Jacob Pfau](https://jacobpfau.com/). I recently graduated from UC Berkeley where I double majored in Computer Science and Applied Mathematics. 
+
+I'm broadly interested in security/robustness for deep learning models as well as improving out of distribution generalization. Right now, I'm particularly focused on LLM's ability to encode and interpret subliminal information.
+
+At NYU, I'm advised by Rico Angell and He He, working on jailbreak defenses and model interpretability. I'm also extremely fortunate for the opportunity during my undergraduate studies to be mentored by [Chawin Sitawarin](https://chawins.github.io/) at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
+
+In my free time, I enjoy reading, writing, and photography.
 
 # Publications
 

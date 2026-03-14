@@ -20,7 +20,10 @@
     @include container;
     @include clearfix;
     position: relative;
-    padding: 1em 1em 1em;
+    height: $masthead-height;
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
     font-family: $sans-serif-narrow;
 
     @include breakpoint($x-large) {
