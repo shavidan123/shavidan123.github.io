@@ -25,6 +25,7 @@
    ============================================= */
 
 /* Light theme overrides */
+html[data-theme="light"],
 html[data-theme="light"] body {
   background-color: #FAF9F6;
   color: #2C2520;
