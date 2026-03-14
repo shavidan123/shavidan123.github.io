@@ -20,7 +20,7 @@
     @include container;
     @include clearfix;
     position: relative;
-    height: 100%;
+    height: $masthead-height;
     display: flex;
     align-items: center;
     padding: 0 1em;

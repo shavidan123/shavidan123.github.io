@@ -125,15 +125,16 @@ html[data-theme="light"] .pub-excerpt {
 
 .pub-thumbnail {
   flex-shrink: 0;
-  width: 120px;
+  width: 85px;
 }
 
 .pub-thumbnail img {
-  width: 100%;
+  width: 85px;
   height: auto;
-  border-radius: 4px;
+  border-radius: 3px;
   border: 1px solid #3D3733;
   transition: opacity 0.2s ease;
+  object-fit: contain;
 }
 
 .pub-thumbnail img:hover {

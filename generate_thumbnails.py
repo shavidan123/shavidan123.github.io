@@ -18,7 +18,7 @@ PUBLICATIONS_DIR = os.path.join(SITE_DIR, "_publications")
 IMAGES_DIR = os.path.join(SITE_DIR, "images")
 FILES_DIR = os.path.join(SITE_DIR, "files")
 
-DPI = 150  # resolution for thumbnails
+DPI = 72  # low-res thumbnails, displayed at ~85px wide
 
 
 def parse_frontmatter(filepath):
