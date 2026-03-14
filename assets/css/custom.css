@@ -98,8 +98,86 @@ html[data-theme="light"] blockquote {
   border-left-color: #E2A84B;
 }
 
-html[data-theme="light"] .pub-entry span {
+html[data-theme="light"] .pub-venue,
+html[data-theme="light"] .pub-authors {
   color: #7A7067 !important;
+}
+
+html[data-theme="light"] .pub-excerpt {
+  color: #5A5047 !important;
+}
+
+/* =============================================
+   Publication entries with thumbnails
+   ============================================= */
+
+.pub-entry {
+  display: flex;
+  gap: 1.2em;
+  margin-bottom: 1.5em;
+  padding-bottom: 1.5em;
+  border-bottom: 1px solid #3D3733;
+}
+
+.pub-entry:last-child {
+  border-bottom: none;
+}
+
+.pub-thumbnail {
+  flex-shrink: 0;
+  width: 120px;
+}
+
+.pub-thumbnail img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #3D3733;
+  transition: opacity 0.2s ease;
+}
+
+.pub-thumbnail img:hover {
+  opacity: 0.85;
+}
+
+.pub-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.pub-authors {
+  font-size: 0.85em;
+  color: #9AA0A6;
+}
+
+.pub-venue {
+  font-size: 0.85em;
+  color: #9AA0A6;
+}
+
+.pub-excerpt {
+  font-size: 0.85em;
+  color: #B0AAA2;
+  margin-top: 0.3em;
+}
+
+html[data-theme="light"] .pub-entry {
+  border-bottom-color: #E8E3DD;
+}
+
+html[data-theme="light"] .pub-thumbnail img {
+  border-color: #E8E3DD;
+}
+
+/* Stack vertically on small screens */
+@media screen and (max-width: 500px) {
+  .pub-entry {
+    flex-direction: column;
+  }
+  .pub-thumbnail {
+    width: 100%;
+    max-width: 200px;
+  }
 }
 
 html[data-theme="light"] p > code,

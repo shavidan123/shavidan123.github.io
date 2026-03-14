@@ -23,10 +23,20 @@ In my free time, I enjoy reading, writing, and photography.
 
 <div class="publications-list">
 {% for post in site.publications reversed %}
-  <div class="pub-entry" style="margin-bottom: 1em;">
-    <strong><a href="{{ post.paperurl }}" target="_blank">{{ post.title }}</a></strong><br/>
-    <span style="font-size: 0.85em; color: #9AA0A6;">{{ post.venue }}, {{ post.date | date: "%Y" }}</span>
-    {% if post.excerpt %}<br/><span style="font-size: 0.85em;">{{ post.excerpt }}</span>{% endif %}
+  <div class="pub-entry">
+    {% if post.thumbnail %}
+    <div class="pub-thumbnail">
+      <a href="{{ post.paperurl }}" target="_blank">
+        <img src="{{ base_path }}/images/{{ post.thumbnail }}" alt="{{ post.title }}">
+      </a>
+    </div>
+    {% endif %}
+    <div class="pub-details">
+      <strong><a href="{{ post.paperurl }}" target="_blank">{{ post.title }}</a></strong><br/>
+      {% if post.authors %}<span class="pub-authors">{{ post.authors }}</span><br/>{% endif %}
+      <span class="pub-venue">{{ post.venue }}, {{ post.date | date: "%Y" }}</span>
+      {% if post.excerpt %}<br/><span class="pub-excerpt">{{ post.excerpt }}</span>{% endif %}
+    </div>
   </div>
 {% endfor %}
 </div>
