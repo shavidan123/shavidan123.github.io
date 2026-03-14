@@ -18,7 +18,7 @@ PUBLICATIONS_DIR = os.path.join(SITE_DIR, "_publications")
 IMAGES_DIR = os.path.join(SITE_DIR, "images")
 FILES_DIR = os.path.join(SITE_DIR, "files")
 
-DPI = 72  # low-res thumbnails, displayed at ~85px wide
+THUMB_WIDTH = 170  # output image width in pixels (2x display size for retina)
 
 
 def parse_frontmatter(filepath):
@@ -59,14 +59,19 @@ def resolve_pdf_path(paperurl):
 
 
 def generate_thumbnail(pdf_path, output_path):
-    """Render first page of a PDF to a PNG thumbnail."""
+    """Render first page of a PDF, resized to a small thumbnail."""
     doc = fitz.open(pdf_path)
     page = doc[0]
-    mat = fitz.Matrix(DPI / 72, DPI / 72)
+
+    # Determine scale factor to hit target width
+    page_width = page.rect.width  # in points (72 per inch)
+    scale = THUMB_WIDTH / page_width
+
+    mat = fitz.Matrix(scale, scale)
     pix = page.get_pixmap(matrix=mat)
     pix.save(output_path)
     doc.close()
-    print(f"  -> {output_path}")
+    print(f"  -> {output_path} ({pix.width}x{pix.height}px)")
 
 
 def main():

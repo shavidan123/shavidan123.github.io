@@ -1,6 +1,7 @@
 ---
 permalink: /
-title: "About me"
+title: "Avidan Shah"
+hide_title: true
 author_profile: true
 redirect_from:
   - /about/
