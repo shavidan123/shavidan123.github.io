@@ -4,15 +4,17 @@
   text-align: center;
 }
 
-.photo-caption {
+.photo-caption,
+.page__content .photo-caption {
   font-size: 0.85em;
-  color: #9AA0A6;
+  color: #E2A84B;
   margin-top: 0.4em;
   font-style: italic;
+  text-align: center;
 }
 
 html[data-theme="light"] .photo-caption {
-  color: #7A7067;
+  color: #B8860B;
 }
 
 .random-photo-container img {
