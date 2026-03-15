@@ -18,64 +18,15 @@ At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](htt
 
 In my free time, I enjoy reading and writing fantasy, as well as weightlifting.
 
-I'm also a fan of landscape photography. I currently take photos on my Canon EOS R50. Here's one of my favorites.
+I'm also a fan of landscape photography. Here's a randomly sampled photo from my collection:
 
 <div class="random-photo-container">
   <img id="random-photo" src="" alt="Photography by Avidan Shah" style="display:none;">
   <p id="random-photo-caption" class="photo-caption" style="display:none;"></p>
 </div>
 
-<script>
-(function() {
-  // Add your photos here: [filename, caption]
-  var photos = [
-    // ["example.jpg", "Sunset at Big Sur, CA"],
-    // ["another.jpg", "Morning fog in the Sierras"],
-    ["IMG_0103.JPG", "San Francisco, CA"],
-    ["IMG_0332.jpg", "Huka Falls, Taupo, New Zealand"],
-    ["IMG_0390.JPG", "Andes Mountains, Peru"],
-    ["IMG_0440.jpg", "Lake Tekapo, New Zealand"],
-    ["IMG_0490.jpg", "Tasman Glacier, New Zealand"],
-    ["IMG_0809.JPG", "Milford Sound, New Zealand"],
-    ["IMG_0837.JPG", "Fiordland National Park, New Zealand"],
-    ["IMG_0945.jpg", "Sydney, Australia"],
-    ["IMG_1160.JPG", "Tokyo Tower, Tokyo, Japan"],
-    ["IMG_1369.JPG", "Senso-ji Temple, Tokyo, Japan"],
-    ["IMG_1375.JPG", "Senso-ji Temple, Tokyo, Japan"],
-    ["IMG_1539.JPG", "Kyoto, Japan"],
-    ["IMG_4325.JPG", "Venice, Italy"],
-    ["IMG_4952.JPG", "Paris, France"],
-    ["IMG_5802.JPG", "Baku, Azerbaijan"],
-    ["IMG_5943.JPG", "Baku, Azerbaijan"],
-    ["IMG_6077.JPG", "Khinaliq, Azerbaijan"],
-    ["IMG_6081.JPG", "Khinaliq, Azerbaijan"],
-    ["IMG_6117.JPG", "New York City, NY"],
-    ["IMG_6142.JPG", "New York City, NY"],
-    ["IMG_6144.JPG", "New York City, NY"],
-    ["IMG_6450.JPG", "Cairo, Egypt"],
-    ["IMG_6555.JPG", "Giza, Egypt"],
-    ["IMG_6611.jpg", "San Francisco, CA"],
-    ["IMG_6632.jpg", "San Francisco, CA"],
-    ["IMG_6645.jpg", "San Francisco, CA"],
-    ["IMG_6660.jpg", "San Francisco, CA"]
-
-
-
-
-  ];
-  if (photos.length > 0) {
-    var pick = photos[Math.floor(Math.random() * photos.length)];
-    var img = document.getElementById('random-photo');
-    var caption = document.getElementById('random-photo-caption');
-    img.src = '/images/photography/' + pick[0];
-    img.style.display = 'block';
-    if (pick[1]) {
-      caption.textContent = pick[1];
-      caption.style.display = 'block';
-    }
-  }
-})();
-</script>
+<script>window.__photos=[["IMG_0103.JPG","San Francisco, CA"],["IMG_0332.jpg","Huka Falls, Taupo, New Zealand"],["IMG_0390.JPG","Andes Mountains, Peru"],["IMG_0440.jpg","Lake Tekapo, New Zealand"],["IMG_0490.jpg","Tasman Glacier, New Zealand"],["IMG_0809.JPG","Milford Sound, New Zealand"],["IMG_0837.JPG","Fiordland National Park, New Zealand"],["IMG_0945.jpg","Sydney, Australia"],["IMG_1160.JPG","Tokyo Tower, Tokyo, Japan"],["IMG_1369.JPG","Senso-ji Temple, Tokyo, Japan"],["IMG_1375.JPG","Senso-ji Temple, Tokyo, Japan"],["IMG_1539.JPG","Kyoto, Japan"],["IMG_4325.JPG","Venice, Italy"],["IMG_4952.JPG","Paris, France"],["IMG_5802.JPG","Baku, Azerbaijan"],["IMG_5943.JPG","Baku, Azerbaijan"],["IMG_6077.JPG","Khinaliq, Azerbaijan"],["IMG_6081.JPG","Khinaliq, Azerbaijan"],["IMG_6117.JPG","New York City, NY"],["IMG_6142.JPG","New York City, NY"],["IMG_6144.JPG","New York City, NY"],["IMG_6450.JPG","Cairo, Egypt"],["IMG_6555.JPG","Giza, Egypt"],["IMG_6611.jpg","San Francisco, CA"],["IMG_6632.jpg","San Francisco, CA"],["IMG_6645.jpg","San Francisco, CA"],["IMG_6660.jpg","San Francisco, CA"]];</script>
+<script src="/assets/js/random-photo.js"></script>
 
 # Publications
 
