@@ -10,11 +10,11 @@ redirect_from:
 
 I do research on AI safety and security. Reach out to me via email if you'd like to get in contact for discussion or collaboration.
 
-I'm currently taking a gap semester from my MS in Computer Science at New York University to participate in the MATS 9.0 Research Fellowship, where I'm advised by [Shi Feng](https://shi-feng.super.site/) and [Jacob Pfau](https://jacobpfau.com/). I recently graduated from UC Berkeley where I double majored in Computer Science and Applied Mathematics. 
+I'm currently on leave from my MS in Computer Science at New York University to participate in the MATS Research Fellowship, where I'm advised by [Shi Feng](https://shi-feng.super.site/) and [Jacob Pfau](https://jacobpfau.com/). I recently graduated from UC Berkeley where I double majored in Computer Science and Applied Mathematics. 
 
-I'm broadly interested in security/robustness for deep learning models as well as improving out of distribution generalization. Right now, I'm particularly focused on LLM's ability to encode and interpret subliminal information.
+I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization. Right now, I'm particularly focused on the ability of LLMs to encode and interpret subliminal information.
 
-At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](https://hhexiy.github.io/), working on jailbreak defenses and model interpretability. I'm also extremely fortunate for the opportunity during my undergraduate studies to be mentored by [Chawin Sitawarin](https://chawins.github.io/) at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
+At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](https://hhexiy.github.io/), working on jailbreak defenses and model interpretability. I'm also extremely fortunate to be mentored by [Chawin Sitawarin](https://chawins.github.io/) during my undergraduate studies at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
 
 In my free time, I enjoy reading, writing, and photography.
 
