@@ -18,7 +18,7 @@ At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](htt
 
 In my free time, I enjoy reading and writing fantasy, as well as weightlifting.
 
-I'm also a fan of landscape photography. Here's a randomly sampled photo from my collection:
+I'm also a fan of landscape photography. Here's a randomly sampled photo from my portfolio:
 
 <div class="random-photo-container">
   <img id="random-photo" src="" alt="Photography by Avidan Shah" style="display:none;">
