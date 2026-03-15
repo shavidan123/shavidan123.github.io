@@ -8,13 +8,19 @@ redirect_from:
   - /about.html
 ---
 
-**I do research on AI safety and security. Reach out to me via email if you'd like to get in contact for discussion or collaboration. I'm always open to talk about research ideas.**
+<div class="news-box">
+<span class="news-box-title">Recent Updates</span>
+<ul>
+<li>On leave from NYU to participate in the <a href="https://www.matsprogram.org/">MATS Research Fellowship</a>, advised by <a href="https://shi-feng.super.site/">Shi Feng</a> and <a href="https://jacobpfau.com/">Jacob Pfau</a>.</li>
+<li>Paper on poisoning jailbreak detection models accepted to ICLR 2026 AIWILD Workshop.</li>
+</ul>
+</div>
 
-I'm currently on leave from my MS in Computer Science at New York University to participate in the MATS Research Fellowship, where I'm advised by [Shi Feng](https://shi-feng.super.site/) and [Jacob Pfau](https://jacobpfau.com/). I recently graduated from UC Berkeley where I double majored in Computer Science and Applied Mathematics. 
+**I do research on AI safety and security. Reach out to me via email if you'd like to get in contact for discussion or collaboration. I'm always open to talk about research ideas.**
 
 I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization in out of distribution settings. Right now, I'm particularly focused on the ability of LLMs to encode and interpret subliminal information.
 
-At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](https://hhexiy.github.io/), working on jailbreak defenses and model interpretability. I'm also extremely fortunate to be mentored by [Chawin Sitawarin](https://chawins.github.io/) during my undergraduate studies at Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
+At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](https://hhexiy.github.io/), working on jailbreak defenses and model interpretability. I'm also extremely fortunate to be mentored by [Chawin Sitawarin](https://chawins.github.io/) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
 
 In my free time, I enjoy reading and writing fantasy, as well as weightlifting.
 
