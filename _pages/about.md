@@ -8,9 +8,9 @@ redirect_from:
   - /about.html
 ---
 
-<div class="news-box">
-<span class="news-box-title">Recent Updates</span>
-<ul>
+<div style="float:right;width:45%;margin:0 0 1em 1.5em;padding:0.8em 1em;border:1px solid #3D3733;border-radius:4px;background:#231F1C;font-size:0.85em;line-height:1.5;" id="news-box">
+<span style="display:block;font-weight:600;color:#E2A84B;margin-bottom:0.4em;">Recent Updates</span>
+<ul style="margin:0;padding-left:1.2em;">
 <li>On leave from NYU to participate in the <a href="https://www.matsprogram.org/">MATS Research Fellowship</a>, advised by <a href="https://shi-feng.super.site/">Shi Feng</a> and <a href="https://jacobpfau.com/">Jacob Pfau</a>.</li>
 <li>Paper on poisoning jailbreak detection models accepted to ICLR 2026 AIWILD Workshop.</li>
 </ul>
