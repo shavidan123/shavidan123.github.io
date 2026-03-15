@@ -20,22 +20,22 @@ html[data-theme="light"] .photo-caption {
 
 .random-photo-container img,
 .page__content .random-photo-container img {
-  display: inline-block !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   max-width: 100%;
   max-height: 400px;
   width: auto !important;
   height: auto;
   border-radius: 3px;
-  border: 1px solid #4A433D;
-  padding: 6px;
-  background: #2C2724;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: none !important;
+  padding: 0;
+  background: none;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
 html[data-theme="light"] .random-photo-container img {
-  border-color: #D8D2CA;
-  background: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Make tag pills look identical everywhere */
