@@ -1,3 +1,32 @@
+/* Random photography display */
+.random-photo-container {
+  margin: 1.5em 0;
+  text-align: center;
+}
+
+.photo-caption {
+  font-size: 0.85em;
+  color: #9AA0A6;
+  margin-top: 0.4em;
+  font-style: italic;
+}
+
+html[data-theme="light"] .photo-caption {
+  color: #7A7067;
+}
+
+.random-photo-container img {
+  max-width: 100%;
+  max-height: 400px;
+  width: auto !important;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #3D3733;
+}
+
+html[data-theme="light"] .random-photo-container img {
+  border-color: #E8E3DD;
+}
 
 /* Make tag pills look identical everywhere */
 .page__taxonomy-item {
