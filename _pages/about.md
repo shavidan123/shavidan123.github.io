@@ -22,7 +22,7 @@ I'm also a fan of landscape photography. Here's a randomly sampled photo from my
 
 <div class="random-photo-container">
   <img id="random-photo" src="" alt="Photography by Avidan Shah" style="display:none;">
-  <p id="random-photo-caption" class="photo-caption" style="display:none;"></p>
+  <span id="random-photo-caption" class="photo-caption" style="display:none;"></span>
 </div>
 
 <script>window.__photos=[["IMG_0103.JPG","San Francisco, CA"],["IMG_0332.jpg","Huka Falls, Taupo, New Zealand"],["IMG_0390.JPG","Andes Mountains, Peru"],["IMG_0440.jpg","Lake Tekapo, New Zealand"],["IMG_0490.jpg","Tasman Glacier, New Zealand"],["IMG_0809.JPG","Milford Sound, New Zealand"],["IMG_0837.JPG","Fiordland National Park, New Zealand"],["IMG_0945.jpg","Sydney, Australia"],["IMG_1160.JPG","Tokyo Tower, Tokyo, Japan"],["IMG_1369.JPG","Senso-ji Temple, Tokyo, Japan"],["IMG_1375.JPG","Senso-ji Temple, Tokyo, Japan"],["IMG_1539.JPG","Kyoto, Japan"],["IMG_4325.JPG","Venice, Italy"],["IMG_4952.JPG","Paris, France"],["IMG_5802.JPG","Baku, Azerbaijan"],["IMG_5943.JPG","Baku, Azerbaijan"],["IMG_6077.JPG","Khinaliq, Azerbaijan"],["IMG_6081.JPG","Khinaliq, Azerbaijan"],["IMG_6117.JPG","New York City, NY"],["IMG_6142.JPG","New York City, NY"],["IMG_6144.JPG","New York City, NY"],["IMG_6450.JPG","Cairo, Egypt"],["IMG_6555.JPG","Giza, Egypt"],["IMG_6611.jpg","San Francisco, CA"],["IMG_6632.jpg","San Francisco, CA"],["IMG_6645.jpg","San Francisco, CA"],["IMG_6660.jpg","San Francisco, CA"]];</script>

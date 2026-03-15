@@ -6,9 +6,10 @@
 
 .photo-caption,
 .page__content .photo-caption {
+  display: block;
   font-size: 0.85em;
   color: #E2A84B;
-  margin-top: 0.4em;
+  margin-top: 0.6em;
   font-style: italic;
   text-align: center;
 }
@@ -22,12 +23,17 @@ html[data-theme="light"] .photo-caption {
   max-height: 400px;
   width: auto !important;
   height: auto;
-  border-radius: 4px;
-  border: 1px solid #3D3733;
+  border-radius: 3px;
+  border: 1px solid #4A433D;
+  padding: 6px;
+  background: #2C2724;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 html[data-theme="light"] .random-photo-container img {
-  border-color: #E8E3DD;
+  border-color: #D8D2CA;
+  background: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Make tag pills look identical everywhere */
