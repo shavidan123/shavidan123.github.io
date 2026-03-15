@@ -1,7 +1,16 @@
 /* News box - light mode and mobile */
 html[data-theme="light"] #news-box {
-  border-color: #E8E3DD;
-  background: #F5F1EC;
+  border-color: #E8E3DD !important;
+  background: #F5F1EC !important;
+  color: #2C2520 !important;
+}
+
+html[data-theme="light"] #news-box span {
+  color: #B8860B !important;
+}
+
+html[data-theme="light"] #news-box a {
+  color: #B8860B !important;
 }
 
 @media screen and (max-width: 600px) {
