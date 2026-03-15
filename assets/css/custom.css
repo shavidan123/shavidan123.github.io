@@ -18,24 +18,23 @@ html[data-theme="light"] .photo-caption {
   color: #B8860B;
 }
 
-.random-photo-container img,
-.page__content .random-photo-container img {
+img#random-photo {
   display: block !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  max-width: 100%;
-  max-height: 400px;
+  max-width: 90% !important;
+  max-height: 400px !important;
   width: auto !important;
-  height: auto;
-  border-radius: 3px;
+  height: auto !important;
+  border-radius: 3px !important;
   border: none !important;
-  padding: 0;
-  background: none;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35) !important;
 }
 
-html[data-theme="light"] .random-photo-container img {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+html[data-theme="light"] img#random-photo {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Make tag pills look identical everywhere */
