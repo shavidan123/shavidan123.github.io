@@ -6,6 +6,20 @@
   var iconLight = document.getElementById('theme-icon-light');
   var iconDark = document.getElementById('theme-icon-dark');
 
+  function updateNewsBox(theme) {
+    var box = document.getElementById('news-box');
+    if (!box) return;
+    if (theme === 'light') {
+      box.style.borderColor = '#E8E3DD';
+      box.style.background = '#F5F1EC';
+      box.style.color = '#2C2520';
+    } else {
+      box.style.borderColor = '#3D3733';
+      box.style.background = '#231F1C';
+      box.style.color = '';
+    }
+  }
+
   function updateIcons(theme) {
     if (theme === 'dark') {
       iconLight.style.display = 'inline';
@@ -16,8 +30,9 @@
     }
   }
 
-  var currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   updateIcons(currentTheme);
+  updateNewsBox(currentTheme);
 
   toggle.addEventListener('click', function() {
     var theme = document.documentElement.getAttribute('data-theme');
@@ -25,6 +40,7 @@
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     updateIcons(newTheme);
+    updateNewsBox(newTheme);
   });
 })();
 </script>
