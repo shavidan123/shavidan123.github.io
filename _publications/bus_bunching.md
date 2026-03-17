@@ -3,10 +3,10 @@ title: "Efficient Mitigation of Bus Bunching through Setter-Based Curriculum Lea
 collection: publications
 permalink: /publication/2023-12-13-Efficient-Mitigation-Bus-Bunching
 excerpt: 'This paper serves as the final project for CS285, and was not submitted to any conference for review'
-authors: 'Avidan Shah, Danny Tran, Yuhan Tang'
+authors: 'Shah, A., Tran, D., & Tang, Y.'
 venue: 'arxiv'
 date: 2023-12-13
 thumbnail: 'bus_bunching_thumbnail.png'
 paperurl: 'http://shavidan123.github.io/files/CS285_Bus_Bunching_Final_Project.pdf'
-citation: 'Avidan Shah, Danny Tran, Yuhan Tang (2023). &quot;Efficient Mitigation of Bus Bunching through Setter-Based Curriculum Learning.&quot;'
+citation: 'Shah, A., Tran, D., Tang, Y. (2023). &quot;Efficient Mitigation of Bus Bunching through Setter-Based Curriculum Learning.&quot;'
 ---
