@@ -2,7 +2,7 @@
 title: "Efficient Mitigation of Bus Bunching through Setter-Based Curriculum Learning"
 collection: publications
 permalink: /publication/2023-12-13-Efficient-Mitigation-Bus-Bunching
-excerpt: 'Explores deep learning based curriculum learning for RL training'
+excerpt: 'Explores efficient solutions for transportation optimization via model based curriculum learning'
 authors: 'Shah, A., Tran, D., & Tang, Y.'
 venue: 'arxiv'
 date: 2023-12-13
