@@ -18,13 +18,11 @@ redirect_from:
 
 **I do research on AI safety and security. Reach out to me via email if you'd like to get in contact for discussion or collaboration. I'm always open to talk about research ideas.**
 
-I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization in out of distribution settings. Right now, I'm particularly focused on the ability of LLMs to encode and interpret subliminal information.
+I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization in out of distribution settings. Right now, I'm particularly focused on the ability of LLMs to encode and interpret information that is subliminal to humans.
 
-At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](https://hhexiy.github.io/), working on jailbreak defenses and model interpretability. I'm also extremely fortunate to be mentored by [Chawin Sitawarin](https://chawins.github.io/) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
+At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) and [He He](https://hhexiy.github.io/), working on jailbreak defenses and model interpretability. I'm also extremely fortunate for the mentorship of [Chawin Sitawarin](https://chawins.github.io/) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
 
-In my free time, I enjoy reading and writing fantasy, as well as weightlifting.
-
-I'm a huge fan of landscape photography. Here's a randomly sampled photo from my portfolio, most of which were taken on my Canon EOS R50:
+I'm a fan of landscape photography. Here's a randomly sampled photo from my portfolio, most of which were taken on my Canon EOS R50:
 
 <div style="margin:1.5em 0;text-align:center;">
   <img id="random-photo" src="" alt="Photography by Avidan Shah" style="display:none;max-width:90%;max-height:400px;width:auto;height:auto;margin:0 auto;border:none;padding:0;background:none;border-radius:3px;box-shadow:0 2px 12px rgba(0,0,0,0.35);">
