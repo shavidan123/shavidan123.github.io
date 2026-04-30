@@ -13,7 +13,7 @@ redirect_from:
 <ul style="margin:0;padding-left:1.2em;">
 <li>Started working for OpenAI (Contract) on Red Teaming</li>
 <li>On leave from NYU to participate in the <a href="https://www.matsprogram.org/">MATS Research Fellowship</a>, advised by <a href="https://shi-feng.super.site/">Shi Feng</a> and <a href="https://jacobpfau.com/">Jacob Pfau</a>.</li>
-<li>Paper on poisoning jailbreak detection models accepted to ICLR 2026 AIWILD Workshop.</li>
+<li>Paper on poisoning jailbreak detection models accepted as Spotlight to ICML 2026 (Top 2.2% of accepted papers).</li>
 </ul>
 </div>
 
