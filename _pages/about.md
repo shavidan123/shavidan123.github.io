@@ -49,7 +49,7 @@ I'm a fan of landscape photography. Here's a randomly sampled photo from my port
     {% endif %}
     <div class="pub-details">
       <strong><a href="{{ post.paperurl }}" target="_blank">{{ post.title }}</a></strong><br/>
-      {% if post.authors %}<span class="pub-authors">{{ post.authors }}</span><br/>{% endif %}
+      {% if post.authors %}<span class="pub-authors">{{ post.authors | replace: "Shah, A.", "<strong>Shah, A.</strong>" | replace: "</strong>*", "*</strong>" }}</span><br/>{% endif %}
       <span class="pub-venue">{{ post.venue }}, {{ post.date | date: "%Y" }}</span>
       {% if post.excerpt %}<br/><span class="pub-excerpt">{{ post.excerpt }}</span>{% endif %}
     </div>

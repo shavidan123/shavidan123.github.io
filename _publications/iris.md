@@ -4,7 +4,7 @@ collection: publications
 permalink: /publication/2025-02-17-IRIS
 excerpt: 'A novel algorithm leveraging model refusal representation for automated jailbreaking suffix generation on LLMs'
 authors: 'Huang, D., Shah, A., Araujo, A., Wagner, D., & Sitawarin, C.'
-venue: 'NAACL 2025 (abridged version accepted NeurIPS SafeGenAI 2024)'
+venue: 'NAACL'
 date: 2025-02-17
 thumbnail: 'iris_thumbnail.png'
 paperurl: 'https://shavidan123.github.io/files/NAACL__Stronger_Universal_and_Transferable_Attacks_by_Refusal_Suppression.pdf'
