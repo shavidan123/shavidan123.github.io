@@ -19,7 +19,7 @@ redirect_from:
 
 **I do research on AI safety and security. Reach out to me via email if you'd like to get in contact for discussion or collaboration. I'm always open to talk about research ideas.**
 
-I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization in out of distribution settings. I've recently been researching the ability of LLMs to encode and interpret information that is subliminal to humans. Currently, I'm focused on defending against data poisoning threats, which I believe pose an increasingly growing risk as the adoption of AI increases exponentially.
+I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization in out of distribution settings. I've recently been researching the ability of LLMs to encode and interpret information that is subliminal to humans. Currently, I'm focused on defending against data poisoning threats, which I believe pose a critical risk as the adoption of AI increases exponentially.
 
 I'm currently advised by [Shi Feng](https://shi-feng.super.site/) under the MATS research fellowship. At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) in [He He's research group](https://hhexiy.github.io/). I'm also extremely fortunate for the mentorship of [Chawin Sitawarin](https://chawins.github.io/) (Google DeepMind) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
 
