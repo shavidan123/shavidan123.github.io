@@ -3,7 +3,7 @@ title: "Efficient Mitigation of Bus Bunching through Setter-Based Curriculum Lea
 collection: publications
 permalink: /publication/2023-12-13-Efficient-Mitigation-Bus-Bunching
 excerpt: 'Explores efficient solutions for transportation optimization via model based curriculum learning'
-authors: 'Shah, A., Tran, D., & Tang, Y.'
+authors: 'Avidan Shah, Danny Tran, & Yuhan Tang'
 venue: 'arxiv'
 date: 2023-12-13
 thumbnail: 'bus_bunching_thumbnail.png'

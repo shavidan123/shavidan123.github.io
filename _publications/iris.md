@@ -3,7 +3,7 @@ title: "Stronger Universal and Transfer Attacks by Suppressing Refusals"
 collection: publications
 permalink: /publication/2025-02-17-IRIS
 excerpt: 'A novel algorithm leveraging model refusal representation for automated jailbreaking suffix generation on LLMs'
-authors: 'Huang, D., Shah, A., Araujo, A., Wagner, D., & Sitawarin, C.'
+authors: 'David Huang, Avidan Shah, Alexandre Araujo, David Wagner, & Chawin Sitawarin'
 venue: 'NAACL'
 date: 2025-02-17
 thumbnail: 'iris_thumbnail.png'

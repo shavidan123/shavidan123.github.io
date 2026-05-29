@@ -3,7 +3,7 @@ title: "Rapid Poison: Practical Poisoning Attacks Against the Rapid Response Fra
 collection: publications
 permalink: /publication/2026-04-30-rapid-poison
 excerpt: 'Practical prompt-injection-based poisoning attacks against the Rapid Response jailbreak detection framework, including a novel Omission Attack that flips ~90% of target labels with only 1% poisoning rate.'
-authors: 'Huang, D.*, Chang, J.*, Shah, A.*, Mittal, P., & Sitawarin, C.'
+authors: 'David Huang*, Jaewon Chang*, Avidan Shah*, Prateek Mittal, & Chawin Sitawarin'
 venue: 'ICML (Spotlight)'
 date: 2026-04-30
 thumbnail: 'rapid_poison_thumbnail.png'
