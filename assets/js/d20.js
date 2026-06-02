@@ -3,11 +3,15 @@
   var HIST_HEIGHT_PX = 28;
   var PIXEL_SIZE = 4;
   var FACES = 20;
-  var BOUNCE_MS  = 2700;  // free physics
-  var SETTLE_MS  = 400;   // upright animation in place
-  var EFFECT_MS  = 800;   // result effect (varies by crit/normal/fumble)
-  var RETURN_MS  = 700;   // pulled home to the corner
-  var LAND_MS    = 250;   // squish on arrival
+  var BOUNCE_MS = 1400;          // pure physics duration before pull engages
+  var EFFECT_MS = 1100;          // result glow at corner
+  var MAX_TOTAL_MS = 7000;       // safety timeout
+  var SPEED_NO_PULL  = 1500;     // px/s — above this: no pull
+  var SPEED_FULL_PULL = 400;     // px/s — at this and below: full pull
+  var PULL_K_MAX = 22;           // peak spring stiffness
+  var PULL_DAMP_MAX = 11;        // peak velocity damping
+  var ARRIVAL_DIST = 22;         // px from corner to count as "home"
+  var ARRIVAL_SPEED = 70;        // px/s to count as "stopped"
 
   var stats = { rolls: 0, nat20s: 0, nat1s: 0, last: 20, history: [] };
 
@@ -233,16 +237,16 @@
 
     // Pre-pick the final result so the flicker can settle on it before landing
     var result = 1 + Math.floor(Math.random() * 20);
-    var commitTimeMs = BOUNCE_MS + SETTLE_MS * 0.7;  // commit ~end of settle
     var lastFlickerTime = 0;
     var numCommitted = false;
+    var currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
 
     var startTime = null;
     var lastTime = null;
     var phase = 'bounce';
-    var settleStart = null;
-    var settleTargetAngle = 0;
-    var returnStart = null;
+    var effectStartTime = 0;
+    var effectStartAngle = 0;
+    var effectTargetAngle = 0;
 
     function step(now) {
       if (startTime === null) { startTime = now; lastTime = now; }
@@ -250,19 +254,16 @@
       lastTime = now;
       var elapsed = now - startTime;
 
-      // Number flicker — fast during bounce, slows during settle, commits before effect.
+      // Number flicker — interval tracks current die speed; commits at start of effect.
       if (!numCommitted) {
-        if (elapsed >= commitTimeMs) {
+        if (phase === 'effect') {
           numEl.textContent = result;
           numCommitted = true;
         } else {
-          var fInterval;
-          if (elapsed < BOUNCE_MS) {
-            fInterval = 55;
-          } else {
-            var st = (elapsed - BOUNCE_MS) / (commitTimeMs - BOUNCE_MS);
-            fInterval = 55 + (420 - 55) * st * st;
-          }
+          var sf = currentSpeed / 1300;
+          if (sf > 1) sf = 1; if (sf < 0) sf = 0;
+          var slow = (1 - sf) * (1 - sf);    // slowdown ramps fast at low speeds
+          var fInterval = 55 + slow * 480;
           if (elapsed - lastFlickerTime >= fInterval) {
             numEl.textContent = 1 + Math.floor(Math.random() * 20);
             lastFlickerTime = elapsed;
@@ -270,115 +271,110 @@
         }
       }
 
-      if (phase === 'bounce') {
-        if (elapsed < BOUNCE_MS) {
-          // Free physics with gravity, drag, and wall bounces
-          vel.y += gravity * dt;
-          vel.x *= (1 - 0.22 * dt);
-          vel.y *= (1 - 0.10 * dt);
-          angVel *= (1 - 0.15 * dt);
-
-          pos.x += vel.x * dt;
-          pos.y += vel.y * dt;
-          angle += angVel * dt;
-
-          if (pos.x < leftWall) {
-            pos.x = leftWall;
-            vel.x = Math.abs(vel.x) * 0.82;
-            angVel = -angVel * 0.92;
-          } else if (pos.x > rightWall) {
-            pos.x = rightWall;
-            vel.x = -Math.abs(vel.x) * 0.82;
-            angVel = -angVel * 0.92;
-          }
-          if (pos.y < ceiling) {
-            pos.y = ceiling;
-            vel.y = Math.abs(vel.y) * 0.78;
-          } else if (pos.y > floor) {
-            pos.y = floor;
-            vel.y = -Math.abs(vel.y) * 0.75;
-            vel.x *= 0.93;
-            angVel *= 0.93;
-          }
-
-          applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
-        } else {
-          phase = 'settle';
-          settleStart = { x: pos.x, y: pos.y, angle: angle };
-          settleTargetAngle = Math.round(angle / 360) * 360;
+      if (phase === 'bounce' || phase === 'return') {
+        // Pull factor scales inversely with speed (after BOUNCE_MS gate).
+        // Above SPEED_NO_PULL: no pull. Below SPEED_FULL_PULL: full pull. Smoothstep between.
+        var pullEase = 0;
+        if (phase === 'return') {
+          var t = (SPEED_NO_PULL - currentSpeed) / (SPEED_NO_PULL - SPEED_FULL_PULL);
+          if (t < 0) t = 0; if (t > 1) t = 1;
+          pullEase = t * t * (3 - 2 * t);
         }
-      }
 
-      if (phase === 'settle') {
-        // Die freezes in place, rotation eases to nearest 360 multiple, brief upright pose.
-        var setT = Math.min((elapsed - BOUNCE_MS) / SETTLE_MS, 1);
-        var setEase = 1 - Math.pow(1 - setT, 2);
-        var sa = settleStart.angle + (settleTargetAngle - settleStart.angle) * setEase;
-        var stretch = Math.sin(setT * Math.PI);
-        var ssx = 1 - 0.12 * stretch;
-        var ssy = 1 + 0.12 * stretch;
-        applyTransform(settleStart.x - restCx, settleStart.y - restCy, sa, ssx, ssy);
-        if (setT >= 1) phase = 'effect';
+        // Gravity fades inversely with pull (otherwise spring rests below the corner)
+        vel.y += gravity * (1 - pullEase) * dt;
+
+        // Air + angular drag (slightly higher decay for more natural slowdown)
+        vel.x *= (1 - 0.32 * dt);
+        vel.y *= (1 - 0.14 * dt);
+        angVel *= (1 - 0.18 * dt);
+
+        // Magnetic pull toward corner — proportional to (1 - speed/SPEED_NO_PULL)
+        if (pullEase > 0) {
+          var k = PULL_K_MAX * pullEase;
+          var damp = PULL_DAMP_MAX * pullEase;
+          vel.x += -k * (pos.x - restCx) * dt;
+          vel.y += -k * (pos.y - restCy) * dt;
+          vel.x *= (1 - damp * dt);
+          vel.y *= (1 - damp * dt);
+          angVel *= (1 - damp * 0.5 * dt);
+        }
+
+        pos.x += vel.x * dt;
+        pos.y += vel.y * dt;
+        angle += angVel * dt;
+
+        // Wall collisions stay active even during return
+        if (pos.x < leftWall) {
+          pos.x = leftWall;
+          vel.x = Math.abs(vel.x) * 0.82;
+          angVel = -angVel * 0.92;
+        } else if (pos.x > rightWall) {
+          pos.x = rightWall;
+          vel.x = -Math.abs(vel.x) * 0.82;
+          angVel = -angVel * 0.92;
+        }
+        if (pos.y < ceiling) {
+          pos.y = ceiling;
+          vel.y = Math.abs(vel.y) * 0.78;
+        } else if (pos.y > floor) {
+          pos.y = floor;
+          vel.y = -Math.abs(vel.y) * 0.75;
+          vel.x *= 0.93;
+          angVel *= 0.93;
+        }
+
+        currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
+        applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
+
+        if (phase === 'bounce' && elapsed >= BOUNCE_MS) {
+          phase = 'return';
+        }
+        if (phase === 'return') {
+          var dx = pos.x - restCx, dy = pos.y - restCy;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if ((dist < ARRIVAL_DIST && currentSpeed < ARRIVAL_SPEED) ||
+              elapsed > MAX_TOTAL_MS - EFFECT_MS) {
+            phase = 'effect';
+            effectStartTime = elapsed;
+            effectStartAngle = angle;
+            effectTargetAngle = Math.round(angle / 360) * 360;
+            stageEl.classList.remove('rolling');
+            stageEl.classList.add('landing');
+          }
+        }
       }
 
       if (phase === 'effect') {
-        var efT = Math.min((elapsed - BOUNCE_MS - SETTLE_MS) / EFFECT_MS, 1);
-        var ea = settleTargetAngle;
-        if (result === 20) {
-          // Crit: gold glow pulse + rise + scale pulse
-          var pulse = Math.max(0, Math.sin(efT * Math.PI * 1.5));
-          var s = 1 + 0.30 * pulse;
-          var dy = -22 * Math.sin(efT * Math.PI);
-          var glow = Math.sin(efT * Math.PI);
-          dieEl.style.filter =
-            'drop-shadow(2px 2px 0 rgba(0,0,0,.4)) ' +
-            'drop-shadow(0 0 ' + (16 * glow).toFixed(1) + 'px #FFD24A) ' +
-            'drop-shadow(0 0 ' + (28 * glow).toFixed(1) + 'px #ff9c1c)';
-          applyTransform(settleStart.x - restCx, settleStart.y + dy - restCy, ea, s, s);
-        } else if (result === 1) {
-          // Fumble: red glow + shake + sink + slight shrink
-          var shake = Math.sin(efT * 32) * Math.max(0, 1 - efT * 1.1) * 7;
-          var s = 1 - 0.08 * Math.sin(efT * Math.PI);
-          var dy = 10 * Math.sin(efT * Math.PI);
-          var glow = Math.sin(efT * Math.PI);
-          dieEl.style.filter =
-            'drop-shadow(2px 2px 0 rgba(0,0,0,.4)) ' +
-            'drop-shadow(0 0 ' + (14 * glow).toFixed(1) + 'px #E74C3C)';
-          applyTransform(settleStart.x + shake - restCx, settleStart.y + dy - restCy, ea, s, s);
-        } else {
-          // Normal: small scale pulse
-          var p = Math.sin(efT * Math.PI);
-          var s = 1 + 0.05 * p;
-          applyTransform(settleStart.x - restCx, settleStart.y - restCy, ea, s, s);
-        }
+        var efT = (elapsed - effectStartTime) / EFFECT_MS;
+        if (efT > 1) efT = 1;
+        var bell = Math.sin(efT * Math.PI);
+
+        // Color from red (1) to gold (20), with extra saturation/size at the extremes
+        var hueT = (result - 1) / 19;
+        var hue = hueT * 50;                       // 0=red, 50=gold-yellow
+        var extremity = Math.abs(result - 10.5) / 9.5;  // 0 mid → 1 extreme
+        var sat = 70 + 28 * extremity;
+        var color = 'hsl(' + hue.toFixed(0) + ',' + sat.toFixed(0) + '%,55%)';
+
+        var maxGlow  = 6 + extremity * 24;         // 6 → 30 px
+        var maxGlow2 = maxGlow * 1.7;
+        var s = 1 + (0.06 + 0.20 * extremity) * bell;
+
+        // Snap angle to upright in the first 25% of the effect
+        var ap = efT * 4; if (ap > 1) ap = 1;
+        var ape = 1 - Math.pow(1 - ap, 2);
+        var fa = effectStartAngle + (effectTargetAngle - effectStartAngle) * ape;
+
+        dieEl.style.filter =
+          'drop-shadow(2px 2px 0 rgba(0,0,0,.4)) ' +
+          'drop-shadow(0 0 ' + (maxGlow * bell).toFixed(1) + 'px ' + color + ') ' +
+          'drop-shadow(0 0 ' + (maxGlow2 * bell).toFixed(1) + 'px ' + color + ')';
+
+        applyTransform(0, 0, fa, s, s);
+
         if (efT >= 1) {
-          phase = 'return';
           dieEl.style.filter = '';
-          returnStart = { x: settleStart.x, y: settleStart.y };
-          stageEl.classList.remove('rolling');
-        }
-      }
-
-      if (phase === 'return') {
-        // Gravity-like pull back to corner via ease-out cubic
-        var rt = Math.min((elapsed - BOUNCE_MS - SETTLE_MS - EFFECT_MS) / RETURN_MS, 1);
-        var rEase = 1 - Math.pow(1 - rt, 3);
-        var fx = returnStart.x + (restCx - returnStart.x) * rEase;
-        var fy = returnStart.y + (restCy - returnStart.y) * rEase;
-        applyTransform(fx - restCx, fy - restCy, settleTargetAngle, 1, 1);
-        if (rt >= 1) {
-          phase = 'land';
-          stageEl.classList.add('landing');
-        }
-      }
-
-      if (phase === 'land') {
-        var lt = Math.min((elapsed - BOUNCE_MS - SETTLE_MS - EFFECT_MS - RETURN_MS) / LAND_MS, 1);
-        var bell = Math.sin(lt * Math.PI);
-        var lsx = 1 + 0.32 * bell;
-        var lsy = 1 - 0.32 * bell;
-        applyTransform(0, 0, settleTargetAngle, lsx, lsy);
-        if (lt >= 1) {
           finalize();
           return;
         }
