@@ -60,7 +60,7 @@
     'Three timelines converge. You are in the funny one.',
     'The dice goblin coughs into his fist. You take the kill anyway.',
     'You did not deserve that outcome. The outcome occurred regardless.',
-    'A bard, far away, lights a cigarette. Causally related, somehow.'
+    'A bard, far away, sharpens her pen. Causally related, somehow.'
   ];
 
   var ENEMIES = [
@@ -69,10 +69,10 @@
     //   1. VEILSTALKER SKIRMISHERS  (primary: AGI)
     // ============================================================
     {
-      id: 'twins', tier: 1, name: 'Veilstalker Skirmishers',
-      flavor: 'Mirrored masks. Mirrored daggers. They mirror everything — including their own mistakes.',
-      hint: 'They mirror your moves. Refuse to move first.',
-      story: 'Lord Praevus\'s opening act. A pair of assassins who share everything, including a tactical handbook. They were once individual people, but, mostly through a billing dispute, the realm now considers them a unit. They mirror each other\'s swings, footwork, and tax filings. Praevus pays them in matched sets. They are stationed at the eastern gate to greet anyone foolish enough to read past page 1.',
+      id: 'twins', tier: 1, name: 'Veilstalker Twins, the Single Entry',
+      flavor: 'Mirrored masks. Mirrored daggers. Praevus indexed them as a single entry. The world has obliged.',
+      hint: 'They mirror because the book says so. Refuse to move first — the entry has no clause for a still hero.',
+      story: 'Praevus\'s bestiary lists them once: "Veilstalker, pair (mirror)." The world treats them as one creature because his book does. They have not been individuals in some time. They cannot un-mirror without un-citing themselves. Defeat them by making a move the entry does not list — the entry is short.',
       hp: 80, ac: 14, atk: 5,
       dmg: { dice: 6, count: 1, bonus: 3 },
       attacks: 2,
@@ -85,12 +85,12 @@
             options: [
               { stat: 'MIGHT', label: 'Charge them',
                 narrate: 'You charge. They sidestep. Your blade lodges in a wooden post that wasn\'t there a second ago. Where did the post come from?',
-                luckyNarrate: 'You charge. The mysterious post LEAPS aside — revealing itself as a small sentient elf who, for reasons beyond mortal understanding, immediately tackles twin #2. The twins are not having a good Tuesday.' },
+                luckyNarrate: 'You charge. The mysterious post LEAPS aside — revealing a THIRD Veilstalker, redacted out of Praevus\'s entry centuries ago, who has been waiting for siblings to come within stabbing range. She has notes. She uses them.' },
               { stat: 'AGI', label: 'Hold absolutely still', right: true,
                 rightNarrate: 'You don\'t move. They wait. They wait LONGER. One of them forgets which of them was supposed to move first. The pause stretches. You read them.' },
               { stat: 'WILL', label: 'Pray for guidance',
                 narrate: 'You pray. The twins pray with you, in unison, perfect harmony. Now they know your god personally. They take notes.',
-                luckyNarrate: 'You pray. Your god, in a stunning customer service moment, picks up on the FIRST ring. Specifically by dropping a small holy boulder. On twin #2. She is briefly very surprised and then less of a twin.' },
+                luckyNarrate: 'You pray. Your god, against precedent, ANSWERS — specifically by dropping a small holy boulder onto twin #2\'s helm. The bestiary has no entry for holy boulders. Praevus is going to be cross.' },
               { stat: 'VIGOR', label: 'Tense for impact',
                 narrate: 'You tense. They see it. They wait for you to flinch. You wait for them. You blink first. They strike.',
                 luckyNarrate: 'You tense so hard you SNEEZE. The sneeze startles one twin into stabbing the OTHER one in the foot. "That was MY foot." "I KNOW."' }
@@ -246,10 +246,10 @@
     //   2. THE HOLLOW REVENANT  (primary: WILL)
     // ============================================================
     {
-      id: 'revenant', tier: 2, name: 'The Hollow Revenant',
-      flavor: 'Steel passes through grief like wind through a hung sheet. Faith does not.',
-      hint: 'Steel does nothing. Conviction does. Bring belief.',
-      story: 'She used to keep the realm\'s only un-annotated library. Lord Praevus rewrote the catalog. Three centuries later, she still cannot find anything — including who she used to be. She drains the conviction out of passing travelers, looking for one whose memory wasn\'t edited. So far, no luck. She has stopped being optimistic. She has stopped being most things. Praevus stations her at the Seventh Haunted Parchment, where she haunts a moor of tax-evading regrets and very lost footnotes.',
+      id: 'revenant', tier: 2, name: 'The Hollow Revenant, the Redacted',
+      flavor: 'A character Praevus cut from Chapter 3. She refused to leave the margin.',
+      hint: 'Steel does nothing — she is not in the manuscript anymore. Conviction does. Bring belief; belief survives editing.',
+      story: 'She used to be in the book. Praevus redacted her — the chapter she lived in is now eight pages shorter. She remained anyway, in the margins, the way water remains where the cup was. She drains conviction from passing travelers, looking for a memory Praevus didn\'t edit. She has not found one. She has stopped expecting to. She has stopped most things.',
       hp: 90, ac: 13, atk: 4,
       dmg: { dice: 8, count: 1, bonus: 4 },
       attacks: 1,
@@ -281,10 +281,10 @@
             options: [
               { stat: 'MIGHT', label: 'Shout your real name back',
                 narrate: 'You shout. The whisper absorbs the shout. Now the whisper sounds more like you.',
-                luckyNarrate: 'You shout. Your shout disturbs a nearby sentient acorn, which falls out of a tree and plinks the Revenant on the forehead. She is briefly, profoundly bewildered.' },
+                luckyNarrate: 'You shout. Your shout dislodges a page-corner from the margin she lives in. The corner — sharp, well-creased — plinks the Revenant on the forehead. She is briefly, profoundly read.' },
               { stat: 'AGI', label: 'Mishear it deliberately',
                 narrate: 'You pretend not to hear. You hear it anyway. The mishearing was wishful.',
-                luckyNarrate: 'You mishear. You hear "BARRY" instead — specifically, the Revenant\'s ex-husband\'s name. She immediately gets sidetracked by 600 years of unresolved feelings. You strike during the rumination.' },
+                luckyNarrate: 'You mishear. You hear an EARLIER NAME — one Praevus tried out for her in a draft and abandoned. She has not heard that draft-name in three hundred years. She gets sidetracked remembering it. You strike during the remembering.' },
               { stat: 'WILL', label: 'Say HER true name', right: true,
                 rightNarrate: 'You speak the name she had before she had hollows. She FLINCHES. The whisper breaks. For the first time in three centuries someone has remembered her correctly.' },
               { stat: 'VIGOR', label: 'Ignore it',
@@ -327,7 +327,7 @@
                 rightNarrate: 'You raise your blade and SAY THE THING — the prayer you mean. The blade catches light it has no business catching. The weeping flinches. Faith hits her where steel could not.' },
               { stat: 'VIGOR', label: 'Hug her',
                 narrate: 'You go in for a hug. She passes through you. You hug the wall behind her. Embarrassing for everyone.',
-                luckyNarrate: 'You hug. She passes through you. Behind her is a startled BARTENDER you didn\'t notice was there. The bartender, in solidarity, throws his bar towel at the Revenant. It lands.' }
+                luckyNarrate: 'You hug. She passes through you. Behind her, a margin-note has become literal — a small handwritten "(see fig. 4)" hangs in the air. The note, in solidarity, slaps the Revenant across the face. Figure 4 is uncharitable.' }
             ]
           }
         ],
@@ -338,7 +338,7 @@
             options: [
               { stat: 'MIGHT', label: 'Hack the tide',
                 narrate: 'You hack water. Water hacks back, somehow.',
-                luckyNarrate: 'You hack the tide. The tide rises to a 3-star review. The review is so scathing the Revenant has to step out to handle it. You hit her during the customer service call.' },
+                luckyNarrate: 'You hack the tide. The tide rises to a footnote — a SCATHING footnote, written in some scribe\'s margin years before. The Revenant has to read it. The reading takes a moment. You hit her during the moment.' },
               { stat: 'AGI', label: 'Outrun the pull',
                 narrate: 'The pull is faster than you. The pull is faster than fast. The pull is the concept of being late for things.',
                 luckyNarrate: 'You outrun the pull. You outrun it so PURELY the pull, embarrassed, goes back to retrieve something it forgot. Halfway through the retrieval it walks into the Revenant. The boss gets pulled by her own move.' },
@@ -381,8 +381,8 @@
         '"...rude... rude with conviction... is the WORST kind..."'
       ],
       bladeKill: [
-        '"...you... attritted... grief itself... how very... administrative... of you..."',
-        '"...death by paperwork... I\'m... unionizing..."',
+        '"...you... attritted... grief itself... the footnotes about me... will be longer than my listing was..."',
+        '"...I will be... cut again... this time properly..."',
         '"...I will be... in the QUEUE... behind myself..."'
       ]
     },
@@ -391,10 +391,10 @@
     //   3. BRASS FORGEWYRM  (primary: MIGHT)
     // ============================================================
     {
-      id: 'forgewyrm', tier: 3, name: 'Brass Forgewyrm',
-      flavor: 'A drake plated in living foundry. Heat shimmers off her hide like the world is trying to look away.',
-      hint: 'Brass turns blades. Brass does not turn ARGUMENTS made with sufficient weight.',
-      story: 'Lord Praevus commissioned her from a discount blacksmith using a coupon. The smith, sensing opportunity, added extra plating, a heart-furnace, and a small license plate. The drake genuinely believes she is the apex predator of structural integrity, which is mostly true — except against one specific kind of mighty argument. Her warranty was voided in transit by her own enthusiasm. She is stationed at the foundry-mile, where she resents both the discount and the coupon.',
+      id: 'forgewyrm', tier: 3, name: 'Brass Forgewyrm, the Bestiary Drake',
+      flavor: 'Praevus\'s monster-manual entry given form. Her plating is the page itself, flexed into matter.',
+      hint: 'Brass turns blades. Brass does not turn arguments louder than her stat block.',
+      story: 'Page 247, item 12 of Praevus\'s bestiary: "Brass Forgewyrm — Apex predator of structural integrity. AC: yes." The entry walked off the page roughly a century ago. She does not know she\'s an entry. She believes she\'s the apex predator because the codex ranks her so, and the codex has never been wrong about itself. Her plating is the page, hardened. Exceed her listed stats and the entry has nothing left to defend.',
       hp: 110, ac: 17, atk: 6,
       dmg: { dice: 12, count: 1, bonus: 5 },
       attacks: 1,
@@ -483,7 +483,7 @@
             options: [
               { stat: 'MIGHT', label: 'Punch the spasm',
                 narrate: 'You punch a seizure. The seizure was bigger than your fist. Always was.',
-                luckyNarrate: 'You punch the spasm. The spasm, offended at the rudeness, PAUSES to file a formal complaint. The drake collapses safely past you during the paperwork.' },
+                luckyNarrate: 'You punch the spasm. The spasm, offended at the rudeness, PAUSES to draft an erratum about it. The drake collapses safely past you during the drafting.' },
               { stat: 'AGI', label: 'Dodge the spasm',
                 narrate: 'You try to dodge a dragon-shaped death rattle. There is no "outside" of a dying dragon.',
                 luckyNarrate: 'You dodge. You dodge so FAR you exit the room entirely. While outside, you notice a load-bearing post. You kick it. The roof falls on the drake. Architectural homicide.' },
@@ -512,23 +512,23 @@
         '"Tell me again, slower, how that was the plan."',
         '"My plating eats blades for breakfast. Today, also fingers."',
         '"This is page three of the dragon-fighting manual. The page is titled \'don\'t.\'"',
-        '"My SCALES have warranty stickers. Yours did not."',
+        '"My hide is GRADED. The codex gave me A+. Yours is C-, generously."',
         '"You brought a SWORD. I brought a FOUNDRY. We are not in the same WEIGHT CLASS."'
       ],
       bossReactRight: [
         '"Ah. SHIT. That was the ONE move I didn\'t prepare for."',
         '"Brass folded. Brass NEVER folds. Brass and I are going to have a TALK."',
-        '"You read the seam. I had that seam UNDER WARRANTY."',
+        '"You exceeded the entry. Praevus is going to be VERY annoyed at the errata."',
         '"...that was, in fact, mighty. I\'ll grant you that much. Briefly."',
         '"My smith is going to be VERY embarrassed when she hears about this."',
-        '"You hit me where I LIVE. I had not even told my INSURANCE I lived there."',
+        '"You hit me where I LIVE — between the lines of my entry."',
         '"The brass — the BRASS — folded. I just need a MOMENT."',
         '"Mighty. Capital M. With the little dragon-claw underline. Earned."'
       ],
       bladeKill: [
         '"You chipped me. To DEATH. With a STICK. I am going to be VERY embarrassed in the afterlife."',
         '"...the brass... the brass HELD... and you JUST KEPT GOING. Disrespectful."',
-        '"Death by perseverance. My LEAST favorite kind. Tied with \'paperwork.\'"'
+        '"Death by attrition. The bestiary will mark me incomplete. Praevus hates incomplete entries."'
       ]
     },
 
@@ -536,10 +536,10 @@
     //   4. RHASA, THE CRIMSON MAW  (primary: VIGOR)
     // ============================================================
     {
-      id: 'rhasa', tier: 4, name: 'Rhasa, the Crimson Maw',
-      flavor: 'A void-beast with a mouth in its mouth. She lunges first, asks rhetorical questions later.',
-      hint: 'Survive the bite. Find the second heart. Bring HP.',
-      story: 'A void-beast subcontracted from a worse void. She has two hearts: one for hating, one for digesting. Lord Praevus pays her in unsourced flesh and the occasional adjective. Crucially, she is FREELANCE — she keeps 67% of her hauls but does not get healthcare. She lairs in the seven hells\' overflow parking, where she resents both the parking situation and the lack of dental. Bring a survivable body, or do not bring a body at all.',
+      id: 'rhasa', tier: 4, name: 'Rhasa, the Devouring Inconsistency',
+      flavor: 'A plot hole that grew teeth. Praevus drafts quickly; she eats what doesn\'t reconcile.',
+      hint: 'Survive her opening — she eats inconsistencies and you are, briefly, one. Then find the seam between her drafts.',
+      story: 'Praevus drafts quickly. He does not always reconcile what he wrote yesterday with what he writes today. The gaps between his drafts — the contradictions — pile up. They get hungry. Rhasa is what hunger looks like when narrative inconsistencies coalesce and grow teeth. She has two hearts because Praevus drafted her twice and never decided which version was canon. Survive the bite. Strike the seam between drafts.',
       hp: 130, ac: 14, atk: 6,
       dmg: { dice: 10, count: 1, bonus: 6 },
       attacks: 1,
@@ -574,7 +574,7 @@
                 luckyNarrate: 'You headbutt your own thoughts. Your thoughts give up and leave the building. The intrusion follows them, confused. Both end up in the kitchen. Rhasa\'s spectral hand is now in a kitchen drawer.' },
               { stat: 'AGI', label: 'Outpace the intrusion',
                 narrate: 'You can\'t outrun something that\'s already inside.',
-                luckyNarrate: 'You outrun the intrusion by running BACKWARDS into your own past. The intrusion is now reading your high school yearbook. The yearbook is so cringe Rhasa briefly disengages.' },
+                luckyNarrate: 'You outrun the intrusion by running BACKWARDS into your un-canonized past — the chapters of you Praevus never bothered to write. The intrusion finds nothing to grip. The intrusion is, briefly, embarrassed. Rhasa disengages.' },
               { stat: 'WILL', label: 'Remember your name SO HARD it pushes her out', right: true,
                 rightNarrate: 'You recite your name. Your full name. Including the embarrassing middle one. The void-mouth recoils — she didn\'t want THAT MUCH of you. You feel her tendril snap back into her like a measuring tape.' },
               { stat: 'VIGOR', label: 'Endure the forgetting',
@@ -682,9 +682,9 @@
     // ============================================================
     {
       id: 'praevus', tier: 5, name: 'Lord Praevus, the Loomed Hand',
-      flavor: 'He has read your character sheet. He has annotated it. He has notes.',
+      flavor: 'The Author. He has read your character sheet. He has annotated it. He has notes.',
       hint: 'He counters MIGHT, AGI, VIGOR, AND WILL. The only stat he hasn\'t accounted for is LUCK.',
-      story: 'Long ago — last Tuesday, in fact — Lord Praevus finished writing his book. This is a problem. The book is EVERYONE. The book has annotations. He has annotated the annotations. His staff has tenure. His sigils have tenure. He holds three concurrent professorships of unmaking. The only way past him is to do something the book did not, technically, account for — and the book has a chapter on every stat. It does NOT have a chapter on LUCK. Bring LUCK. Bring all of it.',
+      story: 'Lord Praevus is the author of THE FINAL EDITION. The book is EVERYONE. He has annotated the annotations. His staff has tenure. His sigils have tenure. He holds three concurrent professorships of unmaking. The only way past him is to do something the book did not, technically, account for — and the book has a chapter on every stat. It does NOT have a chapter on LUCK, because LUCK is the dice, and the dice are the one thing he cannot pre-write. Bring LUCK. Bring all of it.',
       hp: 100, ac: 15, atk: 5,
       dmg: { dice: 8, count: 1, bonus: 5 },
       attacks: 1,
@@ -817,7 +817,7 @@
       ],
       bladeKill: [
         '"You... attritted me. With a SWORD. I had a chapter on this and I did NOT READ IT. My own fault."',
-        '"...death by paperwork-resistant violence. I will be very VERY annoyed in the next life."',
+        '"...death by margin-resistant violence. I will be very VERY annoyed in the next edition."',
         '"Mortal grit. I had a section on this. Section 7. I SKIMMED section 7."'
       ]
     }
@@ -833,13 +833,24 @@
   var REALM_STORY = {
     title: 'The Loomed Hand\'s Gambit',
     body: [
-      'Long ago — last Tuesday, in fact — LORD PRAEVUS, scholar-tyrant of the Annotated Realms, finished writing his book.',
-      'This is a problem. The book is EVERYONE. The book has annotations. The annotations are legally binding.',
-      'He has dispatched four of his most-cited minions across the realm to suppress dissenting plot threads. They are stationed in increasingly inconvenient locations and they all have impeccable footnotes.',
-      'Someone must defeat them, in tier order, before the Loomed Hand himself can be confronted. You volunteered. You did not, technically, read the volunteer form. The volunteer form was on page 47. Page 47 is also a problem.'
+      'LORD PRAEVUS has finished THE FINAL EDITION — a book that, through definition, defines the world. The book is everyone. The book has annotations. The annotations are legally binding.',
+      'He has stationed four guardians across the realm. They are not creatures who happen to work for him. They are not soldiers. They are functions of his authorship — a cliché, a redaction, a bestiary entry, a plot hole — each given the dignity of a body and the inconvenience of teeth.',
+      'Someone must defeat them, in order, before the Author himself can be confronted. You volunteered. You did not, technically, read the volunteer form. The volunteer form was on page 47. Page 47 is not in your favor.'
     ],
     closer: 'The realm\'s last stand begins below. Pick your first fight.'
   };
+
+  // Post-victory revelations — appended to the roster screen as a growing
+  // Chronicle. Each entry sharpens the hero's understanding of what Praevus is
+  // until the final beat reframes him as The Author.
+  var CHRONICLE = {
+    twins: 'The Veilstalkers were ONE entry in Praevus\'s bestiary. You read them as two. The cross-reference has been broken — for the first time in a century, the world admits two people. Praevus is going to need to revise the index.',
+    revenant: 'She was a character Praevus CUT. Chapter 3 used to have her. He redacted her; she remained anyway. You did not save her — but you READ her, briefly, and she remembered being read. The margins keep score now.',
+    forgewyrm: 'She was an entry — page 247, item 12. You exceeded her stat block; the entry no longer fits her. Praevus\'s bestiary is one page lighter tonight. He will have to write a replacement. He hates having to write a replacement.',
+    rhasa: 'Rhasa was not a beast. She was Praevus\'s PLOT HOLE — the gap between two drafts that grew teeth. You did not slay her so much as patch the manuscript. The realm makes slightly more sense now. Slightly.',
+    praevus: 'Lord Praevus is dead. The Final Edition is now everyone else\'s to write. The world un-annotates by inches. A single page, somewhere, reads: "and they lived." It is, for once, unfootnoted.'
+  };
+  var CHRONICLE_CLOSER = 'The realm has been un-written from. Choose another fight — the dead don\'t stay dead in a book whose author is gone.';
 
   // Tier-unlock: a boss is unlocked when every lower-tier boss is defeated.
   function isUnlocked(enemy) {
@@ -866,20 +877,20 @@
     '[the dice goblin watches, taking notes]',
     '[the GM exhales behind the screen]',
     '[the d20 sighs audibly]',
-    '[a passing scribe writes "lol" in the margin]',
+    '[a copyeditor, somewhere in the margin, makes a tutting sound]',
     '[somewhere a character sheet sheds a single tear]',
     '[the universe consults the rulebook. the rulebook does not cover this.]',
-    '[Donut, your AI companion, would not approve of this decision]',
-    '[the System awards 0 XP and a single judgmental ping]',
+    '[a footnote, three pages back, raises a polite hand and is ignored]',
+    '[the paragraph break holds its breath]',
     '[Achievement progress: "Things I Have Tried" — incremented]',
     '[the Game Master makes a face. the face is well-rehearsed.]',
     '[the dice are conferring. they have NOT reached consensus.]',
-    '[somewhere in another timeline, the right choice is being made]',
+    '[somewhere in another draft, the right choice is being made]',
     '[a hidden modifier rolls behind the screen. it is not in your favor.]',
     '[the bard sharpens their pen and waits, hopefully]',
-    '[the System Message reads: "are you sure?" you click yes anyway]',
+    '[the page number, watching, increments nervously]',
     '[the rulebook flips to a page that says "well, technically..."]',
-    '[a passing god notes this for later. specifically: for a roast.]'
+    '[a citation, far away, fails to load]'
   ];
 
   var META_WIN = [
@@ -887,12 +898,12 @@
     '[the GM grins. the boss music gets the special outro.]',
     '[the universe stamps your sheet with VINDICATED in small letters.]',
     '[Achievement Unlocked: "Read The Room (literally)"]',
-    '[the System awards XP. then more XP. then a thumbs-up emoji.]',
+    '[an erratum is being noted in someone\'s book. it is not yours.]',
     '[somewhere, a bard is finally getting their material]',
     '[the dice bow. they had bets riding on you.]',
     '[the GM puts the boss music away. they will not need it.]',
-    '[Donut, your AI companion, audibly cheers. it is concerning.]',
-    '[the System messages: "well, OKAY then." it is impressed.]',
+    '[the manuscript is being amended. you are the amendment.]',
+    '[the index is being revised in your favor — small kindness, large meaning]',
     '[a fragment of the rulebook tears itself out and applauds.]',
     '[the dice are passing a flask around. you may have invented happiness.]'
   ];
@@ -916,7 +927,7 @@
   ];
 
   var ATTACK_LINES = [
-    'You swing for the fences. Chip damage incoming.',
+    'You swing honest. The boss feels the page-edge.',
     'You commit to the swing. Your blade tastes the air.',
     'Steel meets boss. The boss\'s structural integrity files a small complaint.',
     'You go for a regular old hit. Sometimes regular works. Sometimes.',
@@ -1164,12 +1175,6 @@
     + '.arena-root{min-height:calc(100vh - 80px);'
     + 'display:flex;flex-direction:column;align-items:center;'
     + 'padding:32px 16px 56px;box-sizing:border-box;image-rendering:pixelated}'
-    + '.arena-back{font-size:10px;letter-spacing:1.5px;text-transform:lowercase;'
-    + 'opacity:.6;margin-bottom:14px;align-self:flex-start;width:100%;'
-    + 'max-width:1040px;padding:0 4px}'
-    + '.arena-back a{color:#C9966A;text-decoration:none;'
-    + 'border-bottom:1px dotted rgba(201,150,106,.4);padding-bottom:1px}'
-    + '.arena-back a:hover{color:#E2A84B;border-bottom-color:#E2A84B}'
     + '.arena-title{font-size:14px;letter-spacing:6px;text-transform:uppercase;'
     + 'color:#E2A84B;opacity:.85;margin:0 0 6px;text-align:center;font-weight:700}'
     + '.arena-sub{font-size:10px;letter-spacing:2.5px;opacity:.45;'
@@ -1189,6 +1194,22 @@
     + 'margin:0 0 10px;font-style:italic;opacity:.9}'
     + '.realm-quest-closer{font-size:11px;letter-spacing:1.5px;color:#C9966A;'
     + 'margin-top:12px;font-weight:700;text-transform:lowercase}'
+
+    // Chronicle (grows as bosses fall)
+    + '.chronicle{background:#1f1b18;border:1px solid #3D3733;border-left:3px solid #7ABC78;'
+    + 'border-radius:3px;padding:16px 22px;margin:0 0 22px;'
+    + 'box-shadow:0 2px 10px rgba(0,0,0,.2)}'
+    + '.chronicle-mark{font-size:9px;letter-spacing:3px;color:#7ABC78;'
+    + 'text-transform:uppercase;font-weight:700;margin-bottom:12px;opacity:.85}'
+    + '.chronicle-entry{margin-bottom:14px}'
+    + '.chronicle-entry:last-child{margin-bottom:0}'
+    + '.chronicle-tier{font-size:9px;letter-spacing:2.5px;color:#E2A84B;'
+    + 'text-transform:uppercase;font-weight:700;margin-bottom:4px;opacity:.8}'
+    + '.chronicle-entry p{font-size:11px;line-height:1.65;color:#E8D6B4;'
+    + 'margin:0;font-style:italic;opacity:.85}'
+    + '.chronicle-closer{font-size:11px;line-height:1.6;color:#FFD24A;'
+    + 'margin-top:14px;padding-top:12px;border-top:1px dashed #3D3733;'
+    + 'font-style:italic;letter-spacing:.5px}'
 
     // Roster
     + '.roster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}'
@@ -1478,6 +1499,28 @@
       '<div class="realm-quest-body">' + bodyHtml + '</div>' +
       '<div class="realm-quest-closer">' + REALM_STORY.closer + '</div>';
     el.appendChild(quest);
+
+    // Chronicle: post-victory revelations, growing in tier order
+    var defeatedInTierOrder = ENEMIES
+      .filter(function (e) { return state.defeated[e.id] && CHRONICLE[e.id]; });
+    if (defeatedInTierOrder.length > 0) {
+      var chronicle = document.createElement('div');
+      chronicle.className = 'chronicle';
+      var entries = defeatedInTierOrder.map(function (e) {
+        return '<div class="chronicle-entry">' +
+          '<div class="chronicle-tier">tier ' + e.tier + ' · ' + e.name.split(',')[0] + '</div>' +
+          '<p>' + CHRONICLE[e.id] + '</p>' +
+          '</div>';
+      }).join('');
+      var allDown = defeatedInTierOrder.length === ENEMIES.length;
+      var closer = allDown
+        ? '<div class="chronicle-closer">' + CHRONICLE_CLOSER + '</div>'
+        : '';
+      chronicle.innerHTML =
+        '<div class="chronicle-mark">the chronicle so far</div>' +
+        entries + closer;
+      el.appendChild(chronicle);
+    }
 
     var grid = document.createElement('div');
     grid.className = 'roster-grid';
@@ -2441,7 +2484,6 @@
     root.className = 'arena-root';
     root.id = 'arena-root';
     root.innerHTML = ''
-      + '<div class="arena-back"><a href="/">← back to avidan shah</a></div>'
       + '<h1 class="arena-title">d20 Arena</h1>'
       + '<p class="arena-sub">read the room ‧ pick the door ‧ pray to the dice</p>'
       + '<div class="arena-screen" id="arena-screen"></div>';
