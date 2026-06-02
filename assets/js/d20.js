@@ -245,6 +245,7 @@
     var numCommitted = false;
     var currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
     var distToCorner = 0;
+    var escaped = false;     // true once die has left the catch zone at least once
 
     var startTime = null;
     var lastTime = null;
@@ -279,12 +280,15 @@
       }
 
       if (phase === 'bounce') {
-        // Smoothstep "nearness" to corner — 0 outside catch zone, 1 at corner
+        // Smoothstep "nearness" to corner — 0 outside catch zone, 1 at corner.
+        // The catch zone is dormant until the die has *escaped* once, so the
+        // spring doesn't fight the initial launch (die starts at restPos).
         var dxs = restCx - pos.x;
         var dys = restCy - pos.y;
         var dc  = Math.sqrt(dxs * dxs + dys * dys);
+        if (!escaped && dc > CATCH_RADIUS) escaped = true;
         var nearness = 0;
-        if (dc < CATCH_RADIUS) {
+        if (escaped && dc < CATCH_RADIUS) {
           var nt = 1 - dc / CATCH_RADIUS;
           nearness = nt * nt * (3 - 2 * nt);  // smoothstep
         }
