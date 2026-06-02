@@ -1,10 +1,9 @@
 (function () {
-  var ROLL_MS = 950;
+  var ROLL_MS = 3000;
   var HISTORY_MAX = 50;
   var HIST_HEIGHT_PX = 28;
   var PIXEL_SIZE = 4;
   var FACES = 20;
-  var KERNEL = [0.08, 0.24, 0.36, 0.24, 0.08];
 
   var stats = { rolls: 0, nat20s: 0, nat1s: 0, last: 20, history: [] };
 
@@ -13,38 +12,39 @@
     + 'font-family:"Courier New",monospace;user-select:none;display:flex;'
     + 'flex-direction:column;align-items:center;gap:6px}'
     + '.d20-stage{position:relative;width:64px;height:64px;'
-    + 'display:flex;align-items:flex-end;justify-content:center;'
-    + 'perspective:600px}'
+    + 'display:flex;align-items:flex-end;justify-content:center}'
     + '.d20-shadow{position:absolute;bottom:1px;left:50%;width:42px;height:7px;'
     + 'border-radius:50%;pointer-events:none;'
     + 'background:radial-gradient(ellipse,rgba(0,0,0,.55),rgba(0,0,0,0) 70%);'
     + 'transform:translateX(-50%) scale(1);opacity:.9}'
-    + '.d20-stage.rolling .d20-shadow{animation:d20-shadow .95s linear}'
+    + '.d20-stage.rolling .d20-shadow{animation:d20-shadow 3s ease}'
     + '@keyframes d20-shadow{'
     + '0%{transform:translateX(-50%) scale(1);opacity:.9}'
-    + '30%{transform:translateX(-50%) scale(.55);opacity:.35}'
-    + '50%{transform:translateX(-50%) scale(.42);opacity:.28}'
-    + '70%{transform:translateX(-50%) scale(.7);opacity:.5}'
-    + '88%{transform:translateX(-50%) scaleX(1.45) scaleY(.8);opacity:.9}'
+    + '6%{transform:translateX(-50%) scale(.3);opacity:0}'
+    + '88%{transform:translateX(-50%) scale(.3);opacity:0}'
+    + '94%{transform:translateX(-50%) scaleX(1.5) scaleY(.65);opacity:.9}'
     + '100%{transform:translateX(-50%) scale(1);opacity:.9}}'
     + '.d20-die{width:58px;height:58px;cursor:pointer;outline:none;'
     + '-webkit-tap-highlight-color:transparent;transform-origin:50% 50%;'
     + 'filter:drop-shadow(2px 2px 0 rgba(0,0,0,.4));'
-    + 'transition:filter .15s ease}'
+    + 'transition:filter .15s ease;will-change:transform}'
     + '.d20-die:hover{filter:drop-shadow(2px 3px 0 rgba(0,0,0,.45)) brightness(1.08)}'
     + '.d20-die:focus-visible{filter:drop-shadow(0 0 6px #E2A84B)}'
-    + '.d20-die.rolling{animation:d20-tumble .95s cubic-bezier(.35,.05,.5,.95)}'
+    + '.d20-die.rolling{animation:d20-tumble 3s cubic-bezier(.45,.05,.55,.95)}'
     + '.d20-die.crit{animation:d20-crit 1.2s ease}'
     + '.d20-die.fumble{animation:d20-shake .55s ease}'
     + '@keyframes d20-tumble{'
-    + '0%{transform:translateY(0) rotateY(0) rotate(0) scale(1)}'
-    + '15%{transform:translateY(-20px) rotateY(220deg) rotate(20deg) scale(1.2)}'
-    + '32%{transform:translateY(-32px) rotateY(540deg) rotate(50deg) scale(1.3)}'
-    + '50%{transform:translateY(-36px) rotateY(900deg) rotate(70deg) scale(1.35)}'
-    + '68%{transform:translateY(-26px) rotateY(1260deg) rotate(50deg) scale(1.22)}'
-    + '83%{transform:translateY(-8px) rotateY(1620deg) rotate(20deg) scale(1.08)}'
-    + '92%{transform:translateY(0) rotateY(1800deg) rotate(0) scaleX(1.35) scaleY(.62)}'
-    + '100%{transform:translateY(0) rotateY(1800deg) rotate(0) scale(1)}}'
+    + '0%{transform:translate(0,0) rotate(0) scale(1)}'
+    + '8%{transform:translate(-20vw,-8vh) rotate(280deg) scaleY(.4) scaleX(1.15)}'
+    + '18%{transform:translate(-50vw,-15vh) rotate(620deg) scale(1.15)}'
+    + '30%{transform:translate(-78vw,-25vh) rotate(990deg) scaleY(.4) scaleX(1.15)}'
+    + '42%{transform:translate(-78vw,-55vh) rotate(1300deg) scale(1.2)}'
+    + '55%{transform:translate(-50vw,-75vh) rotate(1700deg) scaleY(.4) scaleX(1.15)}'
+    + '68%{transform:translate(-15vw,-65vh) rotate(2100deg) scale(1.15)}'
+    + '80%{transform:translate(-2vw,-25vh) rotate(2500deg) scaleY(.4) scaleX(1.15)}'
+    + '92%{transform:translate(0,0) rotate(2700deg) scaleX(1.4) scaleY(.6)}'
+    + '97%{transform:translate(0,-3px) rotate(2700deg) scaleX(.95) scaleY(1.05)}'
+    + '100%{transform:translate(0,0) rotate(2700deg) scale(1)}}'
     + '@keyframes d20-crit{'
     + '0%,100%{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.4))}'
     + '50%{filter:drop-shadow(0 0 14px #FFD24A) drop-shadow(0 0 26px #ff9c1c)}}'
@@ -108,15 +108,16 @@
     + '  <span class="d20-flash" id="d20-flash"></span>'
     + '  <svg class="d20-die" id="d20-die" viewBox="0 0 80 80" '
     + '       shape-rendering="crispEdges" aria-label="roll d20" role="button" tabindex="0">'
-    + '    <polygon points="40,8 72,28 60,60 40,76 20,60 8,28" '
-    + '             fill="#B8852F" stroke="#1a1612" stroke-width="3" stroke-linejoin="miter"/>'
-    + '    <polygon points="40,8 72,28 60,60" fill="#D89638" stroke="#1a1612" stroke-width="2"/>'
-    + '    <polygon points="40,8 20,60 8,28" fill="#A67324" stroke="#1a1612" stroke-width="2"/>'
-    + '    <polygon points="60,60 40,76 20,60" fill="#8a5d1c" stroke="#1a1612" stroke-width="2"/>'
-    + '    <polygon points="40,8 60,60 20,60" fill="#F5C26B" stroke="#1a1612" stroke-width="2.5"/>'
+    + '    <polygon points="40,4 76,30 64,74 16,74 4,30" '
+    + '             fill="#E2A84B" stroke="#1a1612" stroke-width="4" stroke-linejoin="miter"/>'
+    + '    <polygon points="40,4 76,30 40,40" fill="#B8852F" stroke="#1a1612" stroke-width="2.5"/>'
+    + '    <polygon points="76,30 64,74 40,40" fill="#D89638" stroke="#1a1612" stroke-width="2.5"/>'
+    + '    <polygon points="40,4 4,30 40,40"   fill="#E2A84B" stroke="#1a1612" stroke-width="2.5"/>'
+    + '    <polygon points="4,30 16,74 40,40"  fill="#B8852F" stroke="#1a1612" stroke-width="2.5"/>'
+    + '    <polygon points="16,74 64,74 40,40" fill="#F5C26B" stroke="#1a1612" stroke-width="2.5"/>'
     + '    <text id="d20-num" x="40" y="52" text-anchor="middle" '
-    + '          font-family="\'Courier New\',monospace" font-size="26" font-weight="900" '
-    + '          fill="#FFF6DC" stroke="#1a1612" stroke-width="1.2" '
+    + '          font-family="\'Courier New\',monospace" font-size="30" font-weight="900" '
+    + '          fill="#FFF6DC" stroke="#1a1612" stroke-width="1.3" '
     + '          paint-order="stroke" stroke-linejoin="round">20</text>'
     + '  </svg>'
     + '</div>'
@@ -153,40 +154,21 @@
     return '';
   }
 
-  function smoothCounts(counts) {
-    var half = Math.floor(KERNEL.length / 2);
-    var smoothed = new Array(counts.length).fill(0);
-    for (var i = 0; i < counts.length; i++) {
-      var sum = 0;
-      for (var k = -half; k <= half; k++) {
-        var j = i + k;
-        if (j >= 0 && j < counts.length) {
-          sum += counts[j] * KERNEL[k + half];
-        }
-      }
-      smoothed[i] = sum;
-    }
-    return smoothed;
-  }
-
   function renderHistogram() {
     var counts = new Array(FACES).fill(0);
     for (var i = 0; i < stats.history.length; i++) {
       counts[stats.history[i] - 1] += 1;
     }
-    var smoothed = smoothCounts(counts);
-    var maxSmoothed = 0;
-    for (var j = 0; j < FACES; j++) {
-      if (smoothed[j] > maxSmoothed) maxSmoothed = smoothed[j];
-    }
+    var maxCount = 0;
+    for (var j = 0; j < FACES; j++) if (counts[j] > maxCount) maxCount = counts[j];
     var maxBars = Math.floor((HIST_HEIGHT_PX + 1) / (PIXEL_SIZE + 1));
-    var scale = maxSmoothed > 0 ? maxBars / maxSmoothed : 0;
+    var scale = maxCount > maxBars ? maxBars / maxCount : 1;
 
     for (var k = 0; k < FACES; k++) {
       var col = cols[k];
       while (col.firstChild) col.removeChild(col.firstChild);
-      var bars = Math.round(smoothed[k] * scale);
-      if (smoothed[k] > 0 && bars === 0) bars = 1;
+      var bars = Math.round(counts[k] * scale);
+      if (counts[k] > 0 && bars === 0) bars = 1;
       var cls = pixelClass(k + 1);
       for (var b = 0; b < bars; b++) {
         var px = document.createElement('div');
@@ -215,7 +197,7 @@
 
     var flicker = setInterval(function () {
       numEl.textContent = 1 + Math.floor(Math.random() * 20);
-    }, 45);
+    }, 60);
 
     setTimeout(function () {
       clearInterval(flicker);
