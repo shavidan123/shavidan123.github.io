@@ -17,6 +17,9 @@
   var COMMIT_SPEED = 480;        // ...AND moving slower than this
   var ARRIVAL_DIST = 22;         // px from corner to count as "home"
   var ARRIVAL_SPEED = 70;        // px/s to count as "stopped"
+  var SMACK_DIST = 55;           // tendril hitbox radius around sigil
+  var SMACK_SPEED = 750;         // px/s required to "smack" the sigil
+  var SMACK_MS = 380;            // how long the recoil lasts
 
   var stats = { rolls: 0, nat20s: 0, nat1s: 0, last: 20, history: [] };
 
@@ -91,10 +94,31 @@
     + '25%{transform:translate(50%,-130%) scale(1)}'
     + '80%{opacity:1;transform:translate(50%,-140%) scale(1)}'
     + '100%{opacity:0;transform:translate(50%,-170%) scale(1)}}'
+    + '.d20-sigil{position:absolute;width:40px;height:40px;top:50%;left:50%;'
+    + 'transform:translate(-50%,-50%);pointer-events:none;opacity:0;'
+    + 'transition:opacity .35s ease}'
+    + '.d20-sigil.active{opacity:.85}'
+    + '.d20-sigil.smacked{animation:d20-sigil-shake .35s ease}'
+    + '@keyframes d20-sigil-shake{'
+    + '0%,100%{transform:translate(-50%,-50%) rotate(0)}'
+    + '25%{transform:translate(calc(-50% - 4px),-50%) rotate(-8deg)}'
+    + '75%{transform:translate(calc(-50% + 4px),-50%) rotate(8deg)}}'
+    + '.d20-tendrils{position:fixed;top:0;left:0;width:100%;height:100%;'
+    + 'pointer-events:none;z-index:9998;opacity:0;'
+    + 'transition:opacity .25s ease}'
+    + '.d20-tendrils.active{opacity:1}'
+    + '.d20-tendrils svg{width:100%;height:100%;position:absolute;top:0;left:0;'
+    + 'overflow:visible}'
+    + '.d20-tendrils path{fill:none;stroke:#9B59B6;stroke-width:1.8;'
+    + 'opacity:.55;filter:drop-shadow(0 0 5px #9B59B6);'
+    + 'transition:stroke .15s ease,opacity .15s ease}'
+    + '.d20-tendrils.smacked path{stroke:#E74C3C;opacity:.35;'
+    + 'filter:drop-shadow(0 0 6px #E74C3C)}'
     + '@media (max-width:600px){'
     + '.d20-widget{bottom:10px;right:10px;gap:4px}'
     + '.d20-stage{width:56px;height:56px}'
-    + '.d20-die{width:50px;height:50px}}';
+    + '.d20-die{width:50px;height:50px}'
+    + '.d20-sigil{width:32px;height:32px}}';
 
   var styleEl = document.createElement('style');
   styleEl.textContent = styles;
@@ -105,6 +129,16 @@
   widget.innerHTML = ''
     + '<div class="d20-stage" id="d20-stage">'
     + '  <div class="d20-shadow"></div>'
+    + '  <div class="d20-sigil" id="d20-sigil">'
+    + '    <svg viewBox="0 0 50 50" shape-rendering="geometricPrecision">'
+    + '      <circle cx="25" cy="25" r="22" fill="none" stroke="#9B59B6" '
+    + '              stroke-width="1" stroke-dasharray="3,2" opacity=".8"/>'
+    + '      <polygon points="25,8 29,21 42,21 32,29 36,42 25,34 14,42 18,29 8,21 21,21" '
+    + '               fill="#9B59B6" fill-opacity=".25" '
+    + '               stroke="#C28FE0" stroke-width="1.4" stroke-linejoin="round"/>'
+    + '      <circle cx="25" cy="25" r="2.5" fill="#FFE6B6"/>'
+    + '    </svg>'
+    + '  </div>'
     + '  <span class="d20-flash" id="d20-flash"></span>'
     + '  <svg class="d20-die" id="d20-die" viewBox="0 0 80 80" '
     + '       shape-rendering="crispEdges" aria-label="roll d20" role="button" tabindex="0">'
@@ -131,13 +165,31 @@
     + '</div>';
   document.body.appendChild(widget);
 
+  // Full-viewport overlay for the tendril paths (separate so they can span the page)
+  var tendrilsEl = document.createElement('div');
+  tendrilsEl.className = 'd20-tendrils';
+  tendrilsEl.id = 'd20-tendrils';
+  tendrilsEl.innerHTML =
+    '<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">' +
+    '  <path id="d20-t0"/><path id="d20-t1"/>' +
+    '  <path id="d20-t2"/><path id="d20-t3"/>' +
+    '</svg>';
+  document.body.appendChild(tendrilsEl);
+
   var stageEl = document.getElementById('d20-stage');
+  var sigilEl = document.getElementById('d20-sigil');
   var dieEl   = document.getElementById('d20-die');
   var numEl   = document.getElementById('d20-num');
   var flashEl = document.getElementById('d20-flash');
   var rollsEl = document.getElementById('d20-rolls');
   var lastEl  = document.getElementById('d20-last');
   var histEl  = document.getElementById('d20-hist');
+  var tendrilPaths = [
+    document.getElementById('d20-t0'),
+    document.getElementById('d20-t1'),
+    document.getElementById('d20-t2'),
+    document.getElementById('d20-t3')
+  ];
 
   var cols = [];
   for (var i = 0; i < FACES; i++) {
@@ -195,6 +247,44 @@
       'scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')';
   }
 
+  function updateTendrils(restCx, restCy, dieXp, dieYp, smacked, timeMs) {
+    var t = timeMs / 1000;
+    for (var i = 0; i < 4; i++) {
+      var path = tendrilPaths[i];
+      // Tendrils emerge from 4 anchor points around the sigil, slowly drifting
+      var ang = (i / 4) * Math.PI * 2 + t * 0.18;
+      var startR = 14;
+      var sx = restCx + startR * Math.cos(ang);
+      var sy = restCy + startR * Math.sin(ang);
+
+      var ex, ey;
+      if (smacked) {
+        // Recoil — tendrils retract to ~30% of the way to the die
+        ex = sx + 0.3 * (dieXp - sx);
+        ey = sy + 0.3 * (dieYp - sy);
+      } else {
+        ex = dieXp;
+        ey = dieYp;
+      }
+
+      // Perpendicular curve offset gives each tendril a wavy character;
+      // sine over time animates the "writhing"
+      var ddx = ex - sx, ddy = ey - sy;
+      var dist = Math.sqrt(ddx * ddx + ddy * ddy);
+      if (dist < 1) dist = 1;
+      var nx = -ddy / dist, ny = ddx / dist;
+      var bias = (i - 1.5) * 12 + Math.sin(t * 4 + i * 1.7) * 14;
+      var mx = (sx + ex) / 2 + nx * bias;
+      var my = (sy + ey) / 2 + ny * bias;
+
+      path.setAttribute('d',
+        'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) +
+        ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) +
+        ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1)
+      );
+    }
+  }
+
   // Several "launch profiles" — picked at random so each click feels different
   // [vxMin, vxMax, vyMin, vyMax, spinMin, spinMax, gravity]
   var LAUNCH_PROFILES = [
@@ -213,6 +303,8 @@
     dieEl.classList.remove('crit', 'fumble');
     dieEl.classList.add('rolling');
     stageEl.classList.add('rolling');
+    sigilEl.classList.add('active');
+    tendrilsEl.classList.add('active');
 
     // Measure rest position (center of die) in viewport coordinates
     dieEl.style.transform = '';
@@ -247,6 +339,7 @@
     var currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
     var distToCorner = 0;
     var escaped = false;     // true once die has left the catch zone at least once
+    var smackedUntil = 0;    // tendrils/sigil recoil window
 
     var startTime = null;
     var lastTime = null;
@@ -353,6 +446,15 @@
         currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
         applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
 
+        // Smack detection — die slammed near the sigil at high speed
+        if (escaped && distToCorner < SMACK_DIST && currentSpeed > SMACK_SPEED &&
+            elapsed > smackedUntil) {
+          smackedUntil = elapsed + SMACK_MS;
+          sigilEl.classList.remove('smacked');
+          void sigilEl.offsetWidth;
+          sigilEl.classList.add('smacked');
+        }
+
         if (distToCorner < ARRIVAL_DIST && currentSpeed < ARRIVAL_SPEED) {
           phase = 'effect';
           effectStartTime = elapsed;
@@ -391,6 +493,8 @@
         var syr = 1 - sw;
 
         applyTransform(fxr - restCx, fyr - restCy, far, sxr, syr);
+        pos.x = fxr;
+        pos.y = fyr;
 
         if (rt >= 1) {
           phase = 'effect';
@@ -427,6 +531,8 @@
           'drop-shadow(0 0 ' + (maxGlow2 * bell).toFixed(1) + 'px ' + color + ')';
 
         applyTransform(0, 0, fa, s, s);
+        pos.x = restCx;
+        pos.y = restCy;
 
         if (efT >= 1) {
           dieEl.style.filter = '';
@@ -435,6 +541,12 @@
         }
       }
 
+      // Update sigil + tendril visualization (after all phase logic)
+      var isSmacked = elapsed < smackedUntil;
+      if (isSmacked) tendrilsEl.classList.add('smacked');
+      else tendrilsEl.classList.remove('smacked');
+      updateTendrils(restCx, restCy, pos.x, pos.y, isSmacked, elapsed);
+
       requestAnimationFrame(step);
     }
 
@@ -442,6 +554,8 @@
       dieEl.style.transform = '';
       dieEl.classList.remove('rolling');
       stageEl.classList.remove('landing');
+      sigilEl.classList.remove('active', 'smacked');
+      tendrilsEl.classList.remove('active', 'smacked');
 
       stats.last = result;
       stats.rolls += 1;
