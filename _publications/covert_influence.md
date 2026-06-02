@@ -1,5 +1,5 @@
 ---
-title: "Covert Influence between Language Models"
+title: "Covert Influence Between Language Models"
 collection: publications
 permalink: /publication/2026-06-02-Covert-Influence
 excerpt: 'Characterizes covert influence between language models, where behavioral traits transfer through channels undetectable by humans, across supervised fine-tuning, on-policy distillation, and in-context learning, using inference-time per-sample attribution to select carriers that amplify influence.'
