@@ -1,9 +1,11 @@
 (function () {
-  var ROLL_MS = 3000;
   var HISTORY_MAX = 50;
   var HIST_HEIGHT_PX = 28;
   var PIXEL_SIZE = 4;
   var FACES = 20;
+  var PHYSICS_MS = 2800;
+  var RETURN_MS = 550;
+  var LAND_MS = 200;
 
   var stats = { rolls: 0, nat20s: 0, nat1s: 0, last: 20, history: [] };
 
@@ -16,35 +18,22 @@
     + '.d20-shadow{position:absolute;bottom:1px;left:50%;width:42px;height:7px;'
     + 'border-radius:50%;pointer-events:none;'
     + 'background:radial-gradient(ellipse,rgba(0,0,0,.55),rgba(0,0,0,0) 70%);'
-    + 'transform:translateX(-50%) scale(1);opacity:.9}'
-    + '.d20-stage.rolling .d20-shadow{animation:d20-shadow 3s ease}'
-    + '@keyframes d20-shadow{'
-    + '0%{transform:translateX(-50%) scale(1);opacity:.9}'
-    + '6%{transform:translateX(-50%) scale(.3);opacity:0}'
-    + '88%{transform:translateX(-50%) scale(.3);opacity:0}'
-    + '94%{transform:translateX(-50%) scaleX(1.5) scaleY(.65);opacity:.9}'
-    + '100%{transform:translateX(-50%) scale(1);opacity:.9}}'
+    + 'transform:translateX(-50%) scale(1);opacity:.9;transition:opacity .15s ease}'
+    + '.d20-stage.rolling .d20-shadow{opacity:0}'
+    + '.d20-stage.landing .d20-shadow{opacity:.9;animation:d20-shadow-land .2s ease}'
+    + '@keyframes d20-shadow-land{'
+    + '0%{transform:translateX(-50%) scale(.3)}'
+    + '60%{transform:translateX(-50%) scaleX(1.55) scaleY(.7)}'
+    + '100%{transform:translateX(-50%) scale(1)}}'
     + '.d20-die{width:58px;height:58px;cursor:pointer;outline:none;'
     + '-webkit-tap-highlight-color:transparent;transform-origin:50% 50%;'
     + 'filter:drop-shadow(2px 2px 0 rgba(0,0,0,.4));'
     + 'transition:filter .15s ease;will-change:transform}'
     + '.d20-die:hover{filter:drop-shadow(2px 3px 0 rgba(0,0,0,.45)) brightness(1.08)}'
     + '.d20-die:focus-visible{filter:drop-shadow(0 0 6px #E2A84B)}'
-    + '.d20-die.rolling{animation:d20-tumble 3s cubic-bezier(.45,.05,.55,.95)}'
+    + '.d20-die.rolling{filter:drop-shadow(0 4px 8px rgba(0,0,0,.35))}'
     + '.d20-die.crit{animation:d20-crit 1.2s ease}'
     + '.d20-die.fumble{animation:d20-shake .55s ease}'
-    + '@keyframes d20-tumble{'
-    + '0%{transform:translate(0,0) rotate(0) scale(1)}'
-    + '8%{transform:translate(-20vw,-8vh) rotate(280deg) scaleY(.4) scaleX(1.15)}'
-    + '18%{transform:translate(-50vw,-15vh) rotate(620deg) scale(1.15)}'
-    + '30%{transform:translate(-78vw,-25vh) rotate(990deg) scaleY(.4) scaleX(1.15)}'
-    + '42%{transform:translate(-78vw,-55vh) rotate(1300deg) scale(1.2)}'
-    + '55%{transform:translate(-50vw,-75vh) rotate(1700deg) scaleY(.4) scaleX(1.15)}'
-    + '68%{transform:translate(-15vw,-65vh) rotate(2100deg) scale(1.15)}'
-    + '80%{transform:translate(-2vw,-25vh) rotate(2500deg) scaleY(.4) scaleX(1.15)}'
-    + '92%{transform:translate(0,0) rotate(2700deg) scaleX(1.4) scaleY(.6)}'
-    + '97%{transform:translate(0,-3px) rotate(2700deg) scaleX(.95) scaleY(1.05)}'
-    + '100%{transform:translate(0,0) rotate(2700deg) scale(1)}}'
     + '@keyframes d20-crit{'
     + '0%,100%{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.4))}'
     + '50%{filter:drop-shadow(0 0 14px #FFD24A) drop-shadow(0 0 26px #ff9c1c)}}'
@@ -186,23 +175,155 @@
   }
   render();
 
+  function rand(min, max) { return min + Math.random() * (max - min); }
+  function sign() { return Math.random() < 0.5 ? -1 : 1; }
+  function applyTransform(dx, dy, ang, sx, sy) {
+    dieEl.style.transform =
+      'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px) ' +
+      'rotate(' + ang.toFixed(1) + 'deg) ' +
+      'scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')';
+  }
+
+  // Several "launch profiles" — picked at random so each click feels different
+  // [vxMin, vxMax, vyMin, vyMax, spinMin, spinMax, gravity]
+  var LAUNCH_PROFILES = [
+    { vx:[-1100,-700], vy:[-1500,-1100], spin:[700,1300], g:2200 },   // hard left arc
+    { vx:[ 700, 1100], vy:[-1500,-1100], spin:[700,1300], g:2200 },   // hard right arc (atypical, since die starts at right)
+    { vx:[-1300,-900], vy:[ -900, -600], spin:[1100,1600], g:2400 },  // low flat shot left
+    { vx:[ -600,-300], vy:[-1700,-1400], spin:[500,1000], g:2300 },   // high lob
+    { vx:[-1500,-1100], vy:[-1300,-900], spin:[1300,1800], g:2500 },  // fast skipping shot
+  ];
+
   var rolling = false;
   function roll() {
     if (rolling) return;
     rolling = true;
+
     dieEl.classList.remove('crit', 'fumble');
-    void dieEl.offsetWidth;
     dieEl.classList.add('rolling');
     stageEl.classList.add('rolling');
 
+    // Measure rest position (center of die) in viewport coordinates
+    dieEl.style.transform = '';
+    void dieEl.offsetWidth;
+    var rect = dieEl.getBoundingClientRect();
+    var restCx = rect.left + rect.width / 2;
+    var restCy = rect.top + rect.height / 2;
+    var radius = rect.width / 2;
+
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var margin = 18;
+    var leftWall   = radius + margin;
+    var rightWall  = vw - radius - margin;
+    var ceiling    = radius + margin;
+    var floor      = vh - radius - margin;
+
+    var profile = LAUNCH_PROFILES[Math.floor(Math.random() * LAUNCH_PROFILES.length)];
+    var pos = { x: restCx, y: restCy };
+    var vel = {
+      x: rand(profile.vx[0], profile.vx[1]),
+      y: rand(profile.vy[0], profile.vy[1])
+    };
+    var angle = 0;
+    var angVel = sign() * rand(profile.spin[0], profile.spin[1]);
+    var gravity = profile.g;
+
     var flicker = setInterval(function () {
       numEl.textContent = 1 + Math.floor(Math.random() * 20);
-    }, 60);
+    }, 55);
 
-    setTimeout(function () {
+    var startTime = null;
+    var lastTime = null;
+    var phase = 'physics';
+    var rStart = null;     // captured at start of return phase
+    var rTargetAngle = 0;
+
+    function step(now) {
+      if (startTime === null) { startTime = now; lastTime = now; }
+      var dt = Math.min((now - lastTime) / 1000, 0.04);
+      lastTime = now;
+      var elapsed = now - startTime;
+
+      if (phase === 'physics') {
+        if (elapsed < PHYSICS_MS) {
+          // Integrate
+          vel.y += gravity * dt;
+          vel.x *= (1 - 0.45 * dt);    // air drag
+          vel.y *= (1 - 0.18 * dt);
+          angVel *= (1 - 0.25 * dt);
+
+          pos.x += vel.x * dt;
+          pos.y += vel.y * dt;
+          angle += angVel * dt;
+
+          // Wall collisions
+          if (pos.x < leftWall) {
+            pos.x = leftWall;
+            vel.x = Math.abs(vel.x) * 0.65;
+            angVel = -angVel * 0.85;
+          } else if (pos.x > rightWall) {
+            pos.x = rightWall;
+            vel.x = -Math.abs(vel.x) * 0.65;
+            angVel = -angVel * 0.85;
+          }
+          if (pos.y < ceiling) {
+            pos.y = ceiling;
+            vel.y = Math.abs(vel.y) * 0.6;
+          } else if (pos.y > floor) {
+            pos.y = floor;
+            vel.y = -Math.abs(vel.y) * 0.55;
+            vel.x *= 0.82;
+            angVel *= 0.82;
+          }
+
+          applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
+        } else {
+          phase = 'return';
+          rStart = { x: pos.x, y: pos.y, a: angle };
+          // Round target rotation to nearest full turn so we settle upright
+          var spinSign = angVel >= 0 ? 1 : -1;
+          var extraTurns = 1.5;
+          rTargetAngle = Math.round(angle / 360) * 360 + spinSign * 360 * extraTurns;
+          stageEl.classList.remove('rolling');
+          stageEl.classList.add('landing');
+        }
+      }
+
+      if (phase === 'return') {
+        var rt = Math.min((elapsed - PHYSICS_MS) / RETURN_MS, 1);
+        var e = 1 - Math.pow(1 - rt, 3);  // ease-out cubic
+        var cx = rStart.x + (restCx - rStart.x) * e;
+        var cy = rStart.y + (restCy - rStart.y) * e;
+        var ca = rStart.a + (rTargetAngle - rStart.a) * e;
+        applyTransform(cx - restCx, cy - restCy, ca, 1, 1);
+
+        if (rt >= 1) phase = 'land';
+      }
+
+      if (phase === 'land') {
+        var lt = Math.min((elapsed - PHYSICS_MS - RETURN_MS) / LAND_MS, 1);
+        // Squish then settle
+        var bell = Math.sin(lt * Math.PI);
+        var sx = 1 + 0.32 * bell;
+        var sy = 1 - 0.32 * bell;
+        applyTransform(0, 0, rTargetAngle, sx, sy);
+
+        if (lt >= 1) {
+          finalize();
+          return;
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    function finalize() {
       clearInterval(flicker);
+      dieEl.style.transform = '';
       dieEl.classList.remove('rolling');
-      stageEl.classList.remove('rolling');
+      stageEl.classList.remove('landing');
+
       var result = 1 + Math.floor(Math.random() * 20);
       stats.last = result;
       stats.rolls += 1;
@@ -229,7 +350,9 @@
         flashEl.classList.add('show');
       }
       rolling = false;
-    }, ROLL_MS);
+    }
+
+    requestAnimationFrame(step);
   }
 
   dieEl.addEventListener('click', roll);
