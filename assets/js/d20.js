@@ -3,9 +3,11 @@
   var HIST_HEIGHT_PX = 28;
   var PIXEL_SIZE = 4;
   var FACES = 20;
-  var PHYSICS_MS = 2800;
-  var RETURN_MS = 550;
-  var LAND_MS = 200;
+  var PHYSICS_MS = 4500;
+  var LAND_MS = 280;
+  var PULL_START_MS = 2800;   // when the corner-magnetism begins ramping in
+  var PULL_K = 15;             // spring stiffness at full strength
+  var PULL_DAMP = 9;           // velocity damping at full strength
 
   var stats = { rolls: 0, nat20s: 0, nat1s: 0, last: 20, history: [] };
 
@@ -187,11 +189,11 @@
   // Several "launch profiles" — picked at random so each click feels different
   // [vxMin, vxMax, vyMin, vyMax, spinMin, spinMax, gravity]
   var LAUNCH_PROFILES = [
-    { vx:[-1100,-700], vy:[-1500,-1100], spin:[700,1300], g:2200 },   // hard left arc
-    { vx:[ 700, 1100], vy:[-1500,-1100], spin:[700,1300], g:2200 },   // hard right arc (atypical, since die starts at right)
-    { vx:[-1300,-900], vy:[ -900, -600], spin:[1100,1600], g:2400 },  // low flat shot left
-    { vx:[ -600,-300], vy:[-1700,-1400], spin:[500,1000], g:2300 },   // high lob
-    { vx:[-1500,-1100], vy:[-1300,-900], spin:[1300,1800], g:2500 },  // fast skipping shot
+    { vx:[-1700,-1200], vy:[-2100,-1600], spin:[900,1600], g:1700 },   // hard left arc
+    { vx:[ 1200, 1700], vy:[-2100,-1600], spin:[900,1600], g:1700 },   // hard right arc
+    { vx:[-2000,-1500], vy:[-1400,-1000], spin:[1400,2000], g:1850 },  // low flat shot left
+    { vx:[-1000, -500], vy:[-2400,-1900], spin:[700,1300], g:1800 },   // high lob
+    { vx:[-2200,-1700], vy:[-1900,-1400], spin:[1600,2200], g:1900 },  // fast skipping shot
   ];
 
   var rolling = false;
@@ -229,9 +231,11 @@
     var angVel = sign() * rand(profile.spin[0], profile.spin[1]);
     var gravity = profile.g;
 
-    var flicker = setInterval(function () {
-      numEl.textContent = 1 + Math.floor(Math.random() * 20);
-    }, 55);
+    // Pre-pick the final result so the flicker can settle on it before landing
+    var result = 1 + Math.floor(Math.random() * 20);
+    var commitTimeMs = PULL_START_MS + 0.85 * (PHYSICS_MS - PULL_START_MS);
+    var lastFlickerTime = 0;
+    var numCommitted = false;
 
     var startTime = null;
     var lastTime = null;
@@ -245,69 +249,97 @@
       lastTime = now;
       var elapsed = now - startTime;
 
+      // Number flicker — fast during free bounce, slows during the pull,
+      // commits to the final result once the die is mostly settled.
+      if (!numCommitted) {
+        if (elapsed >= commitTimeMs) {
+          numEl.textContent = result;
+          numCommitted = true;
+        } else {
+          var fInterval;
+          if (elapsed < PULL_START_MS) {
+            fInterval = 55;
+          } else {
+            var st = (elapsed - PULL_START_MS) / (commitTimeMs - PULL_START_MS);
+            fInterval = 55 + (480 - 55) * st * st;
+          }
+          if (elapsed - lastFlickerTime >= fInterval) {
+            numEl.textContent = 1 + Math.floor(Math.random() * 20);
+            lastFlickerTime = elapsed;
+          }
+        }
+      }
+
       if (phase === 'physics') {
         if (elapsed < PHYSICS_MS) {
-          // Integrate
-          vel.y += gravity * dt;
-          vel.x *= (1 - 0.45 * dt);    // air drag
-          vel.y *= (1 - 0.18 * dt);
-          angVel *= (1 - 0.25 * dt);
+          // Magnetic pull toward the corner — ramps up after PULL_START_MS via smoothstep.
+          // Gravity fades in inverse, so the spring's equilibrium is exactly the corner
+          // (otherwise gravity would offset the rest point below it).
+          var pullT = (elapsed - PULL_START_MS) / (PHYSICS_MS - PULL_START_MS);
+          if (pullT < 0) pullT = 0;
+          if (pullT > 1) pullT = 1;
+          var pullEase = pullT * pullT * (3 - 2 * pullT);
+
+          vel.y += gravity * (1 - pullEase) * dt;
+          vel.x *= (1 - 0.22 * dt);
+          vel.y *= (1 - 0.10 * dt);
+          angVel *= (1 - 0.15 * dt);
+
+          if (pullEase > 0) {
+            var k = PULL_K * pullEase;
+            var damp = PULL_DAMP * pullEase;
+            vel.x += -k * (pos.x - restCx) * dt;
+            vel.y += -k * (pos.y - restCy) * dt;
+            vel.x *= (1 - damp * dt);
+            vel.y *= (1 - damp * dt);
+            angVel *= (1 - damp * 0.6 * dt);
+          }
 
           pos.x += vel.x * dt;
           pos.y += vel.y * dt;
           angle += angVel * dt;
 
-          // Wall collisions
+          // Wall collisions (bouncier restitution)
           if (pos.x < leftWall) {
             pos.x = leftWall;
-            vel.x = Math.abs(vel.x) * 0.65;
-            angVel = -angVel * 0.85;
+            vel.x = Math.abs(vel.x) * 0.82;
+            angVel = -angVel * 0.92;
           } else if (pos.x > rightWall) {
             pos.x = rightWall;
-            vel.x = -Math.abs(vel.x) * 0.65;
-            angVel = -angVel * 0.85;
+            vel.x = -Math.abs(vel.x) * 0.82;
+            angVel = -angVel * 0.92;
           }
           if (pos.y < ceiling) {
             pos.y = ceiling;
-            vel.y = Math.abs(vel.y) * 0.6;
+            vel.y = Math.abs(vel.y) * 0.78;
           } else if (pos.y > floor) {
             pos.y = floor;
-            vel.y = -Math.abs(vel.y) * 0.55;
-            vel.x *= 0.82;
-            angVel *= 0.82;
+            vel.y = -Math.abs(vel.y) * 0.75;
+            vel.x *= 0.93;
+            angVel *= 0.93;
           }
 
           applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
         } else {
-          phase = 'return';
+          phase = 'land';
           rStart = { x: pos.x, y: pos.y, a: angle };
-          // Round target rotation to nearest full turn so we settle upright
-          var spinSign = angVel >= 0 ? 1 : -1;
-          var extraTurns = 1.5;
-          rTargetAngle = Math.round(angle / 360) * 360 + spinSign * 360 * extraTurns;
+          rTargetAngle = Math.round(angle / 360) * 360;
           stageEl.classList.remove('rolling');
           stageEl.classList.add('landing');
         }
       }
 
-      if (phase === 'return') {
-        var rt = Math.min((elapsed - PHYSICS_MS) / RETURN_MS, 1);
-        var e = 1 - Math.pow(1 - rt, 3);  // ease-out cubic
-        var cx = rStart.x + (restCx - rStart.x) * e;
-        var cy = rStart.y + (restCy - rStart.y) * e;
-        var ca = rStart.a + (rTargetAngle - rStart.a) * e;
-        applyTransform(cx - restCx, cy - restCy, ca, 1, 1);
-
-        if (rt >= 1) phase = 'land';
-      }
-
       if (phase === 'land') {
-        var lt = Math.min((elapsed - PHYSICS_MS - RETURN_MS) / LAND_MS, 1);
-        // Squish then settle
+        var lt = Math.min((elapsed - PHYSICS_MS) / LAND_MS, 1);
+        // Snap any residual offset/rotation smoothly while the squish plays
+        var snap = 1 - Math.pow(1 - lt, 2);
+        var fx = (rStart.x - restCx) * (1 - snap);
+        var fy = (rStart.y - restCy) * (1 - snap);
+        var fa = rStart.a + (rTargetAngle - rStart.a) * snap;
         var bell = Math.sin(lt * Math.PI);
         var sx = 1 + 0.32 * bell;
         var sy = 1 - 0.32 * bell;
-        applyTransform(0, 0, rTargetAngle, sx, sy);
+        applyTransform(fx, fy, fa, sx, sy);
 
         if (lt >= 1) {
           finalize();
@@ -319,12 +351,10 @@
     }
 
     function finalize() {
-      clearInterval(flicker);
       dieEl.style.transform = '';
       dieEl.classList.remove('rolling');
       stageEl.classList.remove('landing');
 
-      var result = 1 + Math.floor(Math.random() * 20);
       stats.last = result;
       stats.rolls += 1;
       if (result === 20) stats.nat20s += 1;
