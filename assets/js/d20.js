@@ -3,11 +3,11 @@
   var HIST_HEIGHT_PX = 28;
   var PIXEL_SIZE = 4;
   var FACES = 20;
-  var PHYSICS_MS = 4500;
-  var LAND_MS = 280;
-  var PULL_START_MS = 2800;   // when the corner-magnetism begins ramping in
-  var PULL_K = 15;             // spring stiffness at full strength
-  var PULL_DAMP = 9;           // velocity damping at full strength
+  var BOUNCE_MS  = 2700;  // free physics
+  var SETTLE_MS  = 400;   // upright animation in place
+  var EFFECT_MS  = 800;   // result effect (varies by crit/normal/fumble)
+  var RETURN_MS  = 700;   // pulled home to the corner
+  var LAND_MS    = 250;   // squish on arrival
 
   var stats = { rolls: 0, nat20s: 0, nat1s: 0, last: 20, history: [] };
 
@@ -233,15 +233,16 @@
 
     // Pre-pick the final result so the flicker can settle on it before landing
     var result = 1 + Math.floor(Math.random() * 20);
-    var commitTimeMs = PULL_START_MS + 0.85 * (PHYSICS_MS - PULL_START_MS);
+    var commitTimeMs = BOUNCE_MS + SETTLE_MS * 0.7;  // commit ~end of settle
     var lastFlickerTime = 0;
     var numCommitted = false;
 
     var startTime = null;
     var lastTime = null;
-    var phase = 'physics';
-    var rStart = null;     // captured at start of return phase
-    var rTargetAngle = 0;
+    var phase = 'bounce';
+    var settleStart = null;
+    var settleTargetAngle = 0;
+    var returnStart = null;
 
     function step(now) {
       if (startTime === null) { startTime = now; lastTime = now; }
@@ -249,19 +250,18 @@
       lastTime = now;
       var elapsed = now - startTime;
 
-      // Number flicker — fast during free bounce, slows during the pull,
-      // commits to the final result once the die is mostly settled.
+      // Number flicker — fast during bounce, slows during settle, commits before effect.
       if (!numCommitted) {
         if (elapsed >= commitTimeMs) {
           numEl.textContent = result;
           numCommitted = true;
         } else {
           var fInterval;
-          if (elapsed < PULL_START_MS) {
+          if (elapsed < BOUNCE_MS) {
             fInterval = 55;
           } else {
-            var st = (elapsed - PULL_START_MS) / (commitTimeMs - PULL_START_MS);
-            fInterval = 55 + (480 - 55) * st * st;
+            var st = (elapsed - BOUNCE_MS) / (commitTimeMs - BOUNCE_MS);
+            fInterval = 55 + (420 - 55) * st * st;
           }
           if (elapsed - lastFlickerTime >= fInterval) {
             numEl.textContent = 1 + Math.floor(Math.random() * 20);
@@ -270,36 +270,18 @@
         }
       }
 
-      if (phase === 'physics') {
-        if (elapsed < PHYSICS_MS) {
-          // Magnetic pull toward the corner — ramps up after PULL_START_MS via smoothstep.
-          // Gravity fades in inverse, so the spring's equilibrium is exactly the corner
-          // (otherwise gravity would offset the rest point below it).
-          var pullT = (elapsed - PULL_START_MS) / (PHYSICS_MS - PULL_START_MS);
-          if (pullT < 0) pullT = 0;
-          if (pullT > 1) pullT = 1;
-          var pullEase = pullT * pullT * (3 - 2 * pullT);
-
-          vel.y += gravity * (1 - pullEase) * dt;
+      if (phase === 'bounce') {
+        if (elapsed < BOUNCE_MS) {
+          // Free physics with gravity, drag, and wall bounces
+          vel.y += gravity * dt;
           vel.x *= (1 - 0.22 * dt);
           vel.y *= (1 - 0.10 * dt);
           angVel *= (1 - 0.15 * dt);
-
-          if (pullEase > 0) {
-            var k = PULL_K * pullEase;
-            var damp = PULL_DAMP * pullEase;
-            vel.x += -k * (pos.x - restCx) * dt;
-            vel.y += -k * (pos.y - restCy) * dt;
-            vel.x *= (1 - damp * dt);
-            vel.y *= (1 - damp * dt);
-            angVel *= (1 - damp * 0.6 * dt);
-          }
 
           pos.x += vel.x * dt;
           pos.y += vel.y * dt;
           angle += angVel * dt;
 
-          // Wall collisions (bouncier restitution)
           if (pos.x < leftWall) {
             pos.x = leftWall;
             vel.x = Math.abs(vel.x) * 0.82;
@@ -321,26 +303,81 @@
 
           applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
         } else {
-          phase = 'land';
-          rStart = { x: pos.x, y: pos.y, a: angle };
-          rTargetAngle = Math.round(angle / 360) * 360;
+          phase = 'settle';
+          settleStart = { x: pos.x, y: pos.y, angle: angle };
+          settleTargetAngle = Math.round(angle / 360) * 360;
+        }
+      }
+
+      if (phase === 'settle') {
+        // Die freezes in place, rotation eases to nearest 360 multiple, brief upright pose.
+        var setT = Math.min((elapsed - BOUNCE_MS) / SETTLE_MS, 1);
+        var setEase = 1 - Math.pow(1 - setT, 2);
+        var sa = settleStart.angle + (settleTargetAngle - settleStart.angle) * setEase;
+        var stretch = Math.sin(setT * Math.PI);
+        var ssx = 1 - 0.12 * stretch;
+        var ssy = 1 + 0.12 * stretch;
+        applyTransform(settleStart.x - restCx, settleStart.y - restCy, sa, ssx, ssy);
+        if (setT >= 1) phase = 'effect';
+      }
+
+      if (phase === 'effect') {
+        var efT = Math.min((elapsed - BOUNCE_MS - SETTLE_MS) / EFFECT_MS, 1);
+        var ea = settleTargetAngle;
+        if (result === 20) {
+          // Crit: gold glow pulse + rise + scale pulse
+          var pulse = Math.max(0, Math.sin(efT * Math.PI * 1.5));
+          var s = 1 + 0.30 * pulse;
+          var dy = -22 * Math.sin(efT * Math.PI);
+          var glow = Math.sin(efT * Math.PI);
+          dieEl.style.filter =
+            'drop-shadow(2px 2px 0 rgba(0,0,0,.4)) ' +
+            'drop-shadow(0 0 ' + (16 * glow).toFixed(1) + 'px #FFD24A) ' +
+            'drop-shadow(0 0 ' + (28 * glow).toFixed(1) + 'px #ff9c1c)';
+          applyTransform(settleStart.x - restCx, settleStart.y + dy - restCy, ea, s, s);
+        } else if (result === 1) {
+          // Fumble: red glow + shake + sink + slight shrink
+          var shake = Math.sin(efT * 32) * Math.max(0, 1 - efT * 1.1) * 7;
+          var s = 1 - 0.08 * Math.sin(efT * Math.PI);
+          var dy = 10 * Math.sin(efT * Math.PI);
+          var glow = Math.sin(efT * Math.PI);
+          dieEl.style.filter =
+            'drop-shadow(2px 2px 0 rgba(0,0,0,.4)) ' +
+            'drop-shadow(0 0 ' + (14 * glow).toFixed(1) + 'px #E74C3C)';
+          applyTransform(settleStart.x + shake - restCx, settleStart.y + dy - restCy, ea, s, s);
+        } else {
+          // Normal: small scale pulse
+          var p = Math.sin(efT * Math.PI);
+          var s = 1 + 0.05 * p;
+          applyTransform(settleStart.x - restCx, settleStart.y - restCy, ea, s, s);
+        }
+        if (efT >= 1) {
+          phase = 'return';
+          dieEl.style.filter = '';
+          returnStart = { x: settleStart.x, y: settleStart.y };
           stageEl.classList.remove('rolling');
+        }
+      }
+
+      if (phase === 'return') {
+        // Gravity-like pull back to corner via ease-out cubic
+        var rt = Math.min((elapsed - BOUNCE_MS - SETTLE_MS - EFFECT_MS) / RETURN_MS, 1);
+        var rEase = 1 - Math.pow(1 - rt, 3);
+        var fx = returnStart.x + (restCx - returnStart.x) * rEase;
+        var fy = returnStart.y + (restCy - returnStart.y) * rEase;
+        applyTransform(fx - restCx, fy - restCy, settleTargetAngle, 1, 1);
+        if (rt >= 1) {
+          phase = 'land';
           stageEl.classList.add('landing');
         }
       }
 
       if (phase === 'land') {
-        var lt = Math.min((elapsed - PHYSICS_MS) / LAND_MS, 1);
-        // Snap any residual offset/rotation smoothly while the squish plays
-        var snap = 1 - Math.pow(1 - lt, 2);
-        var fx = (rStart.x - restCx) * (1 - snap);
-        var fy = (rStart.y - restCy) * (1 - snap);
-        var fa = rStart.a + (rTargetAngle - rStart.a) * snap;
+        var lt = Math.min((elapsed - BOUNCE_MS - SETTLE_MS - EFFECT_MS - RETURN_MS) / LAND_MS, 1);
         var bell = Math.sin(lt * Math.PI);
-        var sx = 1 + 0.32 * bell;
-        var sy = 1 - 0.32 * bell;
-        applyTransform(fx, fy, fa, sx, sy);
-
+        var lsx = 1 + 0.32 * bell;
+        var lsy = 1 - 0.32 * bell;
+        applyTransform(0, 0, settleTargetAngle, lsx, lsy);
         if (lt >= 1) {
           finalize();
           return;
