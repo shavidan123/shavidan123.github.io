@@ -3,6 +3,11 @@
 
   document.body.classList.add('game-page');
 
+  // The arena is hand-styled for dark fantasy — light mode looks ass.
+  // Force dark theme for the duration of this page WITHOUT touching
+  // localStorage, so the user's preference is preserved on navigate-away.
+  document.documentElement.setAttribute('data-theme', 'dark');
+
   // ============================================================
   //   STATS / CORE
   // ============================================================
@@ -78,26 +83,32 @@
             telegraph: 'The twins glide into mirror stance, daggers crossed. They wait for YOU to move first.',
             options: [
               { stat: 'MIGHT', label: 'Charge them',
-                narrate: 'You charge. They sidestep. Your blade lodges in a wooden post that wasn\'t there a second ago. Where did the post come from?' },
+                narrate: 'You charge. They sidestep. Your blade lodges in a wooden post that wasn\'t there a second ago. Where did the post come from?',
+                luckyNarrate: 'You charge. The mysterious post LEAPS aside — revealing itself as a small sentient elf who, for reasons beyond mortal understanding, immediately tackles twin #2. The twins are not having a good Tuesday.' },
               { stat: 'AGI', label: 'Hold absolutely still', right: true,
                 rightNarrate: 'You don\'t move. They wait. They wait LONGER. One of them forgets which of them was supposed to move first. The pause stretches. You read them.' },
               { stat: 'WILL', label: 'Pray for guidance',
-                narrate: 'You pray. The twins pray with you, in unison, perfect harmony. Now they know your god personally. They take notes.' },
+                narrate: 'You pray. The twins pray with you, in unison, perfect harmony. Now they know your god personally. They take notes.',
+                luckyNarrate: 'You pray. Your god, in a stunning customer service moment, picks up on the FIRST ring. Specifically by dropping a small holy boulder. On twin #2. She is briefly very surprised and then less of a twin.' },
               { stat: 'VIGOR', label: 'Tense for impact',
-                narrate: 'You tense. They see it. They wait for you to flinch. You wait for them. You blink first. They strike.' }
+                narrate: 'You tense. They see it. They wait for you to flinch. You wait for them. You blink first. They strike.',
+                luckyNarrate: 'You tense so hard you SNEEZE. The sneeze startles one twin into stabbing the OTHER one in the foot. "That was MY foot." "I KNOW."' }
             ]
           },
           {
             telegraph: 'Both twins lower their hoods at the same moment. Their eyes are exactly level with yours. They wait.',
             options: [
               { stat: 'MIGHT', label: 'Stomp the ground',
-                narrate: 'You stomp. They stomp back. The floor stomps you. You weren\'t expecting a third stomper.' },
+                narrate: 'You stomp. They stomp back. The floor stomps you. You weren\'t expecting a third stomper.',
+                luckyNarrate: 'You stomp. A floorboard pops up and clocks one twin under the chin. The other pauses to laugh. The pause becomes an opening. The opening becomes a wound.' },
               { stat: 'AGI', label: 'Match their stillness', right: true,
                 rightNarrate: 'You lower your gaze to match theirs. Three motionless people. The room holds its breath. They lose interest first.' },
               { stat: 'WILL', label: 'Speak their names',
-                narrate: 'You guess wrong twice. The twins are now insulted on each other\'s behalf.' },
+                narrate: 'You guess wrong twice. The twins are now insulted on each other\'s behalf.',
+                luckyNarrate: 'You guess wrong — spectacularly wrong. You name them after your high school nemesis. They become so confused they break formation to discuss it. You strike during the discussion.' },
               { stat: 'VIGOR', label: 'Plant your feet wide',
-                narrate: 'You plant. They plant. Everyone is planted. A nearby gardener wanders in to inspect. Now you have a witness to your forthcoming death.' }
+                narrate: 'You plant. They plant. Everyone is planted. A nearby gardener wanders in to inspect. Now you have a witness to your forthcoming death.',
+                luckyNarrate: 'You plant. A gardener arrives. The gardener is, improbably, a retired level-20 paladin. He briefly assists. He retires again. The twins are no longer formation-shaped.' }
             ]
           }
         ],
@@ -107,26 +118,32 @@
             telegraph: 'Tired of the stillness, both twins lunge in perfect synchrony. Twin daggers come for your ribs.',
             options: [
               { stat: 'MIGHT', label: 'Brute-parry both blades',
-                narrate: 'You catch one. The other catches you. Pretty straightforward, really.' },
+                narrate: 'You catch one. The other catches you. Pretty straightforward, really.',
+                luckyNarrate: 'You catch one blade. The other STICKS in your buckler at an angle that, mathematically, redirects its owner\'s next swing back into HER OWN sister. Your buckler is now a tactical genius.' },
               { stat: 'AGI', label: 'Step BETWEEN them', right: true,
                 rightNarrate: 'You slip into the gap they didn\'t think existed. Their blades carry past you. Into each other\'s gambesons. They look down. They look at each other. They look down again.' },
               { stat: 'WILL', label: 'Forbid the lunge',
-                narrate: 'You forbid it. They lunge anyway. You add this to your therapist\'s pile.' },
+                narrate: 'You forbid it. They lunge anyway. You add this to your therapist\'s pile.',
+                luckyNarrate: 'You forbid it. The twins, raised with impeccable manners, briefly hesitate. The hesitation is just long enough for the floor to give out beneath them. New basement. Bad day for them.' },
               { stat: 'VIGOR', label: 'Eat both blades',
-                narrate: 'You take both. They take you, in exchange. Bad trade.' }
+                narrate: 'You take both. They take you, in exchange. Bad trade.',
+                luckyNarrate: 'You take both blades — specifically into your IRON FLASK that you forgot was clipped to your hip. The blades stick. The flask wins. Both twins are now disarmed, confused, and bleeding from the sheer rebound.' }
             ]
           },
           {
             telegraph: 'The twins blur into a crossing pattern — left-then-right-then-left-then-right.',
             options: [
               { stat: 'MIGHT', label: 'Break the pattern',
-                narrate: 'You try to disrupt it. The pattern absorbs your disruption. It was always going to.' },
+                narrate: 'You try to disrupt it. The pattern absorbs your disruption. It was always going to.',
+                luckyNarrate: 'You try to break the pattern. You succeed by accidentally tripping. The trip carries you UNDER the pattern. The pattern flails trying to find you. The flailing wounds both twins.' },
               { stat: 'AGI', label: 'Time the gap', right: true,
                 rightNarrate: 'You count their beats. On the third beat there is half a second of nothing. You stand inside that nothing. The blades sing past you.' },
               { stat: 'WILL', label: 'Out-stubborn the choreography',
-                narrate: 'You set your jaw. The choreography sets ITS jaw. The choreography wins.' },
+                narrate: 'You set your jaw. The choreography sets ITS jaw. The choreography wins.',
+                luckyNarrate: 'You out-stubborn the choreography. The choreography, in a fit of artistic pique, throws itself off-tempo to prove a point. The point lands on twin #1\'s shoulder. Sharp point.' },
               { stat: 'VIGOR', label: 'Charge through',
-                narrate: 'You barrel forward. The pattern eats your shoulder. You\'re inside the pattern now. The pattern is unfriendly.' }
+                narrate: 'You barrel forward. The pattern eats your shoulder. You\'re inside the pattern now. The pattern is unfriendly.',
+                luckyNarrate: 'You charge through. You charge SO HARD you punch a hole in the pattern. One twin leaks out the side. The other is, briefly, very alone. You strike the alone one.' }
             ]
           }
         ],
@@ -136,13 +153,16 @@
             telegraph: 'Bleeding now, the twins step into shadow and FLICKER — visible, gone, visible, gone — mocking the air with quick laughs.',
             options: [
               { stat: 'MIGHT', label: 'Cleave the shadow',
-                narrate: 'Your blade hits shadow. Shadow is not a substance. Your blade keeps going. So do you. Off-balance.' },
+                narrate: 'Your blade hits shadow. Shadow is not a substance. Your blade keeps going. So do you. Off-balance.',
+                luckyNarrate: 'Your blade hits shadow. The shadow, surprised, becomes briefly substantial — just long enough to take the wound. Then it goes back to being shadow, embarrassed. Twin #1 is wounded by proxy.' },
               { stat: 'AGI', label: 'Match their flicker',
-                narrate: 'You try to flicker. You are not a flicker-capable being. You stumble. The twins applaud politely from the not-real.' },
+                narrate: 'You try to flicker. You are not a flicker-capable being. You stumble. The twins applaud politely from the not-real.',
+                luckyNarrate: 'You try to flicker. You can\'t — but you stumble in such an unpredictable pattern that you EXACTLY MATCH where a twin chooses to materialize. Painful for both of you. More painful for her.' },
               { stat: 'WILL', label: 'Refuse to acknowledge the trick', right: true,
                 rightNarrate: 'You stop looking. Your eyes simply do NOT allow it. The illusion fails because you will not engage. They flicker solid, embarrassed. You hear one of them mutter "rude."' },
               { stat: 'VIGOR', label: 'Wait it out',
-                narrate: 'You wait. They flicker LONGER. You wait LONGER. They flicker into your blind spot. You no longer see them coming.' }
+                narrate: 'You wait. They flicker LONGER. You wait LONGER. They flicker into your blind spot. You no longer see them coming.',
+                luckyNarrate: 'You wait. One twin flickers SO HARD she flickers herself out of existence for three seconds. When she flickers back, you happen to be standing exactly where she rematerializes. Awkward for her insides.' }
             ]
           }
         ],
@@ -154,11 +174,14 @@
               { stat: 'MIGHT', label: 'Shove them apart', right: true,
                 rightNarrate: 'You shoulder into the bristling mass. Weight does what blade can\'t. The twins POP apart like reluctant magnets. One lands on her own knife. The other lands on her sister\'s elbow.' },
               { stat: 'AGI', label: 'Slip through the gap',
-                narrate: 'There is no gap. They share a shadow. You hit shadow. Shadow hits back, somehow.' },
+                narrate: 'There is no gap. They share a shadow. You hit shadow. Shadow hits back, somehow.',
+                luckyNarrate: 'There is no gap. You force one anyway by slipping BETWEEN their shared shadow — which causes a small reality-tear. The reality-tear contains a single annoyed twin. She is now even more annoyed.' },
               { stat: 'WILL', label: 'Will them apart',
-                narrate: 'You will it. They will it back, doubled. You feel something behind your eyes give.' },
+                narrate: 'You will it. They will it back, doubled. You feel something behind your eyes give.',
+                luckyNarrate: 'You will them apart. They will them TOGETHER. Reality plays a brief game of tug-of-war and, being a poor sport, JUST CHOOSES YOU. The twins are now apart. You\'ll get the bill later.' },
               { stat: 'VIGOR', label: 'Bear-hug the cluster',
-                narrate: 'You bear-hug two assassins. They are surprisingly small. They are also covered in knives.' }
+                narrate: 'You bear-hug two assassins. They are surprisingly small. They are also covered in knives.',
+                luckyNarrate: 'You bear-hug them. Both blades aim for you. Both blades miss your gambeson entirely and find each other\'s twin instead. The hug was, retrospectively, optimal.' }
             ]
           }
         ],
@@ -168,13 +191,16 @@
             telegraph: 'Wounded and desperate, the twins do the unspeakable: they BREAK FORMATION. One charges. The other circles. They are, for the first time, ACTUALLY TRYING.',
             options: [
               { stat: 'MIGHT', label: 'Smash the charger',
-                narrate: 'You swing for the charging twin. The circling twin slides her blade where your kidney lives. Now your kidney lives somewhere else.' },
+                narrate: 'You swing for the charging twin. The circling twin slides her blade where your kidney lives. Now your kidney lives somewhere else.',
+                luckyNarrate: 'You swing for the charger. The flanker, perfectly executing her flank, runs SHOULDER-FIRST into the swing she had no business being in front of. The other twin: "That was — that was MY part."' },
               { stat: 'AGI', label: 'Hold the still pose ONE MORE BEAT', right: true,
                 rightNarrate: 'You don\'t move. The charging twin commits. The circling twin commits to flanking. The flank is now where the charge is going to end up.' },
               { stat: 'WILL', label: 'Outwill them',
-                narrate: 'You will not be flanked. They flank you anyway. You add this to the will-doesn\'t-work pile.' },
+                narrate: 'You will not be flanked. They flank you anyway. You add this to the will-doesn\'t-work pile.',
+                luckyNarrate: 'You out-will them. They flank you anyway — but the flank is so PERFECTLY executed that they triangulate themselves into the same blade-arc. "Oh COME ON."' },
               { stat: 'VIGOR', label: 'Tank the charge',
-                narrate: 'You tank. The charger lands. So does the flanker. You are now sandwich.' }
+                narrate: 'You tank. The charger lands. So does the flanker. You are now sandwich.',
+                luckyNarrate: 'You tank. The charger bounces off you like a thrown shoe. The shoe lands on the flanker. The flanker is now also a sandwich, in her own right.' }
             ]
           }
         ]
@@ -233,13 +259,16 @@
             telegraph: 'The Revenant drifts close, hollow eyes flickering. A wave of crushing sorrow rolls outward.',
             options: [
               { stat: 'MIGHT', label: 'Swing through the grief',
-                narrate: 'Your blade passes through her ribs. She does not have ribs. Awkward.' },
+                narrate: 'Your blade passes through her ribs. She does not have ribs. Awkward.',
+                luckyNarrate: 'Your blade passes through her ribs. On the way out, it picks up a single floating regret. The regret solidifies around the blade and stabs her on the way out.' },
               { stat: 'AGI', label: 'Sidestep the sorrow',
-                narrate: 'You dodge feelings. Feelings find you anyway. They were always going to.' },
+                narrate: 'You dodge feelings. Feelings find you anyway. They were always going to.',
+                luckyNarrate: 'You dodge feelings. The feelings, frustrated, ricochet OFF you and back at the Revenant — who is the source. She is now haunted by her own emotions. Worse than yours.' },
               { stat: 'WILL', label: 'Refuse the sorrow', right: true,
                 rightNarrate: 'You feel it. You note it. You set it down. The Revenant LOOKS at you — that is not how this is supposed to work. She is offended. Her form solidifies, just slightly.' },
               { stat: 'VIGOR', label: 'Endure it',
-                narrate: 'You endure. The sorrow has a lot of inventory. You run out before it does.' }
+                narrate: 'You endure. The sorrow has a lot of inventory. You run out before it does.',
+                luckyNarrate: 'You endure. You endure so HARD that the sorrow loses interest. It wanders off looking for a more responsive customer. The Revenant is now low on stock.' }
             ]
           }
         ],
@@ -249,13 +278,16 @@
             telegraph: 'The Revenant whispers a name — soft, repeating, almost familiar. The whisper is trying to be YOUR name.',
             options: [
               { stat: 'MIGHT', label: 'Shout your real name back',
-                narrate: 'You shout. The whisper absorbs the shout. Now the whisper sounds more like you.' },
+                narrate: 'You shout. The whisper absorbs the shout. Now the whisper sounds more like you.',
+                luckyNarrate: 'You shout. Your shout disturbs a nearby sentient acorn, which falls out of a tree and plinks the Revenant on the forehead. She is briefly, profoundly bewildered.' },
               { stat: 'AGI', label: 'Mishear it deliberately',
-                narrate: 'You pretend not to hear. You hear it anyway. The mishearing was wishful.' },
+                narrate: 'You pretend not to hear. You hear it anyway. The mishearing was wishful.',
+                luckyNarrate: 'You mishear. You hear "BARRY" instead — specifically, the Revenant\'s ex-husband\'s name. She immediately gets sidetracked by 600 years of unresolved feelings. You strike during the rumination.' },
               { stat: 'WILL', label: 'Say HER true name', right: true,
                 rightNarrate: 'You speak the name she had before she had hollows. She FLINCHES. The whisper breaks. For the first time in three centuries someone has remembered her correctly.' },
               { stat: 'VIGOR', label: 'Ignore it',
-                narrate: 'You ignore the whisper. The whisper escalates to a SHOUT. You stop ignoring. Too late.' }
+                narrate: 'You ignore the whisper. The whisper escalates to a SHOUT. You stop ignoring. Too late.',
+                luckyNarrate: 'You ignore the whisper. The whisper, embarrassed, tries to back off and trips over its own grammar. The Revenant catches a stray syntax error in the throat.' }
             ]
           }
         ],
@@ -265,13 +297,16 @@
             telegraph: 'A spectral tendril of soul-stuff lances from her open mouth, fast as thought.',
             options: [
               { stat: 'MIGHT', label: 'Block with shield',
-                narrate: 'The tendril passes through your shield like a metaphor. Which it is.' },
+                narrate: 'The tendril passes through your shield like a metaphor. Which it is.',
+                luckyNarrate: 'The tendril passes through your shield. The shield, displeased, materializes on the OTHER side. The tendril is now sandwiched between the shield\'s two timelines. It does not enjoy this.' },
               { stat: 'AGI', label: 'Duck under it', right: true,
                 rightNarrate: 'You drop low. The tendril whistles overhead. It hits the wall, takes one disappointed look back at you, and dissipates.' },
               { stat: 'WILL', label: 'Refuse to be drained',
-                narrate: 'You refuse. The tendril is not asking for permission. It rarely does.' },
+                narrate: 'You refuse. The tendril is not asking for permission. It rarely does.',
+                luckyNarrate: 'You refuse. The tendril, raised to never accept no for an answer, throws a SPIRITUAL TANTRUM. The tantrum recoils into the Revenant. She grounds herself for a long time.' },
               { stat: 'VIGOR', label: 'Tank the drain',
-                narrate: 'You take it. Several formative memories of yours go on a sudden unscheduled vacation.' }
+                narrate: 'You take it. Several formative memories of yours go on a sudden unscheduled vacation.',
+                luckyNarrate: 'You take it. The drain hits one of your really FORMATIVE memories. It is so dense the drain RICOCHETS back into the Revenant. She now has your childhood. She does not enjoy it.' }
             ]
           }
         ],
@@ -281,13 +316,16 @@
             telegraph: 'Bleeding light now, the Revenant opens her chest cavity. Inside is a long, slow, terrible weeping.',
             options: [
               { stat: 'MIGHT', label: 'Strike the weeping',
-                narrate: 'You can\'t strike a sound. You strike air. The weeping continues, unimpressed.' },
+                narrate: 'You can\'t strike a sound. You strike air. The weeping continues, unimpressed.',
+                luckyNarrate: 'You strike the sound. The sound DUCKS — it was sentient. The weeping pauses to take notes. The pause is fatal. For the Revenant.' },
               { stat: 'AGI', label: 'Step around it',
-                narrate: 'You cannot step around grief. It is shaped like a room.' },
+                narrate: 'You cannot step around grief. It is shaped like a room.',
+                luckyNarrate: 'You step around grief. You find a SECOND room behind it containing your unrelated emotional support kit. You apply emotional support to the Revenant. She is unfamiliar with it. It hurts.' },
               { stat: 'WILL', label: 'SMITE her with conviction', right: true,
                 rightNarrate: 'You raise your blade and SAY THE THING — the prayer you mean. The blade catches light it has no business catching. The weeping flinches. Faith hits her where steel could not.' },
               { stat: 'VIGOR', label: 'Hug her',
-                narrate: 'You go in for a hug. She passes through you. You hug the wall behind her. Embarrassing for everyone.' }
+                narrate: 'You go in for a hug. She passes through you. You hug the wall behind her. Embarrassing for everyone.',
+                luckyNarrate: 'You hug. She passes through you. Behind her is a startled BARTENDER you didn\'t notice was there. The bartender, in solidarity, throws his bar towel at the Revenant. It lands.' }
             ]
           }
         ],
@@ -297,11 +335,14 @@
             telegraph: 'Cornered, the Revenant opens FULLY — every hollow at once — and the drain becomes a tide pulling at you ALL.',
             options: [
               { stat: 'MIGHT', label: 'Hack the tide',
-                narrate: 'You hack water. Water hacks back, somehow.' },
+                narrate: 'You hack water. Water hacks back, somehow.',
+                luckyNarrate: 'You hack the tide. The tide rises to a 3-star review. The review is so scathing the Revenant has to step out to handle it. You hit her during the customer service call.' },
               { stat: 'AGI', label: 'Outrun the pull',
-                narrate: 'The pull is faster than you. The pull is faster than fast. The pull is the concept of being late for things.' },
+                narrate: 'The pull is faster than you. The pull is faster than fast. The pull is the concept of being late for things.',
+                luckyNarrate: 'You outrun the pull. You outrun it so PURELY the pull, embarrassed, goes back to retrieve something it forgot. Halfway through the retrieval it walks into the Revenant. The boss gets pulled by her own move.' },
               { stat: 'WILL', label: 'Refuse the pull',
-                narrate: 'You refuse. The pull has stopped taking refusals. It is on a timer.' },
+                narrate: 'You refuse. The pull has stopped taking refusals. It is on a timer.',
+                luckyNarrate: 'You refuse. The pull tries to argue. The argument is recorded by a passing scribe and immediately published as a hit play. The play has bad reviews. The Revenant takes them personally.' },
               { stat: 'VIGOR', label: 'Plant yourself like a tree', right: true,
                 rightNarrate: 'You set your stance. You become FURNITURE. The tide hits you. The tide moves past you. The tide loses cohesion against your immovable body. The Revenant\'s mouth makes an O that is genuinely impressive.' }
             ]
@@ -364,11 +405,14 @@
               { stat: 'MIGHT', label: 'Shoulder-charge the plating', right: true,
                 rightNarrate: 'You drive your full weight into the seam. The brass doesn\'t crack — but it FLEXES. Heat pours out of the crease. You\'ve opened a gap. The drake hisses, betrayed by her own armor.' },
               { stat: 'AGI', label: 'Slip a blade between the plates',
-                narrate: 'The plates close around your blade. Your blade is now her blade. Hers is bigger, and on fire.' },
+                narrate: 'The plates close around your blade. Your blade is now her blade. Hers is bigger, and on fire.',
+                luckyNarrate: 'The plates close around your blade. The blade, now wedged, becomes a structural feature. The Forgewyrm tries to twist. The blade twists with her. Specifically into her own ribcage.' },
               { stat: 'WILL', label: 'Command her to soften',
-                narrate: 'You command. The brass laughs. You did not know brass could laugh. Now you do.' },
+                narrate: 'You command. The brass laughs. You did not know brass could laugh. Now you do.',
+                luckyNarrate: 'You command. The brass laughs SO HARD it crumples a section of itself by accident. "...I did not consent to comedy structural damage," the Forgewyrm grumbles.' },
               { stat: 'VIGOR', label: 'Endure the heat',
-                narrate: 'You endure. The heat endures more. Heat has been doing this longer than you.' }
+                narrate: 'You endure. The heat endures more. Heat has been doing this longer than you.',
+                luckyNarrate: 'You endure. The heat, frustrated, OVERHEATS itself. The Forgewyrm experiences a brief but humiliating internal short-circuit. A scale flies off and clatters away embarrassed.' }
             ]
           }
         ],
@@ -378,13 +422,16 @@
             telegraph: 'The Forgewyrm inhales — chest glowing molten — and exhales a long arc of furnace breath.',
             options: [
               { stat: 'MIGHT', label: 'Bull through the fire',
-                narrate: 'You charge through fire. Fire is unmoved. You are now also fire.' },
+                narrate: 'You charge through fire. Fire is unmoved. You are now also fire.',
+                luckyNarrate: 'You bull through. You are SO MASSIVE you smother part of the breath. The unsmothered part redirects backwards into the drake\'s own face. "...how."' },
               { stat: 'AGI', label: 'Slide under the arc', right: true,
                 rightNarrate: 'You hit the ground sliding. The breath roars over you, igniting the ceiling beams. You come up inside her guard, untouched, blade up. The drake squints — that was not on her itinerary.' },
               { stat: 'WILL', label: 'Refuse the burn',
-                narrate: 'You refuse. The burn was never asking. It rarely asks.' },
+                narrate: 'You refuse. The burn was never asking. It rarely asks.',
+                luckyNarrate: 'You refuse the burn. The burn, taken aback, asks for clarification. While it asks, it forgets to actually burn you. The momentum carries the gout into the drake\'s own nostril.' },
               { stat: 'VIGOR', label: 'Soak the breath',
-                narrate: 'You soak it. The breath was, in retrospect, more than your soak budget.' }
+                narrate: 'You soak it. The breath was, in retrospect, more than your soak budget.',
+                luckyNarrate: 'You soak. You soak SO HARD you absorb the entire gout. You then exhale at the drake. The drake is briefly stunned by being breathed at by a smaller fire.' }
             ]
           }
         ],
@@ -396,11 +443,14 @@
               { stat: 'MIGHT', label: 'Pry the scale loose with force', right: true,
                 rightNarrate: 'You jam your blade in the gap and LEVER. The scale tears free with a sound like a foundry being divorced. The drake roars in a register that briefly deafens history.' },
               { stat: 'AGI', label: 'Pluck the scale delicately',
-                narrate: 'You pluck. The scale holds. It is large, hot, and not interested in being plucked.' },
+                narrate: 'You pluck. The scale holds. It is large, hot, and not interested in being plucked.',
+                luckyNarrate: 'You pluck. The scale, surprised by the delicacy, FORGETS it was attached and pops off on its own. It lands on a small bug. The bug is fine. The drake is not.' },
               { stat: 'WILL', label: 'Ask the scale to leave',
-                narrate: 'You ask politely. The scale is unmoved. It has tenure.' },
+                narrate: 'You ask politely. The scale is unmoved. It has tenure.',
+                luckyNarrate: 'You ask politely. The scale, raised by good parents, considers the request seriously — specifically while detaching. It lands on the drake\'s foot. She makes a sound.' },
               { stat: 'VIGOR', label: 'Press your body against the gap',
-                narrate: 'You press. The gap heats up. You are now searing into a drake-shape.' }
+                narrate: 'You press. The gap heats up. You are now searing into a drake-shape.',
+                luckyNarrate: 'You press. You press so HARD the heat redirects INWARDS. The drake experiences her own furnace from the wrong side. She is shocked.' }
             ]
           }
         ],
@@ -412,11 +462,14 @@
               { stat: 'MIGHT', label: 'Drive your blade THROUGH the collar', right: true,
                 rightNarrate: 'You set your point. You commit your entire spine to the thrust. The collar resists for one half-second of eternity — then folds. Your blade enters the heart-furnace and asks it a hard question.' },
               { stat: 'AGI', label: 'Slip the blade past the collar',
-                narrate: 'You slip. The collar slips back. The collar is, in some way, agile.' },
+                narrate: 'You slip. The collar slips back. The collar is, in some way, agile.',
+                luckyNarrate: 'You slip past. The collar tries to slip BACK — tries TOO hard. Briefly leaves its socket. While reseating, it pinches the drake. She yelps.' },
               { stat: 'WILL', label: 'Believe through the collar',
-                narrate: 'You believe. Brass does not have ears for that.' },
+                narrate: 'You believe. Brass does not have ears for that.',
+                luckyNarrate: 'You believe. Brass develops ears, briefly, just to hear your conviction. Specifically near the heart-furnace. The ears short-circuit. Hot.' },
               { stat: 'VIGOR', label: 'Hug the heart-furnace',
-                narrate: 'You hug the heart-furnace. You are briefly the heart-furnace\'s problem. You are also briefly soup.' }
+                narrate: 'You hug the heart-furnace. You are briefly the heart-furnace\'s problem. You are also briefly soup.',
+                luckyNarrate: 'You hug it. The hug is so EARNEST the heart-furnace experiences emotional exhaustion. Specifically it sighs. Furnaces are not built for sighing. Cracks form.' }
             ]
           }
         ],
@@ -426,11 +479,14 @@
             telegraph: 'Bleeding furnace-light, the Forgewyrm convulses. Her dying spasm will level half the room — including you, unless you weather it.',
             options: [
               { stat: 'MIGHT', label: 'Punch the spasm',
-                narrate: 'You punch a seizure. The seizure was bigger than your fist. Always was.' },
+                narrate: 'You punch a seizure. The seizure was bigger than your fist. Always was.',
+                luckyNarrate: 'You punch the spasm. The spasm, offended at the rudeness, PAUSES to file a formal complaint. The drake collapses safely past you during the paperwork.' },
               { stat: 'AGI', label: 'Dodge the spasm',
-                narrate: 'You try to dodge a dragon-shaped death rattle. There is no "outside" of a dying dragon.' },
+                narrate: 'You try to dodge a dragon-shaped death rattle. There is no "outside" of a dying dragon.',
+                luckyNarrate: 'You dodge. You dodge so FAR you exit the room entirely. While outside, you notice a load-bearing post. You kick it. The roof falls on the drake. Architectural homicide.' },
               { stat: 'WILL', label: 'Refuse to be flattened',
-                narrate: 'You refuse flattening. The drake flattens you anyway. Her last act, lovingly.' },
+                narrate: 'You refuse flattening. The drake flattens you anyway. Her last act, lovingly.',
+                luckyNarrate: 'You refuse. The drake\'s mass, sensing your refusal, RESPECTS IT. She lands beside you instead of on you. Then keeps landing. Architectural drake.' },
               { stat: 'VIGOR', label: 'Brace and ride it out', right: true,
                 rightNarrate: 'You crouch low. You grip a chunk of dropped plating like a surfboard. The spasm hits — but you\'re too low, too anchored. The drake collapses. The room collapses. You stand up out of the rubble, slightly singed.' }
             ]
@@ -491,11 +547,14 @@
             telegraph: 'Rhasa lunges OPENER — full maw, full speed, no warning. The bite is going to land.',
             options: [
               { stat: 'MIGHT', label: 'Punch the maw',
-                narrate: 'You punch a void-mouth. The mouth eats your fist. Then the rest of you.' },
+                narrate: 'You punch a void-mouth. The mouth eats your fist. Then the rest of you.',
+                luckyNarrate: 'You punch the maw. Your fist tastes BAD — so bad the maw spits it out. With the rest of you still attached. You are catapulted to safety. Embarrassing but effective.' },
               { stat: 'AGI', label: 'Dodge the bite',
-                narrate: 'You dodge. The maw was bigger than the dodge. There was no outside to dodge to.' },
+                narrate: 'You dodge. The maw was bigger than the dodge. There was no outside to dodge to.',
+                luckyNarrate: 'You dodge. The maw was bigger — but your dodge was AIMED. You dodge directly into Rhasa\'s blind spot, which she didn\'t know she had. Now she does. Now her blind spot has your BLADE in it.' },
               { stat: 'WILL', label: 'Refuse the bite',
-                narrate: 'You refuse. Rhasa accepts your refusal and bites you anyway.' },
+                narrate: 'You refuse. Rhasa accepts your refusal and bites you anyway.',
+                luckyNarrate: 'You refuse. Rhasa appreciates the directness — so much that she pauses to congratulate you. The pause is one full second of exposed throat. You make use of it.' },
               { stat: 'VIGOR', label: 'OFFER your shield arm', right: true,
                 rightNarrate: 'You shove your shield-arm into her maw. She bites it — HARD. But she bites the SHIELD, not the arm. Her jaws lock around metal she didn\'t expect. You can hear her swearing through teeth.' }
             ]
@@ -507,13 +566,16 @@
             telegraph: 'Mouth full, Rhasa reaches into your skull with something thinner than thought. She wants you to FORGET why you\'re here.',
             options: [
               { stat: 'MIGHT', label: 'Headbutt the thought',
-                narrate: 'You headbutt your own brain. Brain headbutts back. You are now concussed and confused.' },
+                narrate: 'You headbutt your own brain. Brain headbutts back. You are now concussed and confused.',
+                luckyNarrate: 'You headbutt your own thoughts. Your thoughts give up and leave the building. The intrusion follows them, confused. Both end up in the kitchen. Rhasa\'s spectral hand is now in a kitchen drawer.' },
               { stat: 'AGI', label: 'Outpace the intrusion',
-                narrate: 'You can\'t outrun something that\'s already inside.' },
+                narrate: 'You can\'t outrun something that\'s already inside.',
+                luckyNarrate: 'You outrun the intrusion by running BACKWARDS into your own past. The intrusion is now reading your high school yearbook. The yearbook is so cringe Rhasa briefly disengages.' },
               { stat: 'WILL', label: 'Remember your name SO HARD it pushes her out', right: true,
                 rightNarrate: 'You recite your name. Your full name. Including the embarrassing middle one. The void-mouth recoils — she didn\'t want THAT MUCH of you. You feel her tendril snap back into her like a measuring tape.' },
               { stat: 'VIGOR', label: 'Endure the forgetting',
-                narrate: 'You endure. You forget what you were enduring. Then you forget everything.' }
+                narrate: 'You endure. You forget what you were enduring. Then you forget everything.',
+                luckyNarrate: 'You endure. You forget so thoroughly that you forget WHICH FIGHT YOU\'RE IN. Specifically you forget you should fight at all. Rhasa forgets too, in solidarity. You both reset. You strike first.' }
             ]
           }
         ],
@@ -523,11 +585,14 @@
             telegraph: 'Rhasa hauls back, gathering for a DEVOUR — a full-body swallow attempt. The throat opens. The throat is a room.',
             options: [
               { stat: 'MIGHT', label: 'Punch your way out',
-                narrate: 'You punch the inside of a throat. The throat informs you, by contracting, that this is bad form.' },
+                narrate: 'You punch the inside of a throat. The throat informs you, by contracting, that this is bad form.',
+                luckyNarrate: 'You punch the throat from inside. The throat, surprised, opens to complain. You ride the complaint OUT and use the momentum to stab the LARYNX. Rhasa is no longer eloquent.' },
               { stat: 'AGI', label: 'Slip out a tooth-gap',
-                narrate: 'You slip. The teeth slip back into place around you. You are now lodged. Specifically lodged.' },
+                narrate: 'You slip. The teeth slip back into place around you. You are now lodged. Specifically lodged.',
+                luckyNarrate: 'You slip the tooth-gap. The tooth pops out. You ride the tooth like a small slide. The tooth lands on Rhasa\'s other foot. Three things are now embarrassed.' },
               { stat: 'WILL', label: 'Refuse to be eaten',
-                narrate: 'You refuse. The eating proceeds without your consent.' },
+                narrate: 'You refuse. The eating proceeds without your consent.',
+                luckyNarrate: 'You refuse so categorically that Rhasa develops a small attack of conscience. She PAUSES mid-swallow. You strike up. From in. With prejudice.' },
               { stat: 'VIGOR', label: 'Brace inside the throat', right: true,
                 rightNarrate: 'You let yourself be drawn in — and then you BRACE. Arms and legs locked against the inner walls. The throat tries to swallow. The throat fails. You can hear Rhasa\'s ribs disagreeing with each other.' }
             ]
@@ -541,11 +606,14 @@
               { stat: 'MIGHT', label: 'Drive your blade through both ribs', right: true,
                 rightNarrate: 'You set your blade between the two heartbeats and SHOVE. Both ribs go. The blade catches the second heart on its second pulse. Rhasa makes a sound that goes through your gambeson and into the next room.' },
               { stat: 'AGI', label: 'Precision strike between the ribs',
-                narrate: 'You strike between the ribs precisely. The ribs precisely shift. You hit cartilage. Cartilage shrugs.' },
+                narrate: 'You strike between the ribs precisely. The ribs precisely shift. You hit cartilage. Cartilage shrugs.',
+                luckyNarrate: 'You strike precisely. The ribs shift. You strike again, even more precisely. You shave a sliver of rib. The sliver lands in the heart valve. Cardio issues for Rhasa.' },
               { stat: 'WILL', label: 'Will the heart to stop',
-                narrate: 'You will it. The heart consults its lawyer. The lawyer is also you. You lose.' },
+                narrate: 'You will it. The heart consults its lawyer. The lawyer is also you. You lose.',
+                luckyNarrate: 'You will the heart to stop. The heart, sensing peer pressure from the OTHER heart, slows. Two hearts. One peer-pressure attack. They both go down.' },
               { stat: 'VIGOR', label: 'Bear-hug the heart',
-                narrate: 'You hug the heart from inside a throat. This is the worst hug ever recorded.' }
+                narrate: 'You hug the heart from inside a throat. This is the worst hug ever recorded.',
+                luckyNarrate: 'You hug the heart. Hugs slow heart rate. You are surprisingly knowledgeable about this. The heart slows. Then slows. Then stops, gently. The other heart panics.' }
             ]
           }
         ],
@@ -555,11 +623,14 @@
             telegraph: 'The second heart pops. Rhasa goes into a death-spiral — collapsing inward — and you\'re still inside her.',
             options: [
               { stat: 'MIGHT', label: 'Punch your way out the side',
-                narrate: 'You punch a void-beast\'s flank from inside. The flank wins. The flank usually does.' },
+                narrate: 'You punch a void-beast\'s flank from inside. The flank wins. The flank usually does.',
+                luckyNarrate: 'You punch the flank. The flank, dying anyway, just GIVES. You punch through. You are now outside. Rhasa is in pieces. The pieces are also outside.' },
               { stat: 'AGI', label: 'Sprint out the throat',
-                narrate: 'You sprint up a collapsing throat. The throat collapses. You are throat now.' },
+                narrate: 'You sprint up a collapsing throat. The throat collapses. You are throat now.',
+                luckyNarrate: 'You sprint up the throat. The throat tries to collapse on you. You outrun the collapse by half a second. The collapse meets only itself. Painful for the void-beast.' },
               { stat: 'WILL', label: 'Will yourself outside',
-                narrate: 'You will yourself outside. The cosmos charges a fee. You can\'t pay.' },
+                narrate: 'You will yourself outside. The cosmos charges a fee. You can\'t pay.',
+                luckyNarrate: 'You will yourself outside. The cosmos sends an invoice. You hand the invoice to Rhasa on the way out. She is now in collections.' },
               { stat: 'VIGOR', label: 'Ride the collapse to the exit', right: true,
                 rightNarrate: 'You hunker down and let the convulsion CARRY you. Rhasa\'s body folds — once, twice — and spits you out her open maw like a melon pit. You roll, stand up, and dust off something you don\'t want to identify.' }
             ]
@@ -622,11 +693,14 @@
               { stat: 'MIGHT', label: 'Break his concentration with brute force', right: true,
                 rightNarrate: 'You drive your shoulder into his sternum. The recitation stops. He looks down at his own ribcage, mildly offended. "That was — that was on page 4. Page 4 said you would not do that."' },
               { stat: 'AGI', label: 'Sidestep the recitation',
-                narrate: '"Yes. Page 3, line 9. \'The hero will sidestep.\' Anyway."' },
+                narrate: '"Yes. Page 3, line 9. \'The hero will sidestep.\' Anyway."',
+                luckyNarrate: '"Page 3 — wait. Page 3 has been TORN OUT. Who tore out page 3. WHO." Praevus shuffles through his book. You strike during the shuffle.' },
               { stat: 'WILL', label: 'Refuse to be quoted',
-                narrate: '"That refusal is on page 17. Margin note: \'predictable.\' Continuing."' },
+                narrate: '"That refusal is on page 17. Margin note: \'predictable.\' Continuing."',
+                luckyNarrate: '"That refusal is on — wait. There is a NEW page 17. Did you EDIT my notes? While I was reading them?" The editing was you. Editing is, in this case, violence.' },
               { stat: 'VIGOR', label: 'Tank the recitation',
-                narrate: '"Tanking. Page 22. I have a chart for what you will do next." (He has a chart. You can see it.)' }
+                narrate: '"Tanking. Page 22. I have a chart for what you will do next." (He has a chart. You can see it.)',
+                luckyNarrate: '"Tanking. Page 22 — the chart is BLANK. The chart was supposed to be FULL. Did the universe REDACT my chart??" While he checks the chart you wound him.' }
             ]
           }
         ],
@@ -636,13 +710,16 @@
             telegraph: 'Praevus weaves a Sigil of Predicted Motion in the air. It hangs between you, glowing — a map of where you will be in three seconds.',
             options: [
               { stat: 'MIGHT', label: 'Punch the sigil',
-                narrate: '"Page 9 entry: \'will attempt to punch the sigil.\' Marked complete." (He marks it complete.)' },
+                narrate: '"Page 9 entry: \'will attempt to punch the sigil.\' Marked complete." (He marks it complete.)',
+                luckyNarrate: '"Page 9 — the entry has UPDATED ITSELF. It now reads \'will punch the sigil AND ALSO PRAEVUS.\' The second part is happening now."' },
               { stat: 'AGI', label: 'Move to a place the sigil DOESN\'T predict', right: true,
                 rightNarrate: 'You watch the sigil. It shows you stepping LEFT. So you step exactly nowhere — a half-step into a position the sigil didn\'t map. The sigil flickers. Praevus FROWNS for the first time. "...that was off-script."' },
               { stat: 'WILL', label: 'Refuse the prediction',
-                narrate: '"Refusal logged. Sigil unchanged. Continuing."' },
+                narrate: '"Refusal logged. Sigil unchanged. Continuing."',
+                luckyNarrate: '"Refusal — wait. The sigil is now CHANGING. Why is it changing. Refusal does not change sigils. Refusal SHOULD NOT — oh." The sigil now points at him.' },
               { stat: 'VIGOR', label: 'Stand where you are',
-                narrate: '"Standing-still. Page 11. Easy." (He shoves you with a word. You move.)' }
+                narrate: '"Standing-still. Page 11. Easy." (He shoves you with a word. You move.)',
+                luckyNarrate: '"Standing-still. Page 11 — oh. Page 11 has been EDITED. It says \'unmoveable.\' By WHOM." The shove word slides off you. Hits Praevus.' }
             ]
           }
         ],
@@ -652,11 +729,14 @@
             telegraph: 'Annoyed, Praevus calls down a Sigil of Unmaking — a pillar of erasure that descends slowly. It is going to land on the spot you stand.',
             options: [
               { stat: 'MIGHT', label: 'Punch the pillar',
-                narrate: '"Punching the un-pillar. You would be erased twice as fast." (He is correct.)' },
+                narrate: '"Punching the un-pillar. You would be erased twice as fast." (He is correct.)',
+                luckyNarrate: '"Punching the un-pillar would erase you twice as fast — wait, your fist is GLOWING. Is that a COUNTER-pillar. Did you bring a COUNTER-PILLAR." You did. Praevus is briefly un-unmade.' },
               { stat: 'AGI', label: 'Run from the pillar',
-                narrate: '"Running. Page 18. The pillar moves with you. Surely you noticed?" (You did not.)' },
+                narrate: '"Running. Page 18. The pillar moves with you. Surely you noticed?" (You did not.)',
+                luckyNarrate: '"Running. Page 18 — the pillar is running. Why is the pillar running. Oh. It\'s running AT ME."' },
               { stat: 'WILL', label: 'Refuse erasure',
-                narrate: '"Refusing erasure. The erasure is unmoved by your refusal. As is the dictionary."' },
+                narrate: '"Refusing erasure. The erasure is unmoved by your refusal. As is the dictionary."',
+                luckyNarrate: '"Refusing erasure. The erasure — pauses. The erasure CONSIDERS. The erasure finds you compelling. The erasure pivots." Bad for Praevus.' },
               { stat: 'VIGOR', label: 'Stand DIRECTLY UNDER it', right: true,
                 rightNarrate: 'You step INTO the descending pillar. Praevus blinks. The Sigil of Unmaking encounters someone who refuses to be unmade. You feel the pillar HESITATE around you. It cannot decide if you should still exist. The pillar fizzles, embarrassed. "...that was — that was paradoxical."' }
             ]
@@ -668,13 +748,16 @@
             telegraph: 'Praevus drops his book and SPEAKS. He says the True Name of your weakness — the one you have, the one you didn\'t put on your sheet.',
             options: [
               { stat: 'MIGHT', label: 'Hit him before he finishes',
-                narrate: '"Interrupting. Page 12. The name was already said. The name is in you now."' },
+                narrate: '"Interrupting. Page 12. The name was already said. The name is in you now."',
+                luckyNarrate: '"Interrupting. Page 12 — wait, page 12 is now BLANK. The name un-said itself. The name was in you and now it ISN\'T." You feel taller. Praevus is bewildered.' },
               { stat: 'AGI', label: 'Step out of your own name\'s path', right: true,
                 rightNarrate: 'You twist sideways at the exact moment the word leaves his lips. The naming flies past you, lands behind you, and discovers there\'s nobody there to stick to. Praevus blinks. "...your own name has stage-fright. I did not budget for that."' },
               { stat: 'WILL', label: 'Speak HIS true name back',
-                narrate: 'You don\'t have it. You make one up. "Roy?" you offer. Lord Praevus is briefly, profoundly insulted. He marks it down.' },
+                narrate: 'You don\'t have it. You make one up. "Roy?" you offer. Lord Praevus is briefly, profoundly insulted. He marks it down.',
+                luckyNarrate: 'You guess "Roy." It is — somehow — correct. Lord Praevus\'s actual name is Roy. He is furious that you knew. He is also wounded by the knowing.' },
               { stat: 'VIGOR', label: 'Endure the naming',
-                narrate: 'You endure your own true name. It is heavier than you remembered.' }
+                narrate: 'You endure your own true name. It is heavier than you remembered.',
+                luckyNarrate: 'You endure your own true name. The weight settles. The weight is REASSURING. The weight TRANSFERS. To Praevus. He carries it now. He is no longer agile.' }
             ]
           }
         ],
@@ -686,11 +769,14 @@
               { stat: 'MIGHT', label: 'Catch the staff and break it', right: true,
                 rightNarrate: 'You catch the staff one-handed. You break it. Lord Praevus stares at the broken staff. "...it was a SIGNED staff." You have offended his bibliography.' },
               { stat: 'AGI', label: 'Dodge the swing',
-                narrate: '"Page 1, line 1. Dodging." (You dodge into the staff anyway.)' },
+                narrate: '"Page 1, line 1. Dodging." (You dodge into the staff anyway.)',
+                luckyNarrate: '"Page 1 — Page 1 is GONE. The book is missing the front matter. The dodge succeeds. The staff misses." Praevus is briefly disarmed by his own missing context.' },
               { stat: 'WILL', label: 'Refuse the staff',
-                narrate: '"Refusing a staff. Novel. Doesn\'t work."' },
+                narrate: '"Refusing a staff. Novel. Doesn\'t work."',
+                luckyNarrate: '"Refusing a staff. Novel — the staff agrees. The staff abdicates. The staff is no longer his staff. The staff is now YOUR staff." You staff him.' },
               { stat: 'VIGOR', label: 'Tank the staff',
-                narrate: '"Tanking the staff. Page 24. The staff was bigger than the page." (It was.)' }
+                narrate: '"Tanking the staff. Page 24. The staff was bigger than the page." (It was.)',
+                luckyNarrate: '"Tanking — the staff bounces. The staff bounces TWICE. The second bounce lands on Praevus\'s own foot. \'That was — that was MY foot.\'"' }
             ]
           }
         ]
@@ -1030,6 +1116,7 @@
 
   var styles = ''
     + 'body.game-page .d20-widget{display:none !important}'
+    + 'body.game-page #theme-toggle{display:none !important}'
     + 'body.game-page{background:#1a1612;color:#E8D6B4;'
     + 'font-family:"Courier New",monospace;min-height:100vh}'
     + 'body.game-page #main{max-width:none;padding:0;margin:0}'
@@ -1832,9 +1919,14 @@
     logLine(heroQuip, 'you');
     logLine('— you commit to "' + opt.label + '"', 'you');
 
-    if (luckMax) return playLuckOption(opt, ev, enemy);
-
     var isRight = !!opt.right;
+
+    // LUCK chance to save a wrong pick. LUCK/10 chance, LUCK 10 = guaranteed.
+    // Right picks always succeed normally — luck doesn't reroute correct play.
+    var luckChance = c.player.stats.LUCK / 10;
+    var luckSaves = !isRight && (luckMax || Math.random() < luckChance);
+
+    if (luckSaves) return playLuckOption(opt, ev, enemy);
 
     // ----- Phase 2: dice -----
     setTimeout(function () {
@@ -1875,66 +1967,82 @@
     }, 4600);
   }
 
+  // Generic fallbacks used when an option doesn't define a custom luckyNarrate.
+  // Each takes the option label and weaves it into a "yet it worked" line.
+  var LUCK_FALLBACK_SAVES = [
+    'And yet — somehow — the boss is the one bleeding.',
+    'A passing chandelier picks this exact moment to fall. On the boss.',
+    'It should not have worked. It did. The boss is wounded. The math is unspoken.',
+    'Reality folds, very slightly, in your favor. The boss has a new wound.',
+    'A passing pigeon dies dramatically on the boss. You take the credit.',
+    'You did not, technically, hit the boss. But the boss IS hit. So.',
+    'Cosmic intervention. The boss is wounded. No one knows how.',
+    'You committed to the bit so hard fate had to play along. The boss is hit.',
+    'Improbability theorem #4: sometimes flukes carry the day. This is one of those.',
+    'Statistically, you whiffed. The boss did not get the memo.'
+  ];
+
+  function makeFallbackLucky(opt) {
+    return 'You ' + opt.label.toLowerCase() + '. ' + pick(LUCK_FALLBACK_SAVES);
+  }
+
   function playLuckOption(opt, ev, enemy) {
-    var c = state.combat;
-    var rightOpt = findRightOption(ev);
+    var luckyOutcome = opt.luckyNarrate || makeFallbackLucky(opt);
     var luckTag = pick(LUCK_TAGS);
 
-    setTimeout(function () { flashDice(20, 'nat 20'); }, 700);
+    setTimeout(function () { flashDice(20, 'd20 ★'); }, 700);
 
     setTimeout(function () {
-      if (opt.narrate) logLine(opt.narrate, 'lucky');
-    }, 1400);
+      logLine(luckyOutcome, 'lucky');
+    }, 1500);
 
     setTimeout(function () {
       logLine('[LUCKY] ' + luckTag, 'lucky');
-    }, 2100);
+    }, 2300);
 
     setTimeout(function () {
-      if (rightOpt && rightOpt.rightNarrate) {
-        logLine(rightOpt.rightNarrate, 'right');
-      }
       var bossLine = pick(enemy.bossReactRight);
       showBubble('boss', bossLine, 4400);
       logLine('— BOSS: ' + bossLine, 'foe');
       spawnFloater('LUCKY!', 'lucky');
-    }, 2900);
+    }, 3100);
 
     setTimeout(function () {
-      showBubble('hero', pick(HERO_HIT_QUIPS), 3000);
-    }, 3800);
+      var heroBack = pick(HERO_HIT_QUIPS);
+      showBubble('hero', heroBack, 3000);
+      logLine(heroBack, 'you');
+    }, 4000);
 
-    setTimeout(function () { advanceStage(true); }, 4600);
-  }
-
-  function findRightOption(ev) {
-    for (var i = 0; i < ev.options.length; i++) {
-      if (ev.options[i].right) return ev.options[i];
-    }
-    return null;
+    setTimeout(function () { advanceStage(true); }, 5000);
   }
 
   // Called after a SUCCESSFUL stage pick. Damages boss, increments perfect-run
   // counter, advances stageIdx. If we just finished stage 5: instakill if all
-  // 5 were right, otherwise drop into blade phase.
+  // 5 were right (the chunk damage is skipped — instakill subsumes it),
+  // otherwise drop into blade phase (chunk applies).
   function advanceStage(viaLuck) {
     var c = state.combat;
     var enemy = ENEMY_BY_ID[c.enemyId];
 
     setTimeout(function () {
       c.correctStages += 1;
-      var chunk = Math.floor(c.enemy.maxHp / (enemy.stages.length + 1));
-      c.enemy.hp = Math.max(0, c.enemy.hp - chunk);
-      updateHPBars();
-      logLine('You take ' + chunk + ' off the boss.', 'hit');
-      spawnFloater('-' + chunk, 'crit');
+      var nextStageIdx = c.stageIdx + 1;
+      var puzzleDone = nextStageIdx >= enemy.stages.length;
+      var perfectRun = puzzleDone && c.correctStages === enemy.stages.length;
 
-      c.stageIdx += 1;
-      if (c.stageIdx >= enemy.stages.length) {
-        // Puzzle complete — perfect run = instakill, else blade phase
-        if (c.correctStages === enemy.stages.length) {
-          return triggerInstakill();
-        }
+      // Skip the chunk on the final stage of a perfect run — the instakill
+      // cinematic will take the rest of the boss's HP in one fell swoop.
+      if (!perfectRun) {
+        var chunk = Math.floor(c.enemy.maxHp / (enemy.stages.length + 1));
+        c.enemy.hp = Math.max(0, c.enemy.hp - chunk);
+        updateHPBars();
+        logLine('You take ' + chunk + ' off the boss.', 'hit');
+        spawnFloater('-' + chunk, 'crit');
+      }
+
+      c.stageIdx = nextStageIdx;
+      if (puzzleDone) {
+        if (perfectRun) return triggerInstakill();
         return enterBladePhase();
       }
       pushLogDivider();
