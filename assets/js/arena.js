@@ -72,6 +72,7 @@
       id: 'twins', tier: 1, name: 'Veilstalker Skirmishers',
       flavor: 'Mirrored masks. Mirrored daggers. They mirror everything — including their own mistakes.',
       hint: 'They mirror your moves. Refuse to move first.',
+      story: 'Lord Praevus\'s opening act. A pair of assassins who share everything, including a tactical handbook. They were once individual people, but, mostly through a billing dispute, the realm now considers them a unit. They mirror each other\'s swings, footwork, and tax filings. Praevus pays them in matched sets. They are stationed at the eastern gate to greet anyone foolish enough to read past page 1.',
       hp: 80, ac: 14, atk: 5,
       dmg: { dice: 6, count: 1, bonus: 3 },
       attacks: 2,
@@ -248,6 +249,7 @@
       id: 'revenant', tier: 2, name: 'The Hollow Revenant',
       flavor: 'Steel passes through grief like wind through a hung sheet. Faith does not.',
       hint: 'Steel does nothing. Conviction does. Bring belief.',
+      story: 'She used to keep the realm\'s only un-annotated library. Lord Praevus rewrote the catalog. Three centuries later, she still cannot find anything — including who she used to be. She drains the conviction out of passing travelers, looking for one whose memory wasn\'t edited. So far, no luck. She has stopped being optimistic. She has stopped being most things. Praevus stations her at the Seventh Haunted Parchment, where she haunts a moor of tax-evading regrets and very lost footnotes.',
       hp: 90, ac: 13, atk: 4,
       dmg: { dice: 8, count: 1, bonus: 4 },
       attacks: 1,
@@ -392,6 +394,7 @@
       id: 'forgewyrm', tier: 3, name: 'Brass Forgewyrm',
       flavor: 'A drake plated in living foundry. Heat shimmers off her hide like the world is trying to look away.',
       hint: 'Brass turns blades. Brass does not turn ARGUMENTS made with sufficient weight.',
+      story: 'Lord Praevus commissioned her from a discount blacksmith using a coupon. The smith, sensing opportunity, added extra plating, a heart-furnace, and a small license plate. The drake genuinely believes she is the apex predator of structural integrity, which is mostly true — except against one specific kind of mighty argument. Her warranty was voided in transit by her own enthusiasm. She is stationed at the foundry-mile, where she resents both the discount and the coupon.',
       hp: 110, ac: 17, atk: 6,
       dmg: { dice: 12, count: 1, bonus: 5 },
       attacks: 1,
@@ -536,6 +539,7 @@
       id: 'rhasa', tier: 4, name: 'Rhasa, the Crimson Maw',
       flavor: 'A void-beast with a mouth in its mouth. She lunges first, asks rhetorical questions later.',
       hint: 'Survive the bite. Find the second heart. Bring HP.',
+      story: 'A void-beast subcontracted from a worse void. She has two hearts: one for hating, one for digesting. Lord Praevus pays her in unsourced flesh and the occasional adjective. Crucially, she is FREELANCE — she keeps 67% of her hauls but does not get healthcare. She lairs in the seven hells\' overflow parking, where she resents both the parking situation and the lack of dental. Bring a survivable body, or do not bring a body at all.',
       hp: 130, ac: 14, atk: 6,
       dmg: { dice: 10, count: 1, bonus: 6 },
       attacks: 1,
@@ -680,6 +684,7 @@
       id: 'praevus', tier: 5, name: 'Lord Praevus, the Loomed Hand',
       flavor: 'He has read your character sheet. He has annotated it. He has notes.',
       hint: 'He counters MIGHT, AGI, VIGOR, AND WILL. The only stat he hasn\'t accounted for is LUCK.',
+      story: 'Long ago — last Tuesday, in fact — Lord Praevus finished writing his book. This is a problem. The book is EVERYONE. The book has annotations. He has annotated the annotations. His staff has tenure. His sigils have tenure. He holds three concurrent professorships of unmaking. The only way past him is to do something the book did not, technically, account for — and the book has a chapter on every stat. It does NOT have a chapter on LUCK. Bring LUCK. Bring all of it.',
       hp: 100, ac: 15, atk: 5,
       dmg: { dice: 8, count: 1, bonus: 5 },
       attacks: 1,
@@ -820,6 +825,38 @@
 
   var ENEMY_BY_ID = {};
   ENEMIES.forEach(function (e) { ENEMY_BY_ID[e.id] = e; });
+
+  // ============================================================
+  //   REALM QUEST — the overarching satirical setup
+  // ============================================================
+
+  var REALM_STORY = {
+    title: 'The Loomed Hand\'s Gambit',
+    body: [
+      'Long ago — last Tuesday, in fact — LORD PRAEVUS, scholar-tyrant of the Annotated Realms, finished writing his book.',
+      'This is a problem. The book is EVERYONE. The book has annotations. The annotations are legally binding.',
+      'He has dispatched four of his most-cited minions across the realm to suppress dissenting plot threads. They are stationed in increasingly inconvenient locations and they all have impeccable footnotes.',
+      'Someone must defeat them, in tier order, before the Loomed Hand himself can be confronted. You volunteered. You did not, technically, read the volunteer form. The volunteer form was on page 47. Page 47 is also a problem.'
+    ],
+    closer: 'The realm\'s last stand begins below. Pick your first fight.'
+  };
+
+  // Tier-unlock: a boss is unlocked when every lower-tier boss is defeated.
+  function isUnlocked(enemy) {
+    for (var i = 0; i < ENEMIES.length; i++) {
+      var other = ENEMIES[i];
+      if (other.tier < enemy.tier && !state.defeated[other.id]) return false;
+    }
+    return true;
+  }
+  function lowestLockedRequirement(enemy) {
+    // Return the lowest-tier boss that's still blocking this enemy.
+    for (var i = 0; i < ENEMIES.length; i++) {
+      var other = ENEMIES[i];
+      if (other.tier < enemy.tier && !state.defeated[other.id]) return other;
+    }
+    return null;
+  }
 
   // ============================================================
   //   GENERIC FLAVOR
@@ -1139,13 +1176,29 @@
     + 'text-align:center;margin:0 0 32px;text-transform:lowercase}'
     + '.arena-screen{width:100%;max-width:1040px}'
 
+    // Realm-quest story banner
+    + '.realm-quest{background:linear-gradient(to bottom,#231F1C 0%,#1f1b18 100%);'
+    + 'border:1px solid #5C544E;border-left:3px solid #E2A84B;border-radius:3px;'
+    + 'padding:20px 26px;margin:0 0 28px;position:relative;'
+    + 'box-shadow:0 4px 16px rgba(0,0,0,.35)}'
+    + '.realm-quest-mark{font-size:9px;letter-spacing:3px;color:#E74C3C;'
+    + 'text-transform:uppercase;font-weight:700;margin-bottom:6px;opacity:.85}'
+    + '.realm-quest-title{font-size:18px;letter-spacing:3px;color:#E2A84B;'
+    + 'text-transform:uppercase;margin:0 0 14px;font-weight:700;font-family:"Courier New",monospace}'
+    + '.realm-quest-body p{font-size:12px;line-height:1.65;color:#E8D6B4;'
+    + 'margin:0 0 10px;font-style:italic;opacity:.9}'
+    + '.realm-quest-closer{font-size:11px;letter-spacing:1.5px;color:#C9966A;'
+    + 'margin-top:12px;font-weight:700;text-transform:lowercase}'
+
     // Roster
     + '.roster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}'
     + '.roster-card{background:#231F1C;border:1px solid #3D3733;border-radius:3px;'
     + 'padding:16px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;'
     + 'cursor:pointer;transition:border-color .15s ease,transform .15s ease,background .15s ease}'
-    + '.roster-card:hover{border-color:#E2A84B;transform:translateY(-2px);background:#2A2522}'
+    + '.roster-card:not(.locked):hover{border-color:#E2A84B;transform:translateY(-2px);background:#2A2522}'
     + '.roster-card.defeated{border-color:#7ABC78}'
+    + '.roster-card.locked{cursor:not-allowed;opacity:.5;filter:grayscale(.6)}'
+    + '.roster-card.locked .roster-portrait svg{filter:brightness(.55)}'
     + '.roster-portrait{width:96px;height:96px;background:#1a1612;border:1px solid #3D3733;'
     + 'display:flex;align-items:center;justify-content:center;overflow:hidden;'
     + 'image-rendering:pixelated}'
@@ -1158,6 +1211,16 @@
     + 'margin-top:2px;font-weight:700}'
     + '.roster-status.go{color:#E2A84B}'
     + '.roster-status.defeated{color:#7ABC78}'
+    + '.roster-status.locked{color:#888}'
+
+    // Per-boss story panel (allocator screen)
+    + '.boss-story{background:#1f1b18;border:1px solid #3D3733;border-left:3px solid #5C8C8C;'
+    + 'border-radius:3px;padding:16px 22px;max-width:560px;width:100%;'
+    + 'box-shadow:0 2px 10px rgba(0,0,0,.25)}'
+    + '.boss-story-mark{font-size:9px;letter-spacing:3px;color:#5C8C8C;'
+    + 'text-transform:uppercase;font-weight:700;margin-bottom:8px;opacity:.85}'
+    + '.boss-story p{font-size:11px;line-height:1.65;color:#C9966A;'
+    + 'margin:0;font-style:italic}'
 
     // Allocator
     + '.alloc-wrap{display:flex;flex-direction:column;align-items:center;gap:18px}'
@@ -1403,6 +1466,19 @@
   // ----- Roster ---------------------------------------------------------
 
   function renderRoster(el) {
+    // Realm-quest story banner at the top of the character-select screen
+    var quest = document.createElement('div');
+    quest.className = 'realm-quest';
+    var bodyHtml = REALM_STORY.body.map(function (p) {
+      return '<p>' + p + '</p>';
+    }).join('');
+    quest.innerHTML =
+      '<div class="realm-quest-mark">[ ! ] active quest</div>' +
+      '<h2 class="realm-quest-title">' + REALM_STORY.title + '</h2>' +
+      '<div class="realm-quest-body">' + bodyHtml + '</div>' +
+      '<div class="realm-quest-closer">' + REALM_STORY.closer + '</div>';
+    el.appendChild(quest);
+
     var grid = document.createElement('div');
     grid.className = 'roster-grid';
     ENEMIES.forEach(function (e) { grid.appendChild(buildRosterCard(e)); });
@@ -1412,7 +1488,10 @@
   function buildRosterCard(enemy) {
     var card = document.createElement('div');
     var defeated = !!state.defeated[enemy.id];
-    card.className = 'roster-card' + (defeated ? ' defeated' : '');
+    var unlocked = isUnlocked(enemy);
+    card.className = 'roster-card' +
+      (defeated ? ' defeated' : '') +
+      (!unlocked ? ' locked' : '');
 
     var portrait = document.createElement('div');
     portrait.className = 'roster-portrait';
@@ -1432,15 +1511,29 @@
 
     var status = document.createElement('div');
     status.className = 'roster-status';
-    if (defeated) { status.classList.add('defeated'); status.textContent = 'defeated ✓'; }
-    else { status.classList.add('go'); status.textContent = 'challenge'; }
+    if (defeated) {
+      status.classList.add('defeated');
+      status.textContent = 'defeated ✓';
+    } else if (!unlocked) {
+      status.classList.add('locked');
+      var blocker = lowestLockedRequirement(enemy);
+      status.textContent = blocker
+        ? '🔒 defeat tier ' + blocker.tier
+        : '🔒 locked';
+    } else {
+      status.classList.add('go');
+      status.textContent = 'challenge';
+    }
 
     card.appendChild(portrait);
     card.appendChild(tier);
     card.appendChild(name);
     card.appendChild(flav);
     card.appendChild(status);
-    card.addEventListener('click', function () { onSelectEnemy(enemy.id); });
+
+    if (unlocked) {
+      card.addEventListener('click', function () { onSelectEnemy(enemy.id); });
+    }
     return card;
   }
 
@@ -1475,6 +1568,16 @@
     header.appendChild(hp);
     header.appendChild(ht);
     wrap.appendChild(header);
+
+    // Per-boss story panel (above the stat grid, not in chat)
+    if (enemy.story) {
+      var story = document.createElement('div');
+      story.className = 'boss-story';
+      story.innerHTML =
+        '<div class="boss-story-mark">dossier · tier ' + enemy.tier + '</div>' +
+        '<p>' + enemy.story + '</p>';
+      wrap.appendChild(story);
+    }
 
     var grid = document.createElement('div');
     grid.className = 'alloc-grid';
