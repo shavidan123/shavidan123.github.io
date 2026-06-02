@@ -1,3 +1,58 @@
+{% include base_path %}
 <!-- start custom footer snippets -->
-<a href="https://www.instagram.com/avisflix/">:)</a>
+<div class="footer-snippets">
+  <a href="https://www.instagram.com/avisflix/" style="margin-right:14px">:)</a>
+  <a href="{{ base_path }}/d20/" id="praevus-link" title="Lord Praevus is waiting." aria-label="Enter the d20 Arena"
+     style="display:inline-block;vertical-align:middle;line-height:0">
+    <svg id="praevus-footer-icon" viewBox="0 0 16 16" width="28" height="28"
+         shape-rendering="crispEdges" style="display:inline-block;image-rendering:pixelated"></svg>
+  </a>
+</div>
+<script>
+(function () {
+  var svg = document.getElementById('praevus-footer-icon');
+  if (!svg) return;
+  var rows = [
+    '......dddd....Y.',
+    '....ddVVVVdd..Y.',
+    '...dVVVVVVVVd.Y.',
+    '..dVVVKKKKVVVdK.',
+    '..dVKVEKKEVKVdK.',
+    '..dVKKKKKKKKVdK.',
+    '..dVVKKKKKKVVdK.',
+    '..dVVVVKKVVVVdK.',
+    '..dVVVVVVVVVVdK.',
+    '..dvVvVvVvVvVdK.',
+    '..dvYVvVvVvYvdK.',
+    '..ddvvVvVvvvddK.',
+    '...dddvvvvdddK..',
+    '....dddddddd.K..',
+    '.............K..',
+    '................'
+  ];
+  var palette = {
+    'd': '#15141A', 'V': '#6E5C8C', 'v': '#2E2542',
+    'K': '#0a0907', 'E': '#FFE85C', 'Y': '#E2A84B'
+  };
+  var parts = [];
+  for (var y = 0; y < rows.length; y++) {
+    var row = rows[y];
+    var x = 0;
+    while (x < row.length) {
+      var ch = row.charAt(x);
+      if (!palette[ch]) { x++; continue; }
+      var xs = x;
+      while (x < row.length && row.charAt(x) === ch) x++;
+      parts.push('<rect x="' + xs + '" y="' + y + '" width="' + (x - xs) +
+                 '" height="1" fill="' + palette[ch] + '"/>');
+    }
+  }
+  svg.innerHTML = parts.join('');
+})();
+</script>
+<style>
+  .footer-snippets { display: inline-flex; align-items: center; gap: 8px; }
+  #praevus-link { opacity: .55; transition: opacity .2s ease, transform .2s ease; }
+  #praevus-link:hover { opacity: 1; transform: translateY(-1px); }
+</style>
 <!-- end custom footer snippets -->
