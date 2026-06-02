@@ -5,9 +5,13 @@
   var FACES = 20;
   var EFFECT_MS = 1100;          // result glow at corner
   var MAX_TOTAL_MS = 7500;       // safety timeout
-  var CORNER_GRAVITY = 1100;     // px/s² — gravity always points toward the corner
-  var CATCH_RADIUS = 220;        // px — damping ramps up only inside this zone
-  var DAMP_NEAR = 8;             // peak velocity damping at the corner
+  var GRAVITY_Y = 1100;          // standard downward gravity (px/s²)
+  var HORIZ_PULL_K = 1.1;        // linear horizontal pull toward corner_x...
+  var HORIZ_PULL_CAP = 550;      // ...capped so it doesn't dominate motion
+  var CATCH_RADIUS = 200;        // catch zone where spring + damping ramp in
+  var CATCH_SPRING_K = 28;       // peak spring stiffness (overdamped with...)
+  var CATCH_DAMP = 13;           // ...this damping → no oscillation in zone
+  var BASE_ANG_DRAG = 0.15;      // light angular drag, always on
   var COMMIT_DIST = 95;          // commit number when this close to corner...
   var COMMIT_SPEED = 480;        // ...AND moving slower than this
   var ARRIVAL_DIST = 22;         // px from corner to count as "home"
@@ -275,50 +279,63 @@
       }
 
       if (phase === 'bounce') {
-        // Gravity points toward the corner (not straight down).
-        // This biases every parabola back to the corner without injecting any
-        // extra force when "the pull engages" — it's the same continuous field
-        // for the whole flight.
-        var dxc = restCx - pos.x;
-        var dyc = restCy - pos.y;
-        var dc  = Math.sqrt(dxc * dxc + dyc * dyc);
-        if (dc > 0.5) {
-          var gMag = CORNER_GRAVITY * dt / dc;
-          vel.x += dxc * gMag;
-          vel.y += dyc * gMag;
+        // Smoothstep "nearness" to corner — 0 outside catch zone, 1 at corner
+        var dxs = restCx - pos.x;
+        var dys = restCy - pos.y;
+        var dc  = Math.sqrt(dxs * dxs + dys * dys);
+        var nearness = 0;
+        if (dc < CATCH_RADIUS) {
+          var nt = 1 - dc / CATCH_RADIUS;
+          nearness = nt * nt * (3 - 2 * nt);  // smoothstep
         }
 
-        // Drag is essentially zero in open space; only ramps up near the
-        // corner (the "catch zone"). Velocity is preserved during free flight.
-        var nearness = 1 - dc / CATCH_RADIUS;
-        if (nearness < 0) nearness = 0;
-        var drag = 0.02 + DAMP_NEAR * nearness * nearness;
-        vel.x *= (1 - drag * dt);
-        vel.y *= (1 - drag * dt);
-        angVel *= (1 - drag * 0.4 * dt);
+        // Straight-down gravity (fades inside catch zone so the spring's
+        // equilibrium is exactly restPos). No central force → no orbits.
+        vel.y += GRAVITY_Y * (1 - nearness) * dt;
+
+        // Mild horizontal pull toward corner_x (linear, capped). This breaks
+        // the symmetry of pure gravity and biases the die toward the corner
+        // *side* of the floor without dominating the trajectory.
+        var hx = HORIZ_PULL_K * dxs;
+        if (hx >  HORIZ_PULL_CAP) hx =  HORIZ_PULL_CAP;
+        if (hx < -HORIZ_PULL_CAP) hx = -HORIZ_PULL_CAP;
+        vel.x += hx * (1 - nearness) * dt;
+
+        // Catch zone: overdamped spring exactly to restPos. ω² = K = 28,
+        // c_crit = 2√28 ≈ 10.6; damping 13 > c_crit → no oscillation.
+        if (nearness > 0) {
+          vel.x += dxs * CATCH_SPRING_K * nearness * dt;
+          vel.y += dys * CATCH_SPRING_K * nearness * dt;
+          vel.x *= (1 - CATCH_DAMP * nearness * dt);
+          vel.y *= (1 - CATCH_DAMP * nearness * dt);
+          angVel *= (1 - CATCH_DAMP * nearness * 0.4 * dt);
+        }
+
+        // Constant light angular drag — keeps spin from growing unboundedly
+        angVel *= (1 - BASE_ANG_DRAG * dt);
 
         pos.x += vel.x * dt;
         pos.y += vel.y * dt;
         angle += angVel * dt;
 
-        // Wall collisions — highly elastic; energy is preserved on each bounce
+        // Wall collisions — moderate restitution so energy bleeds via bounces
         if (pos.x < leftWall) {
           pos.x = leftWall;
-          vel.x = Math.abs(vel.x) * 0.90;
-          angVel = -angVel * 0.95;
+          vel.x = Math.abs(vel.x) * 0.80;
+          angVel = -angVel * 0.92;
         } else if (pos.x > rightWall) {
           pos.x = rightWall;
-          vel.x = -Math.abs(vel.x) * 0.90;
-          angVel = -angVel * 0.95;
+          vel.x = -Math.abs(vel.x) * 0.80;
+          angVel = -angVel * 0.92;
         }
         if (pos.y < ceiling) {
           pos.y = ceiling;
-          vel.y = Math.abs(vel.y) * 0.88;
+          vel.y = Math.abs(vel.y) * 0.80;
         } else if (pos.y > floor) {
           pos.y = floor;
-          vel.y = -Math.abs(vel.y) * 0.85;
-          vel.x *= 0.96;
-          angVel *= 0.96;
+          vel.y = -Math.abs(vel.y) * 0.74;
+          vel.x *= 0.94;
+          angVel *= 0.94;
         }
 
         distToCorner = Math.sqrt(
