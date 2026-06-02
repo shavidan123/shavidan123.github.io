@@ -3,13 +3,13 @@
   var HIST_HEIGHT_PX = 28;
   var PIXEL_SIZE = 4;
   var FACES = 20;
-  var BOUNCE_MS = 1400;          // pure physics duration before pull engages
   var EFFECT_MS = 1100;          // result glow at corner
-  var MAX_TOTAL_MS = 7000;       // safety timeout
-  var SPEED_NO_PULL  = 1500;     // px/s — above this: no pull
-  var SPEED_FULL_PULL = 400;     // px/s — at this and below: full pull
-  var PULL_K_MAX = 22;           // peak spring stiffness
-  var PULL_DAMP_MAX = 11;        // peak velocity damping
+  var MAX_TOTAL_MS = 7500;       // safety timeout
+  var CORNER_GRAVITY = 1100;     // px/s² — gravity always points toward the corner
+  var CATCH_RADIUS = 220;        // px — damping ramps up only inside this zone
+  var DAMP_NEAR = 8;             // peak velocity damping at the corner
+  var COMMIT_DIST = 95;          // commit number when this close to corner...
+  var COMMIT_SPEED = 480;        // ...AND moving slower than this
   var ARRIVAL_DIST = 22;         // px from corner to count as "home"
   var ARRIVAL_SPEED = 70;        // px/s to count as "stopped"
 
@@ -240,6 +240,7 @@
     var lastFlickerTime = 0;
     var numCommitted = false;
     var currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
+    var distToCorner = 0;
 
     var startTime = null;
     var lastTime = null;
@@ -254,15 +255,17 @@
       lastTime = now;
       var elapsed = now - startTime;
 
-      // Number flicker — interval tracks current die speed; commits at start of effect.
+      // Number flicker — interval tracks current speed; commits early once the
+      // die enters the catch zone slow enough, so the final approach is silent.
       if (!numCommitted) {
-        if (phase === 'effect') {
+        if (phase === 'effect' ||
+            (distToCorner < COMMIT_DIST && currentSpeed < COMMIT_SPEED)) {
           numEl.textContent = result;
           numCommitted = true;
         } else {
           var sf = currentSpeed / 1300;
           if (sf > 1) sf = 1; if (sf < 0) sf = 0;
-          var slow = (1 - sf) * (1 - sf);    // slowdown ramps fast at low speeds
+          var slow = (1 - sf) * (1 - sf);
           var fInterval = 55 + slow * 480;
           if (elapsed - lastFlickerTime >= fInterval) {
             numEl.textContent = 1 + Math.floor(Math.random() * 20);
@@ -271,77 +274,68 @@
         }
       }
 
-      if (phase === 'bounce' || phase === 'return') {
-        // Pull factor scales inversely with speed (after BOUNCE_MS gate).
-        // Above SPEED_NO_PULL: no pull. Below SPEED_FULL_PULL: full pull. Smoothstep between.
-        var pullEase = 0;
-        if (phase === 'return') {
-          var t = (SPEED_NO_PULL - currentSpeed) / (SPEED_NO_PULL - SPEED_FULL_PULL);
-          if (t < 0) t = 0; if (t > 1) t = 1;
-          pullEase = t * t * (3 - 2 * t);
+      if (phase === 'bounce') {
+        // Gravity points toward the corner (not straight down).
+        // This biases every parabola back to the corner without injecting any
+        // extra force when "the pull engages" — it's the same continuous field
+        // for the whole flight.
+        var dxc = restCx - pos.x;
+        var dyc = restCy - pos.y;
+        var dc  = Math.sqrt(dxc * dxc + dyc * dyc);
+        if (dc > 0.5) {
+          var gMag = CORNER_GRAVITY * dt / dc;
+          vel.x += dxc * gMag;
+          vel.y += dyc * gMag;
         }
 
-        // Gravity fades inversely with pull (otherwise spring rests below the corner)
-        vel.y += gravity * (1 - pullEase) * dt;
-
-        // Air + angular drag (slightly higher decay for more natural slowdown)
-        vel.x *= (1 - 0.32 * dt);
-        vel.y *= (1 - 0.14 * dt);
-        angVel *= (1 - 0.18 * dt);
-
-        // Magnetic pull toward corner — proportional to (1 - speed/SPEED_NO_PULL)
-        if (pullEase > 0) {
-          var k = PULL_K_MAX * pullEase;
-          var damp = PULL_DAMP_MAX * pullEase;
-          vel.x += -k * (pos.x - restCx) * dt;
-          vel.y += -k * (pos.y - restCy) * dt;
-          vel.x *= (1 - damp * dt);
-          vel.y *= (1 - damp * dt);
-          angVel *= (1 - damp * 0.5 * dt);
-        }
+        // Drag is essentially zero in open space; only ramps up near the
+        // corner (the "catch zone"). Velocity is preserved during free flight.
+        var nearness = 1 - dc / CATCH_RADIUS;
+        if (nearness < 0) nearness = 0;
+        var drag = 0.02 + DAMP_NEAR * nearness * nearness;
+        vel.x *= (1 - drag * dt);
+        vel.y *= (1 - drag * dt);
+        angVel *= (1 - drag * 0.4 * dt);
 
         pos.x += vel.x * dt;
         pos.y += vel.y * dt;
         angle += angVel * dt;
 
-        // Wall collisions stay active even during return
+        // Wall collisions — highly elastic; energy is preserved on each bounce
         if (pos.x < leftWall) {
           pos.x = leftWall;
-          vel.x = Math.abs(vel.x) * 0.82;
-          angVel = -angVel * 0.92;
+          vel.x = Math.abs(vel.x) * 0.90;
+          angVel = -angVel * 0.95;
         } else if (pos.x > rightWall) {
           pos.x = rightWall;
-          vel.x = -Math.abs(vel.x) * 0.82;
-          angVel = -angVel * 0.92;
+          vel.x = -Math.abs(vel.x) * 0.90;
+          angVel = -angVel * 0.95;
         }
         if (pos.y < ceiling) {
           pos.y = ceiling;
-          vel.y = Math.abs(vel.y) * 0.78;
+          vel.y = Math.abs(vel.y) * 0.88;
         } else if (pos.y > floor) {
           pos.y = floor;
-          vel.y = -Math.abs(vel.y) * 0.75;
-          vel.x *= 0.93;
-          angVel *= 0.93;
+          vel.y = -Math.abs(vel.y) * 0.85;
+          vel.x *= 0.96;
+          angVel *= 0.96;
         }
 
+        distToCorner = Math.sqrt(
+          (pos.x - restCx) * (pos.x - restCx) +
+          (pos.y - restCy) * (pos.y - restCy)
+        );
         currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
         applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
 
-        if (phase === 'bounce' && elapsed >= BOUNCE_MS) {
-          phase = 'return';
-        }
-        if (phase === 'return') {
-          var dx = pos.x - restCx, dy = pos.y - restCy;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if ((dist < ARRIVAL_DIST && currentSpeed < ARRIVAL_SPEED) ||
-              elapsed > MAX_TOTAL_MS - EFFECT_MS) {
-            phase = 'effect';
-            effectStartTime = elapsed;
-            effectStartAngle = angle;
-            effectTargetAngle = Math.round(angle / 360) * 360;
-            stageEl.classList.remove('rolling');
-            stageEl.classList.add('landing');
-          }
+        if ((distToCorner < ARRIVAL_DIST && currentSpeed < ARRIVAL_SPEED) ||
+            elapsed > MAX_TOTAL_MS - EFFECT_MS) {
+          phase = 'effect';
+          effectStartTime = elapsed;
+          effectStartAngle = angle;
+          effectTargetAngle = Math.round(angle / 360) * 360;
+          stageEl.classList.remove('rolling');
+          stageEl.classList.add('landing');
         }
       }
 
