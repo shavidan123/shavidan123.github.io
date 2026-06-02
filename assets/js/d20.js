@@ -4,6 +4,7 @@
   var PIXEL_SIZE = 4;
   var FACES = 20;
   var EFFECT_MS = 1100;          // result glow at corner
+  var RECOVER_MS = 1200;         // graceful timeout drag + wobble + upright
   var MAX_TOTAL_MS = 7500;       // safety timeout
   var GRAVITY_Y = 1100;          // standard downward gravity (px/s²)
   var HORIZ_PULL_K = 1.1;        // linear horizontal pull toward corner_x...
@@ -253,6 +254,9 @@
     var effectStartTime = 0;
     var effectStartAngle = 0;
     var effectTargetAngle = 0;
+    var recoverStartTime = 0;
+    var recoverStart = null;
+    var recoverTargetAngle = 0;
 
     function step(now) {
       if (startTime === null) { startTime = now; lastTime = now; }
@@ -349,14 +353,50 @@
         currentSpeed = Math.sqrt(vel.x * vel.x + vel.y * vel.y);
         applyTransform(pos.x - restCx, pos.y - restCy, angle, 1, 1);
 
-        if ((distToCorner < ARRIVAL_DIST && currentSpeed < ARRIVAL_SPEED) ||
-            elapsed > MAX_TOTAL_MS - EFFECT_MS) {
+        if (distToCorner < ARRIVAL_DIST && currentSpeed < ARRIVAL_SPEED) {
           phase = 'effect';
           effectStartTime = elapsed;
           effectStartAngle = angle;
           effectTargetAngle = Math.round(angle / 360) * 360;
           stageEl.classList.remove('rolling');
           stageEl.classList.add('landing');
+        } else if (elapsed > MAX_TOTAL_MS - EFFECT_MS - RECOVER_MS) {
+          // Safety timeout — play a graceful recovery (no teleport).
+          phase = 'recover';
+          recoverStartTime = elapsed;
+          recoverStart = { x: pos.x, y: pos.y, angle: angle };
+          recoverTargetAngle = Math.round(angle / 360) * 360;
+          stageEl.classList.remove('rolling');
+          stageEl.classList.add('landing');
+        }
+      }
+
+      if (phase === 'recover') {
+        var rt = (elapsed - recoverStartTime) / RECOVER_MS;
+        if (rt > 1) rt = 1;
+
+        // Position: ease-out cubic drag back to restPos
+        var rEase = 1 - Math.pow(1 - rt, 3);
+        var fxr = recoverStart.x + (restCx - recoverStart.x) * rEase;
+        var fyr = recoverStart.y + (restCy - recoverStart.y) * rEase;
+
+        // Angle: ease to upright + decaying wobble (~3Hz, dies out by the end)
+        var wobble = Math.sin(rt * 18) * (1 - rt) * 12;
+        var far = recoverStart.angle +
+                  (recoverTargetAngle - recoverStart.angle) * rEase + wobble;
+
+        // Scale: small squash-stretch wobble that also decays
+        var sw = Math.sin(rt * 14) * (1 - rt) * 0.06;
+        var sxr = 1 + sw;
+        var syr = 1 - sw;
+
+        applyTransform(fxr - restCx, fyr - restCy, far, sxr, syr);
+
+        if (rt >= 1) {
+          phase = 'effect';
+          effectStartTime = elapsed;
+          effectStartAngle = recoverTargetAngle;
+          effectTargetAngle = recoverTargetAngle;
         }
       }
 
