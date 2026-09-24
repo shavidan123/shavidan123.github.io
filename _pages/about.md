@@ -23,7 +23,7 @@ I'm broadly interested in the security and robustness for deep learning models a
 
 I'm currently advised by [Shi Feng](https://shi-feng.super.site/) under the MATS research fellowship. I've previously worked for OpenAI as a contracted red-teamer. At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) in [He He's research group](https://hhexiy.github.io/). I'm also extremely fortunate for the mentorship of [Chawin Sitawarin](https://chawins.github.io/) (Anthropic) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
 
-I'm a fan of landscape photography. Here's a randomly sampled photo from my portfolio, most of which were taken on my Canon EOS R50:
+I'm a fan of landscape photography. Here's a randomly sampled photo from [my portfolio](/photography/), most of which were taken on my Canon EOS R50:
 
 <div style="margin:1.5em 0;text-align:center;">
   <img id="random-photo" src="" alt="Photography by Avidan Shah" style="display:none;max-width:90%;max-height:400px;width:auto;height:auto;margin:0 auto;border:none;padding:0;background:none;border-radius:3px;box-shadow:0 2px 12px rgba(0,0,0,0.35);">
