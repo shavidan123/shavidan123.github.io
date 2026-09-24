@@ -275,3 +275,61 @@ html[data-theme="light"] .theme-toggle {
 html[data-theme="light"] .theme-toggle:hover {
   color: #996600;
 }
+
+/* =============================================
+   Photography gallery (/photography/)
+   ============================================= */
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 18px 14px;
+  margin: 1.2em 0 2em;
+}
+
+.photo-tile {
+  display: block;
+  margin: 0;
+}
+
+.photo-tile a {
+  display: block;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  background: #231F1C;
+}
+
+.page__content .photo-tile img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.photo-tile a:hover img {
+  transform: scale(1.03);
+  filter: brightness(1.06);
+}
+
+.photo-tile .photo-caption {
+  margin-top: 0.45em;
+  font-size: 0.78em;
+}
+
+html[data-theme="light"] .photo-tile a {
+  background: #F0ECE6;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+@media screen and (max-width: 480px) {
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 10px;
+  }
+}
