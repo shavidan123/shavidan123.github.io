@@ -21,7 +21,7 @@ redirect_from:
 
 I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization in out of distribution settings. I've recently been researching the ability of LLMs to encode and interpret information that is subliminal to humans. Currently, I'm focused on defending against data poisoning threats, which I believe pose a critical risk as the adoption of AI increases exponentially.
 
-I'm currently advised by [Shi Feng](https://shi-feng.super.site/) under the MATS research fellowship. I've also worked for OpenAI as a contracted red-teamer. At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) in [He He's research group](https://hhexiy.github.io/). I'm also extremely fortunate for the mentorship of [Chawin Sitawarin](https://chawins.github.io/) (Anthropic) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
+I'm currently advised by [Shi Feng](https://shi-feng.super.site/) under the MATS research fellowship. I've previously worked for OpenAI as a contracted red-teamer. At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) in [He He's research group](https://hhexiy.github.io/). I'm also extremely fortunate for the mentorship of [Chawin Sitawarin](https://chawins.github.io/) (Anthropic) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
 
 I'm a fan of landscape photography. Here's a randomly sampled photo from my portfolio, most of which were taken on my Canon EOS R50:
 
