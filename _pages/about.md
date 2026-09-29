@@ -11,6 +11,7 @@ redirect_from:
 <div style="float:right;width:45%;margin:0 0 1em 1.5em;padding:0.8em 1em;border:1px solid #3D3733;border-radius:4px;background:#231F1C;font-size:0.85em;line-height:1.5;" id="news-box">
 <span style="display:block;font-weight:600;color:#E2A84B;margin-bottom:0.4em;">Recent Updates</span>
 <ul style="margin:0;padding-left:1.2em;">
+<li>Co-founded <a href="https://etymologic.com">Etymologic</a>, a public benefit corporation focused on ensuring data integrity for training AI models and running AI systems. We recently received pre-seed funding.</li>
 <li>Paper on On-Policy Consistency Training accepted to NeurIPS 2026.</li>
 <li>On leave from NYU to participate in the <a href="https://www.matsprogram.org/">MATS Research Fellowship</a>, advised by <a href="https://shi-feng.super.site/">Shi Feng</a> and <a href="https://jacobpfau.com/">Jacob Pfau</a>.</li>
 <li>Paper on poisoning jailbreak detection models accepted as Spotlight to ICML 2026 (Top 2.2% of accepted papers).</li>
@@ -20,6 +21,8 @@ redirect_from:
 **I do research on AI safety and security. Reach out to me via email if you'd like to get in contact for discussion or collaboration. I'm always open to talk about research ideas.**
 
 I'm broadly interested in the security and robustness for deep learning models as well as understanding their capabilities for generalization in out of distribution settings. I've recently been researching the ability of LLMs to encode and interpret information that is subliminal to humans. Currently, I'm focused on defending against data poisoning threats, which I believe pose a critical risk as the adoption of AI increases exponentially.
+
+I recently co-founded [Etymologic](https://etymologic.com), a public benefit corporation focused on ensuring data integrity for training AI models and running AI systems. We've received pre-seed funding and are just getting started.
 
 I'm currently advised by [Shi Feng](https://shi-feng.super.site/) under the MATS research fellowship. I've previously worked for OpenAI as a contracted red-teamer. At NYU, I'm advised by [Rico Angell](https://rangell.github.io/) in [He He's research group](https://hhexiy.github.io/). I'm also extremely fortunate for the mentorship of [Chawin Sitawarin](https://chawins.github.io/) (Anthropic) during my undergraduate studies at UC Berkeley as a part of [David Wagner's group](https://people.eecs.berkeley.edu/~daw/).
 
